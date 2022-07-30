@@ -1,8 +1,9 @@
 ---
+
 - name: Create the folders
   file:
     path: "{{ docker_dir }}/bunkerweb/data"
-    recurse: yes
+    recurse: true
     owner: root
     group: 101
     mode: 0770
@@ -18,7 +19,7 @@
     image: "bunkerity/bunkerweb"
     networks:
       - name: wg_network
-    pull: yes
+    pull: true
     state: "started"
     env_file: "{{ docker_dir }}/bunkerweb/.env"
     ports:

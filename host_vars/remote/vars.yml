@@ -1,0 +1,18 @@
+---
+
+shell: /bin/bash
+locale: en_US.UTF-8
+
+autoupdate_reboot_time: 03:00
+
+docker_dir: "/opt/docker"
+
+ufw_ports:
+  - port: "51820"
+    proto: "udp"
+  - port: "80"
+    proto: "tcp"
+  - port: "443"
+    proto: "tcp"
+  - port: "{{ ssh_port }}"
+    proto: "tcp"

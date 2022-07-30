@@ -1,25 +1,26 @@
 ---
+
 - name: Create the config folder
   file:
     path: "{{ docker_dir }}/authelia"
     state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
 
 - name: Copy the main config
   template:
     src: configuration.yml.j2
     dest: "{{ docker_dir }}/authelia/configuration.yml"
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
     mode: 0644
 
 - name: Copy the users database
   template:
     src: users_database.yml.j2
     dest: "{{ docker_dir }}/authelia/users_database.yml"
-    owner: "{{ username }}"
-    group: "{{ username }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
     mode: 0644
 
 - name: Make sure the Redis container is created and running
@@ -28,7 +29,7 @@
     image: "redis:alpine"
     networks:
       - name: wg_network
-    pull: yes
+    pull: true
     state: "started"
     restart_policy: unless-stopped
 
@@ -38,7 +39,7 @@
     image: "authelia/authelia"
     networks:
       - name: wg_network
-    pull: yes
+    pull: true
     state: "started"
     volumes:
       - "{{ docker_dir }}/authelia:/config"
@@ -46,7 +47,7 @@
 
 - name: Add a 2FA alias to .bashrc
   blockinfile:
-    path: "/home/{{ username }}/.bashrc"
+    path: "/home/{{ system_user }}/.bashrc"
     state: present
     block: |
       alias show_2fa="sudo cat {{ docker_dir }}/authelia/notification.txt"

@@ -1,23 +1,25 @@
 ---
-- name: get public IP
-  ipify_facts:
+
+- name: Copy the env file
+  template:
+    src: env.j2
+    dest: "{{ docker_dir }}/wg-easy/.env"
 
 - name: Make sure the Wireguard container is created and running
   docker_container:
     name: "wg-easy"
     image: "weejewel/wg-easy"
-    pull: yes
+    pull: true
     networks:
       - name: wg_network
     sysctls:
       "net.ipv4.conf.all.src_valid_mark": "1"
       "net.ipv4.ip_forward": "1"
     capabilities:
-      - net_admin
-      - sys_module
+      - NET_ADMIN
+      - SYS_MODULE
     state: "started"
-    env:
-      "WG_HOST": "{{ wireguard_host }}"
+    env_file: "{{ docker_dir }}/wg-easy/.env"
     ports:
       - "51820:51820/udp"
     volumes:

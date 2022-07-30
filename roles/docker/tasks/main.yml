@@ -1,4 +1,5 @@
 ---
+
 - name: Set amd64 arch
   set_fact:
     repo_arch: amd64
@@ -33,7 +34,7 @@
   block:
     - name: Attempt installation
       apt:
-        update_cache: yes
+        update_cache: true
         name: "{{ docker_packages }}"
         state: present
   rescue:
@@ -49,12 +50,12 @@
     name: docker
     state: present
 
-- name: Add user "{{ username }}" to group docker
+- name: Add user "{{ system_user }}" to group docker
   user:
-    name: "{{ username }}"
+    name: "{{ system_user }}"
     groups:
       - docker
-    append: yes
+    append: true
 
 - name: Install Docker Module for Python
   pip:
@@ -63,19 +64,19 @@
 - name: Make sure Docker is running and enabled
   systemd:
     name: docker
-    daemon_reload: yes
+    daemon_reload: true
     state: started
-    enabled: yes
+    enabled: true
 
 - name: Chmod the data folder
   become: true
   file:
     dest: "{{ docker_dir }}"
     state: directory
-    owner: "{{ username }}"
+    owner: "{{ system_user }}"
     mode: "0775"
     group: "users"
-    recurse: yes
+    recurse: true
 
 - name: Create the wg network
   docker_network:

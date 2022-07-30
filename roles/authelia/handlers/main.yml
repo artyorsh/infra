@@ -1,3 +1,5 @@
+---
+
 - name: source .bashrc
   shell:
     executable: /bin/bash

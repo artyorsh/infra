@@ -1,6 +1,4 @@
 ---
-roles:
-  - name: chriswayg.msmtp-mailer
 
 collections:
   - name: community.docker

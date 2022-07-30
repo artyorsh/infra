@@ -1,3 +1,5 @@
+---
+
 - name: Install UFW
   package:
     name: ufw
