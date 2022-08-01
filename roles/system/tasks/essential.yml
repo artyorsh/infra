@@ -1,8 +1,7 @@
 ---
-
 - name: Generate the locale
   locale_gen:
-    name: "{{ locale }}"
+    name: "{{ system_locale }}"
     state: present
 
 - name: Update and upgrade apt packages

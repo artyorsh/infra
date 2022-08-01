@@ -1,7 +1,9 @@
 ---
-
 shell: /bin/bash
-locale: en_US.UTF-8
+
+system_locale: en_US.UTF-8
+system_language: en
+system_timezone: Europe/Berlin
 
 autoupdate_reboot_time: 03:00
 

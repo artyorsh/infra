@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>FreshRSS</title>
+    <dateCreated>Sat, 02 Nov 2019 12:00:00</dateCreated>
+  </head>
+  <body>
+    <outline text="Wolfgang's Channel" type="rss" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg" htmlUrl="https://www.youtube.com/channel/UCsnGwSIHyoYN0kiINAGUKxg" description=""/>
+    <outline text="Jeff Geerling" type="rss" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCR-DXc1voovS8nhAvccRZhg" htmlUrl="https://www.youtube.com/channel/UCR-DXc1voovS8nhAvccRZhg" description=""/>
+    <outline text="MKBHD" type="rss" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCBJycsmduvYEL83R_U4JriQ" htmlUrl="https://www.youtube.com/channel/UCBJycsmduvYEL83R_U4JriQ" description=""/>
+  </body>
+</opml>

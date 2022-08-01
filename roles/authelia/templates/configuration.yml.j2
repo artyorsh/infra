@@ -28,8 +28,23 @@ access_control:
   rules:
     - domain: {{ host_authelia }}
       policy: bypass
+
     - domain: {{ host_wireguard }}
       policy: two_factor
+
+    - domain: {{ freshrss_host }}
+      policy: bypass
+      resources:
+      - '^\/api([/?].*)?$'
+    - domain: {{ freshrss_host }}
+      policy: two_factor
+
+    - domain: {{ rssbridge_host }}
+      policy: bypass
+      resources:
+      - '\?action=display&bridge=.*$'
+    - domain: {{ rssbridge_host }}
+      policy: one_factor
 
 session:
   name: authelia_session

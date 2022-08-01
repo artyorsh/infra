@@ -1,0 +1,25 @@
+---
+- name: Create docker directories
+  file:
+    path: "{{ freshrss_docker_dir }}/db"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+
+- name: Run db container
+  docker_container:
+    name: "{{ freshrss_service_id }}-db"
+    image: mysql
+    pull: true
+    networks:
+      - name: wg_network
+      - name: "{{ freshrss_service_id }}"
+    state: started
+    env:
+      MYSQL_DATABASE: "{{ freshrss_db }}"
+      MYSQL_USER: "{{ freshrss_user }}"
+      MYSQL_PASSWORD: "{{ freshrss_user_password }}"
+      MYSQL_ROOT_PASSWORD: "{{ system_user_password }}"
+    volumes:
+      - "{{ freshrss_docker_dir }}/db:/var/lib/mysql"
+    restart_policy: unless-stopped

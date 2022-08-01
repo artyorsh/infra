@@ -1,0 +1,5 @@
+---
+rssbridge_service_id: "rssbridge"
+rssbridge_host: "rssbridge.{{ host }}"
+rssbridge_port: 3601
+rssbridge_docker_dir: "{{ docker_dir }}/{{ rssbridge_service_id }}"

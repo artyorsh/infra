@@ -1,5 +1,4 @@
 ---
-
 - hosts: all
   become: true
 
@@ -35,3 +34,12 @@
     - role: ssh
       tags:
         - ssh
+
+    - role: freshrss
+      tags:
+        - feed
+
+    - role: rssbridge
+      tags:
+        - rssbridge
+        - feed

@@ -1,0 +1,57 @@
+---
+# https://github.com/FreshRSS/FreshRSS/blob/edge/Docker/README.md#docker-compose
+
+- name: Create docker directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ system_user }}"
+    group: www-data
+  with_items:
+    - "{{ freshrss_docker_dir }}/data"
+    - "{{ freshrss_docker_dir }}/extensions"
+
+- name: Copy config files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ freshrss_docker_dir }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+  with_items:
+    - files/opml.xml
+    - files/config.custom.php
+
+- name: Run app container
+  docker_container:
+    name: "{{ freshrss_service_id }}"
+    image: freshrss/freshrss:edge
+    pull: true
+    networks:
+      - name: wg_network
+      - name: "{{ freshrss_service_id }}"
+    state: started
+    env:
+      TZ: "{{ system_timezone }}"
+      CRON_MIN: "*/{{ freshrss_update_minutes }}"
+      FRESHRSS_USER: |-
+        --user {{ freshrss_user }}
+        --password {{ freshrss_user_password }}
+        --api_password {{ freshrss_api_password }}
+        --language {{ system_language }}
+      FRESHRSS_INSTALL: |-
+        --default_user {{ freshrss_user }}
+        --db-type mysql
+        --db-base {{ freshrss_db }}
+        --db-host {{ freshrss_service_id }}-db
+        --db-user {{ freshrss_user }}
+        --db-password {{ freshrss_user_password }}
+        --language {{ system_language }}
+        --api_enabled
+    ports:
+      - "{{ freshrss_port }}:80"
+    volumes:
+      - "{{ freshrss_docker_dir }}/data:/var/www/FreshRSS/data"
+      - "{{ freshrss_docker_dir }}/extensions:/var/www/FreshRSS/extensions"
+      - "{{ freshrss_docker_dir }}/opml.xml:/var/www/FreshRSS/data/opml.xml"
+      - "{{ freshrss_docker_dir }}/config.custom.php:/var/www/FreshRSS/data/config.custom.php"
+    restart_policy: unless-stopped

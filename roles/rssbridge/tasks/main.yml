@@ -1,0 +1,28 @@
+---
+- name: Create docker directories
+  file:
+    path: "{{ rssbridge_docker_dir }}/config"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+
+- name: Copy whitelist
+  copy:
+    src: "files/whitelist.txt"
+    dest: "{{ rssbridge_docker_dir }}/config"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+
+- name: Run RSSBridge container
+  docker_container:
+    name: "{{ rssbridge_service_id }}"
+    image: rssbridge/rss-bridge
+    pull: true
+    networks:
+      - name: wg_network
+    state: started
+    ports:
+      - "{{ rssbridge_port }}:80"
+    volumes:
+      - "{{ rssbridge_docker_dir }}/config:/config"
+    restart_policy: unless-stopped
