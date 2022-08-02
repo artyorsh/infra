@@ -3,15 +3,15 @@
   file:
     path: "{{ rssbridge_docker_dir }}/config"
     state: directory
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
 
 - name: Copy whitelist
   copy:
     src: "files/whitelist.txt"
     dest: "{{ rssbridge_docker_dir }}/config"
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
 
 - name: Run RSSBridge container
   docker_container:

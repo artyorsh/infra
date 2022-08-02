@@ -7,10 +7,10 @@
 
 # List of users
 users:
-  {{ system_user }}:
-    displayname: "{{ system_user }}"
-    password: "{{ system_user_password | string | password_hash('sha512') }}"
-    email: "{{ email }}"
+  {{ user_name }}:
+    displayname: "{{ user_name }}"
+    password: "{{ user_password | string | password_hash('sha512') }}"
+    email: "{{ user_email }}"
     groups:
       - admins
       - dev

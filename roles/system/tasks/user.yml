@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure group sudo exists
   group:
     name: sudo
@@ -15,25 +14,25 @@
 
 - name: Create a login user
   user:
-    name: "{{ system_user }}"
-    password: "{{ system_user_password | string | password_hash('sha512') }}"
+    name: "{{ user_name }}"
+    password: "{{ user_password | string | password_hash('sha512') }}"
     groups:
       - sudo
       - users
     state: present
     append: true
-    shell: "{{ shell }}"
+    shell: "{{ system_shell }}"
 
-- name: Ensure group "{{ system_user }}" exists
+- name: Ensure group "{{ user_name }}" exists
   group:
-    name: "{{ system_user }}"
+    name: "{{ user_name }}"
     state: present
 
 - name: Chmod the user home directory
   file:
-    path: "/home/{{ system_user }}"
+    path: "/home/{{ user_name }}"
     state: directory
     mode: 0755
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
     recurse: true

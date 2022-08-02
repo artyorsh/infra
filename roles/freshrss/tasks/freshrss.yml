@@ -5,7 +5,7 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: "{{ system_user }}"
+    owner: "{{ user_name }}"
     group: www-data
   with_items:
     - "{{ freshrss_docker_dir }}/data"
@@ -15,8 +15,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ freshrss_docker_dir }}"
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
   with_items:
     - files/opml.xml
     - files/config.custom.php

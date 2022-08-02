@@ -1,5 +1,4 @@
 ---
-
 - name: Set amd64 arch
   set_fact:
     repo_arch: amd64
@@ -50,9 +49,9 @@
     name: docker
     state: present
 
-- name: Add user "{{ system_user }}" to group docker
+- name: Add user "{{ user_name }}" to group docker
   user:
-    name: "{{ system_user }}"
+    name: "{{ user_name }}"
     groups:
       - docker
     append: true
@@ -73,7 +72,7 @@
   file:
     dest: "{{ docker_dir }}"
     state: directory
-    owner: "{{ system_user }}"
+    owner: "{{ user_name }}"
     mode: "0775"
     group: "users"
     recurse: true

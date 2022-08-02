@@ -1,0 +1,2 @@
+---
+wireguard_host: "wg.{{ host }}"

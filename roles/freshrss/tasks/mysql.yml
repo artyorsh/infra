@@ -3,8 +3,8 @@
   file:
     path: "{{ freshrss_docker_dir }}/db"
     state: directory
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
 
 - name: Run db container
   docker_container:
@@ -19,7 +19,7 @@
       MYSQL_DATABASE: "{{ freshrss_db }}"
       MYSQL_USER: "{{ freshrss_user }}"
       MYSQL_PASSWORD: "{{ freshrss_user_password }}"
-      MYSQL_ROOT_PASSWORD: "{{ system_user_password }}"
+      MYSQL_ROOT_PASSWORD: "{{ user_password }}"
     volumes:
       - "{{ freshrss_docker_dir }}/db:/var/lib/mysql"
     restart_policy: unless-stopped
