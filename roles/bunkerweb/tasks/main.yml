@@ -1,5 +1,4 @@
 ---
-
 - name: Create the folders
   file:
     path: "{{ docker_dir }}/bunkerweb/data"
