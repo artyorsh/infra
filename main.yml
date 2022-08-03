@@ -35,11 +35,10 @@
       tags:
         - ssh
 
-    - role: freshrss
-      tags:
-        - feed
-
     - role: rssbridge
       tags:
         - rssbridge
-        - feed
+
+    - role: freshrss
+      tags:
+        - freshrss
