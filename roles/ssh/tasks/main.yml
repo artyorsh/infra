@@ -28,6 +28,8 @@
   with_items:
     - regexp: "^#?PasswordAuthentication"
       line: "PasswordAuthentication no"
+    - regexp: "^#?PermitRootLogin"
+      line: "PermitRootLogin no"
     - regexp: "^#?Port"
       line: "Port {{ ssh_port }}"
     - regexp: "^#?PermitEmptyPasswords"

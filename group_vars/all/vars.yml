@@ -27,6 +27,7 @@ ufw_ports:
 ## vault.yml (or vars.yml if you don't care)
 
 ansible_host: "172.217.16.14"
+ansible_user: "root"
 
 host: "example.com"
 
