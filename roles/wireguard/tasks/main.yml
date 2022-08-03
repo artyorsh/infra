@@ -1,26 +1,27 @@
 ---
-- name: Copy the env file
+- name: "Copy the env file"
   template:
-    src: env.j2
+    src: "env.j2"
     dest: "{{ docker_dir }}/wg-easy/.env"
+    mode: 0664
 
-- name: Make sure the Wireguard container is created and running
+- name: "Make sure the Wireguard container is created and running"
   docker_container:
     name: "wg-easy"
     image: "weejewel/wg-easy"
     pull: true
     networks:
-      - name: wg_network
+      - name: "{{ wireguard_service_id }}"
     sysctls:
       "net.ipv4.conf.all.src_valid_mark": "1"
       "net.ipv4.ip_forward": "1"
     capabilities:
-      - NET_ADMIN
-      - SYS_MODULE
+      - "NET_ADMIN"
+      - "SYS_MODULE"
     state: "started"
     env_file: "{{ docker_dir }}/wg-easy/.env"
     ports:
       - "51820:51820/udp"
     volumes:
       - "{{ docker_dir }}/wg-easy:/etc/wireguard"
-    restart_policy: unless-stopped
+    restart_policy: "unless-stopped"

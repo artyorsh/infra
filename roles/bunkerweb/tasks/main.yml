@@ -1,23 +1,24 @@
 ---
-- name: Create the folders
+- name: "Create the folders"
   file:
     path: "{{ docker_dir }}/bunkerweb/data"
-    recurse: true
-    owner: root
+    owner: "root"
     group: 101
     mode: 0770
+    recurse: true
 
-- name: Copy the env file
+- name: "Copy the env file"
   template:
-    src: env.j2
+    src: "env.j2"
     dest: "{{ docker_dir }}/bunkerweb/.env"
+    mode: 0664
 
-- name: Make sure the Bunkerweb container is created and running
+- name: "Make sure the Bunkerweb container is created and running"
   docker_container:
     name: "bunkerweb"
     image: "bunkerity/bunkerweb"
     networks:
-      - name: wg_network
+      - name: "{{ wireguard_service_id }}"
     pull: true
     state: "started"
     env_file: "{{ docker_dir }}/bunkerweb/.env"
@@ -27,4 +28,4 @@
     volumes:
       - "{{ docker_dir }}/bunkerweb/data:/data"
       - "/lib/modules:/lib/modules"
-    restart_policy: unless-stopped
+    restart_policy: "unless-stopped"

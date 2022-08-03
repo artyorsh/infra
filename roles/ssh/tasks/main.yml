@@ -1,29 +1,28 @@
 ---
-- name: Install cryptography
+- name: "Install cryptography"
   pip:
-    name: cryptography
-    state: latest
+    name: "cryptography"
+    state: "latest"
 
-- name: Create the SSH directory
+- name: "Create the SSH directory"
   file:
     path: "/home/{{ user_name }}/.ssh"
-    state: directory
+    state: "directory"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: 0700
 
-- name: Install the existing public key
+- name: "Install the existing public key"
   authorized_key:
     user: "{{ user_name }}"
     key: "{{ ssh_public_key }}"
 
-- name: Update SSH configuration to be more secure
-  register: ssh_config
+- name: "Update SSH configuration to be more secure"
   lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
-    state: present
+    state: "present"
     validate: "sshd -T -f %s"
     mode: 0644
   with_items:
@@ -35,19 +34,14 @@
       line: "PermitEmptyPasswords no"
     - regexp: "^#?X11Forwarding"
       line: "X11Forwarding no"
+  notify: "Restart sshd daemon"
 
-- name: Restart sshd daemon
-  when: ssh_config.changed
-  service:
-    name: sshd
-    state: restarted
-
-- name: Schedule a reboot if required
+- name: "Schedule a reboot if required"
   stat:
-    path: /var/run/reboot-required
-  register: reboot_required
+    path: "/var/run/reboot-required"
+  register: "reboot_required"
 
-- name: Reboot the system if updates are pending
-  when: reboot_required.stat.exists
+- name: "Reboot the system if updates are pending"
+  when: "reboot_required.stat.exists"
   command:
-    cmd: reboot
+    cmd: "reboot"

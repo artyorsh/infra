@@ -1,8 +1,8 @@
 ---
-- name: Create docker network
+- name: "Create docker network"
   docker_network:
     name: "{{ freshrss_service_id }}"
-    state: present
+    state: "present"
 
-- include_tasks: mysql.yml
-- include_tasks: freshrss.yml
+- include_tasks: "mysql.yml"
+- include_tasks: "freshrss.yml"

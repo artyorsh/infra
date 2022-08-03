@@ -1,0 +1,6 @@
+---
+repos:
+  - repo: "https://github.com/ansible/ansible-lint.git"
+    rev: "v6.4.0" # check to use the latest version https://github.com/ansible/ansible-lint/tags
+    hooks:
+      - id: "ansible-lint"

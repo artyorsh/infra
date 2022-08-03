@@ -1,35 +1,37 @@
 ---
 # https://github.com/FreshRSS/FreshRSS/blob/edge/Docker/README.md#docker-compose
 
-- name: Create docker directories
+- name: "Create docker directories"
   file:
     path: "{{ item }}"
-    state: directory
+    state: "directory"
     owner: "{{ user_name }}"
-    group: www-data
+    group: "www-data"
+    mode: 0775
   with_items:
     - "{{ freshrss_docker_dir }}/data"
     - "{{ freshrss_docker_dir }}/extensions"
 
-- name: Copy config files
+- name: "Copy config files"
   copy:
     src: "{{ item }}"
     dest: "{{ freshrss_docker_dir }}"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
+    mode: 0775
   with_items:
-    - files/opml.xml
-    - files/config.custom.php
+    - "files/opml.xml"
+    - "files/config.custom.php"
 
-- name: Run app container
+- name: "Run app container"
   docker_container:
     name: "{{ freshrss_service_id }}"
-    image: freshrss/freshrss:edge
+    image: "freshrss/freshrss:edge"
     pull: true
     networks:
-      - name: wg_network
+      - name: "{{ wireguard_service_id }}"
       - name: "{{ freshrss_service_id }}"
-    state: started
+    state: "started"
     env:
       TZ: "{{ system_timezone }}"
       CRON_MIN: "*/{{ freshrss_update_minutes }}"
@@ -54,4 +56,4 @@
       - "{{ freshrss_docker_dir }}/extensions:/var/www/FreshRSS/extensions"
       - "{{ freshrss_docker_dir }}/opml.xml:/var/www/FreshRSS/data/opml.xml"
       - "{{ freshrss_docker_dir }}/config.custom.php:/var/www/FreshRSS/data/config.custom.php"
-    restart_policy: unless-stopped
+    restart_policy: "unless-stopped"

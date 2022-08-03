@@ -1,54 +1,52 @@
 ---
-- name: Create the config folder
+- name: "Create the config folder"
   file:
     path: "{{ docker_dir }}/authelia"
-    state: directory
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-
-- name: Copy the main config
-  template:
-    src: configuration.yml.j2
-    dest: "{{ docker_dir }}/authelia/configuration.yml"
+    state: "directory"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: 0644
 
-- name: Copy the users database
+- name: "Copy config files"
   template:
-    src: users_database.yml.j2
-    dest: "{{ docker_dir }}/authelia/users_database.yml"
+    src: "{{ item.src }}"
+    dest: "{{ docker_dir }}/authelia/{{ item.dest }}"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: 0644
+  with_items:
+    - src: "configuration.yml.j2"
+      dest: "configuration.yml"
+    - src: "users_database.yml.j2"
+      dest: "users_database.yml"
 
-- name: Make sure the Redis container is created and running
+- name: "Make sure the Redis container is created and running"
   docker_container:
     name: "redis"
     image: "redis:alpine"
     networks:
-      - name: wg_network
+      - name: "{{ wireguard_service_id }}"
     pull: true
     state: "started"
-    restart_policy: unless-stopped
+    restart_policy: "unless-stopped"
 
-- name: Make sure the Authelia container is created and running
+- name: "Make sure the Authelia container is created and running"
   docker_container:
     name: "authelia"
     image: "authelia/authelia"
     networks:
-      - name: wg_network
+      - name: "{{ wireguard_service_id }}"
     pull: true
     state: "started"
     volumes:
       - "{{ docker_dir }}/authelia:/config"
-    restart_policy: unless-stopped
+    restart_policy: "unless-stopped"
 
-- name: Add a 2FA alias to .bashrc
+- name: "Add a 2FA alias to .bashrc"
   blockinfile:
     path: "/home/{{ user_name }}/.bashrc"
-    state: present
+    state: "present"
     block: |
       alias show_2fa="sudo cat {{ docker_dir }}/authelia/notification.txt"
   notify:
-    - source .bashrc
+    - "source .bashrc"

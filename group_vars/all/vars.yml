@@ -8,11 +8,11 @@
 
 ## vars.yml (or vault.yml if you are into it)
 
-system_locale: en_US.UTF-8
-system_language: en
-system_timezone: Europe/Amsterdam
-system_shell: /bin/bash
-system_reboot_time: 03:00
+system_locale: "en_US.UTF-8"
+system_language: "en"
+system_timezone: "Europe/Amsterdam"
+system_shell: "/bin/bash"
+system_reboot_time: "03:00"
 
 ufw_ports:
   - port: "51820"

@@ -1,37 +1,37 @@
 ---
-- name: Ensure group sudo exists
+- name: "Ensure group sudo exists"
   group:
-    name: sudo
-    state: present
+    name: "sudo"
+    state: "present"
 
-- name: Allow sudo group to have passwordless sudo
+- name: "Allow sudo group to have passwordless sudo"
   lineinfile:
-    path: /etc/sudoers
-    state: present
+    path: "/etc/sudoers"
+    state: "present"
     regexp: "^%sudo"
     line: "%sudo ALL=(ALL) NOPASSWD: ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-- name: Create a login user
+- name: "Create a login user"
   user:
     name: "{{ user_name }}"
     password: "{{ user_password | string | password_hash('sha512') }}"
     groups:
-      - sudo
-      - users
-    state: present
+      - "sudo"
+      - "users"
+    state: "present"
     append: true
     shell: "{{ system_shell }}"
 
-- name: Ensure group "{{ user_name }}" exists
+- name: "Ensure group {{ user_name }} exists"
   group:
     name: "{{ user_name }}"
-    state: present
+    state: "present"
 
-- name: Chmod the user home directory
+- name: "Chmod the user home directory"
   file:
     path: "/home/{{ user_name }}"
-    state: directory
+    state: "directory"
     mode: 0755
     owner: "{{ user_name }}"
     group: "{{ user_name }}"

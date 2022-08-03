@@ -1,28 +1,30 @@
 ---
-- name: Create docker directories
+- name: "Create docker directories"
   file:
     path: "{{ rssbridge_docker_dir }}/config"
-    state: directory
+    state: "directory"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
+    mode: 0664
 
-- name: Copy whitelist
+- name: "Copy whitelist"
   copy:
     src: "files/whitelist.txt"
     dest: "{{ rssbridge_docker_dir }}/config"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
+    mode: 0664
 
-- name: Run RSSBridge container
+- name: "Run RSSBridge container"
   docker_container:
     name: "{{ rssbridge_service_id }}"
-    image: rssbridge/rss-bridge
+    image: "rssbridge/rss-bridge"
     pull: true
     networks:
-      - name: wg_network
-    state: started
+      - name: "{{ wireguard_service_id }}"
+    state: "started"
     ports:
       - "{{ rssbridge_port }}:80"
     volumes:
       - "{{ rssbridge_docker_dir }}/config:/config"
-    restart_policy: unless-stopped
+    restart_policy: "unless-stopped"

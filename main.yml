@@ -1,44 +1,44 @@
 ---
-- hosts: all
+- hosts: "all"
   become: true
 
   roles:
-    - role: system
+    - role: "system"
       tags:
-        - system
+        - "system"
 
-    - role: docker
+    - role: "docker"
       tags:
-        - docker
+        - "docker"
 
-    - role: fail2ban
+    - role: "fail2ban"
       tags:
-        - fail2ban
+        - "fail2ban"
 
-    - role: ufw
+    - role: "ufw"
       tags:
-        - ufw
+        - "ufw"
 
-    - role: authelia
+    - role: "authelia"
       tags:
-        - authelia
+        - "authelia"
 
-    - role: bunkerweb
+    - role: "bunkerweb"
       tags:
-        - bunkerweb
+        - "bunkerweb"
 
-    - role: wireguard
+    - role: "wireguard"
       tags:
-        - wireguard
+        - "wireguard"
 
-    - role: ssh
+    - role: "ssh"
       tags:
-        - ssh
+        - "ssh"
 
-    - role: rssbridge
+    - role: "rssbridge"
       tags:
-        - rssbridge
+        - "rssbridge"
 
-    - role: freshrss
+    - role: "freshrss"
       tags:
-        - freshrss
+        - "freshrss"

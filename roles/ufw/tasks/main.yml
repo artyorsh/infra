@@ -1,22 +1,22 @@
 ---
-- name: Install UFW
+- name: "Install UFW"
   package:
-    name: ufw
-    state: present
+    name: "ufw"
+    state: "present"
 
-- name: Enable UFW logging
+- name: "Enable UFW logging"
   ufw:
-    logging: on
+    logging: true
 
-- name: Allow the defined ports
+- name: "Allow the defined ports"
   ufw:
-    rule: allow
+    rule: "allow"
     proto: "{{ item.proto }}"
     port: "{{ item.port }}"
   with_items:
     - "{{ ufw_ports }}"
 
-- name: Deny everything else and enable UFW
+- name: "Deny everything else and enable UFW"
   ufw:
-    state: enabled
-    policy: deny
+    state: "enabled"
+    policy: "deny"

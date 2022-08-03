@@ -1,0 +1,10 @@
+---
+rules:
+  document-start:
+    level: "error"
+  empty-values: "enable"
+  quoted-strings:
+    required: true
+    quote-type: "double"
+  truthy:
+    level: "error"
