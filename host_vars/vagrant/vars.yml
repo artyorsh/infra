@@ -19,10 +19,14 @@ authelia_host: "{{ host }}:{{ authelia_port }}"
 
 bunkerweb_service_enabled: false
 
-rssbridge_service_enabled: true
+rssbridge_service_enabled: false
 rssbridge_host: "{{ host }}:{{ rssbridge_port }}"
 rssbridge_port: 3601
 
-freshrss_service_enabled: true
+freshrss_service_enabled: false
 freshrss_host: "{{ host }}:{{ freshrss_port }}"
 freshrss_port: 3600
+
+fireflyiii_service_enabled: true
+fireflyiii_host: "{{ host }}:{{ fireflyiii_port }}"
+fireflyiii_port: 3700

@@ -61,3 +61,9 @@ freshrss_service_enabled: true
 freshrss_host: "feed.{{ host }}"
 freshrss_port: 3600
 freshrss_api_password: "p@s$w0Rd"
+
+fireflyiii_service_enabled: true
+fireflyiii_host: "fin.{{ host }}"
+fireflyiii_port: 3700
+fireflyiii_app_key: "W9GROK7rg2Nlp0Fnpz7Mpiqp53i3yqFc"
+fireflyiii_cron_token: "Xmc78VUuoaP44egj32BrPQYnZ37pM9p9"

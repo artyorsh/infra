@@ -1,0 +1,7 @@
+---
+fireflyiii_service_id: "fireflyiii"
+fireflyiii_docker_dir: "{{ docker_dir }}/{{ fireflyiii_service_id }}"
+fireflyiii_user: "{{ user_name }}"
+fireflyiii_user_password: "{{ user_password }}"
+fireflyiii_db: "{{ fireflyiii_service_id }}"
+fireflyiii_db_port: 3308

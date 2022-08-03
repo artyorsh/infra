@@ -47,6 +47,12 @@
       when: |
         bunkerweb_service_enabled
 
+    - role: "fireflyiii"
+      tags:
+        - "fireflyiii"
+      when: |
+        fireflyiii_service_enabled
+
     - role: "rssbridge"
       tags:
         - "rssbridge"

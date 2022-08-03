@@ -32,6 +32,9 @@ access_control:
     - domain: {{ wireguard_host }}
       policy: two_factor
 
+    - domain: {{ fireflyiii_host }}
+      policy: two_factor
+
     - domain: {{ freshrss_host }}
       policy: bypass
       resources:

@@ -1,0 +1,8 @@
+---
+- name: "Create docker network"
+  docker_network:
+    name: "{{ fireflyiii_service_id }}"
+    state: "present"
+
+- include_tasks: "mysql.yml"
+- include_tasks: "fireflyiii.yml"

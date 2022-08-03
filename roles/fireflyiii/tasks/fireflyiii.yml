@@ -1,0 +1,36 @@
+---
+# https://docs.firefly-iii.org/firefly-iii/installation/docker/#using-docker-compose
+
+- name: "Create docker directories"
+  file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0644
+  with_items:
+    - "{{ fireflyiii_docker_dir }}/export"
+    - "{{ fireflyiii_docker_dir }}/upload"
+
+- name: "Copy env file"
+  template:
+    src: "fireflyiii.env.j2"
+    dest: "{{ fireflyiii_docker_dir }}/.env"
+    mode: 0644
+
+- name: "Run app container"
+  docker_container:
+    name: "{{ fireflyiii_service_id }}"
+    image: "fireflyiii/core:latest"
+    pull: true
+    networks:
+      - name: "{{ wireguard_service_id }}"
+      - name: "{{ fireflyiii_service_id }}"
+    state: "started"
+    env_file: "{{ fireflyiii_docker_dir }}/.env"
+    ports:
+      - "{{ fireflyiii_port }}:8080"
+    volumes:
+      - "{{ fireflyiii_docker_dir }}/export:/var/www/firefly-iii/storage/export"
+      - "{{ fireflyiii_docker_dir }}/upload:/var/www/firefly-iii/storage/upload"
+    restart_policy: "unless-stopped"

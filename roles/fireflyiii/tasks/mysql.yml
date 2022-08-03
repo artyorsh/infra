@@ -1,0 +1,30 @@
+---
+- name: "Create docker directories"
+  file:
+    path: "{{ fireflyiii_docker_dir }}/db"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0775
+
+- name: "Copy env file"
+  template:
+    src: "mysql.env.j2"
+    dest: "{{ fireflyiii_docker_dir }}/db/.env"
+    mode: 0644
+
+- name: "Run db container"
+  docker_container:
+    name: "{{ fireflyiii_service_id }}-db"
+    image: "mysql"
+    pull: true
+    networks:
+      - name: "{{ wireguard_service_id }}"
+      - name: "{{ fireflyiii_service_id }}"
+    state: "started"
+    env_file: "{{ fireflyiii_docker_dir }}/db/.env"
+    ports:
+      - "{{ fireflyiii_db_port }}:{{ fireflyiii_db_port }}"
+    volumes:
+      - "{{ fireflyiii_docker_dir }}/db:/var/lib/mysql"
+    restart_policy: "unless-stopped"
