@@ -1,0 +1,28 @@
+---
+ansible_host: "127.0.0.1"
+ansible_user: "vagrant"
+
+host: "localhost"
+
+fail2ban_service_enabled: false
+
+ufw_service_enabled: false
+
+ssh_service_enabled: false
+
+wireguard_service_enabled: false
+wireguard_host: "{{ host }}:{{ wireguard_port }}"
+wireguard_port: 51821
+
+authelia_service_enabled: false
+authelia_host: "{{ host }}:{{ authelia_port }}"
+
+bunkerweb_service_enabled: false
+
+rssbridge_service_enabled: true
+rssbridge_host: "{{ host }}:{{ rssbridge_port }}"
+rssbridge_port: 3601
+
+freshrss_service_enabled: true
+freshrss_host: "{{ host }}:{{ freshrss_port }}"
+freshrss_port: 3600

@@ -2,6 +2,8 @@
 all:
   hosts:
     remote:
-      ansible_connection: "ssh"
       ansible_ssh_port: "{{ ssh_port }}"
       ansible_ssh_private_key_file: "~/.ssh/id_rsa"
+    vagrant:
+      ansible_ssh_port: 2222
+      ansible_ssh_private_key_file: "~/.vagrant.d/insecure_private_key"

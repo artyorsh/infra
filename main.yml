@@ -14,31 +14,47 @@
     - role: "fail2ban"
       tags:
         - "fail2ban"
+      when: |
+        fail2ban_service_enabled
 
     - role: "ufw"
       tags:
         - "ufw"
-
-    - role: "authelia"
-      tags:
-        - "authelia"
-
-    - role: "bunkerweb"
-      tags:
-        - "bunkerweb"
-
-    - role: "wireguard"
-      tags:
-        - "wireguard"
+      when: |
+        ufw_service_enabled
 
     - role: "ssh"
       tags:
         - "ssh"
+      when: |
+        ssh_service_enabled
+
+    - role: "wireguard"
+      tags:
+        - "wireguard"
+      when: |
+        wireguard_service_enabled
+
+    - role: "authelia"
+      tags:
+        - "authelia"
+      when: |
+        authelia_service_enabled
+
+    - role: "bunkerweb"
+      tags:
+        - "bunkerweb"
+      when: |
+        bunkerweb_service_enabled
 
     - role: "rssbridge"
       tags:
         - "rssbridge"
+      when: |
+        rssbridge_service_enabled
 
     - role: "freshrss"
       tags:
         - "freshrss"
+      when: |
+        freshrss_service_enabled

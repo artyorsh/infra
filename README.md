@@ -53,3 +53,17 @@ Run the playbook
 ansible-playbook main.yml -K
 # -K flag is only needed when running the playbook for first time
 ```
+
+## Debugging
+
+Before deploying changes to a real machine, it's always a good idea to check how it runs locally. This is where [Vagrant](https://www.vagrantup.com) is for the rescue.
+
+Run the virtual machine
+```
+vagrant up
+```
+
+Run the playbook against vagrant host
+```
+ansible-playbook main.yml -l vagrant
+```

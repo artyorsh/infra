@@ -1,9 +1,22 @@
 ---
+- name: "Create the {{ wireguard_service_id }} network"
+  docker_network:
+    name: "{{ wireguard_service_id }}"
+    state: "present"
+
+- name: "Create docker directories"
+  file:
+    path: "{{ wireguard_docker_dir }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0644
+
 - name: "Copy the env file"
   template:
     src: "env.j2"
     dest: "{{ docker_dir }}/wg-easy/.env"
-    mode: 0664
+    mode: 0644
 
 - name: "Make sure the Wireguard container is created and running"
   docker_container:

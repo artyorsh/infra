@@ -1,10 +1,7 @@
 ---
 freshrss_service_id: "freshrss"
-freshrss_host: "feed.{{ host }}"
-freshrss_port: 3600
 freshrss_docker_dir: "{{ docker_dir }}/{{ freshrss_service_id }}"
 freshrss_user: "{{ user_name }}"
 freshrss_user_password: "{{ user_password }}"
-freshrss_api_password: "{{ public_api_password }}"
 freshrss_db: "{{ freshrss_service_id }}"
 freshrss_update_minutes: 20
