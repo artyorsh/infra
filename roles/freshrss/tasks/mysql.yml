@@ -7,6 +7,12 @@
     group: "{{ user_name }}"
     mode: 0775
 
+- name: "Copy env file"
+  template:
+    src: "mysql.env.j2"
+    dest: "{{ freshrss_docker_dir }}/db/.env"
+    mode: 0644
+
 - name: "Run db container"
   docker_container:
     name: "{{ freshrss_service_id }}-db"
@@ -16,11 +22,9 @@
       - name: "{{ wireguard_service_id }}"
       - name: "{{ freshrss_service_id }}"
     state: "started"
-    env:
-      MYSQL_DATABASE: "{{ freshrss_db }}"
-      MYSQL_USER: "{{ freshrss_user }}"
-      MYSQL_PASSWORD: "{{ freshrss_user_password }}"
-      MYSQL_ROOT_PASSWORD: "{{ user_password }}"
+    env_file: "{{ freshrss_docker_dir }}/db/.env"
+    ports:
+      - "{{ freshrss_db_port }}:{{ freshrss_db_port }}"
     volumes:
       - "{{ freshrss_docker_dir }}/db:/var/lib/mysql"
     restart_policy: "unless-stopped"

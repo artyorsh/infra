@@ -44,7 +44,7 @@
         --default_user {{ freshrss_user }}
         --db-type mysql
         --db-base {{ freshrss_db }}
-        --db-host {{ freshrss_service_id }}-db
+        --db-host {{ freshrss_service_id }}-db:{{ freshrss_db_port }}
         --db-user {{ freshrss_user }}
         --db-password {{ freshrss_user_password }}
         --language {{ system_language }}

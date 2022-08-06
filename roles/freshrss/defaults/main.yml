@@ -4,4 +4,5 @@ freshrss_docker_dir: "{{ docker_dir }}/{{ freshrss_service_id }}"
 freshrss_user: "{{ user_name }}"
 freshrss_user_password: "{{ user_password }}"
 freshrss_db: "{{ freshrss_service_id }}"
+freshrss_db_port: 3307
 freshrss_update_minutes: 20
