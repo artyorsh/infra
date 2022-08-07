@@ -3,14 +3,14 @@
 
 - name: "Create docker directories"
   file:
-    path: "{{ item }}"
+    path: "{{ freshrss_docker_dir }}/{{ item }}"
     state: "directory"
     owner: "{{ user_name }}"
     group: "www-data"
-    mode: 0775
+    mode: 0770
   with_items:
-    - "{{ freshrss_docker_dir }}/data"
-    - "{{ freshrss_docker_dir }}/extensions"
+    - "data"
+    - "extensions"
 
 - name: "Copy config files"
   copy:
@@ -18,7 +18,7 @@
     dest: "{{ freshrss_docker_dir }}"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
-    mode: 0775
+    mode: 0770
   with_items:
     - "files/opml.xml"
     - "files/config.custom.php"
