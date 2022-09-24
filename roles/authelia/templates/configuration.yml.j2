@@ -24,30 +24,31 @@ authentication_backend:
     path: /config/users_database.yml
 
 access_control:
-  default_policy: deny
+  default_policy: two_factor
+
+  networks:
+  - name: self
+    networks:
+      - {{ ansible_host }}
+
   rules:
     - domain: {{ authelia_host }}
       policy: bypass
 
-    - domain: {{ wireguard_host }}
-      policy: two_factor
-
-    - domain: {{ fireflyiii_host }}
-      policy: two_factor
-
     - domain: {{ freshrss_host }}
       policy: bypass
       resources:
-      - '^\/api([/?].*)?$'
-    - domain: {{ freshrss_host }}
-      policy: two_factor
+        - '^\/api([/?].*)?$'
 
     - domain: {{ rssbridge_host }}
       policy: bypass
       resources:
-      - '\?action=display&bridge=.*$'
-    - domain: {{ rssbridge_host }}
+        - '\?action=display&bridge=.*$'
+
+    - domain: "*.{{ host }}"
       policy: one_factor
+      networks:
+        - self
 
 session:
   name: authelia_session
