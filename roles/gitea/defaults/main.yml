@@ -1,0 +1,7 @@
+---
+gitea_service_id: "gitea"
+gitea_docker_dir: "{{ docker_dir }}/{{ gitea_service_id }}"
+gitea_user: "{{ user_name }}"
+gitea_user_password: "{{ user_password }}"
+gitea_db: "{{ gitea_service_id }}"
+gitea_db_port: 3309

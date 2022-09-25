@@ -16,6 +16,7 @@ It assumes a fresh Ubuntu Server 20.04 install with access to a user with sudo p
 
 ## Apps
 
+- [Gitea](https://github.com/go-gitea/gitea) (Git service) 
 - [FreshRSS](https://github.com/FreshRSS/FreshRSS) and [RSSBridge](https://github.com/RSS-Bridge/rss-bridge) (An RSS reader + feed generator)
 - [FireflyIII](https://github.com/firefly-iii/firefly-iii) (Personal finance manager)
 

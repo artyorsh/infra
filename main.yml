@@ -47,6 +47,12 @@
       when: |
         bunkerweb_service_enabled
 
+    - role: "gitea"
+      tags:
+        - "gitea"
+      when: |
+        gitea_service_enabled
+
     - role: "fireflyiii"
       tags:
         - "fireflyiii"

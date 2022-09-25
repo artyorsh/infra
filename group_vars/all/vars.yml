@@ -53,6 +53,10 @@ authelia_encryption_key: "Zzfhsw/PIq8YJvNiE+XiR22uLKZf8wec"
 
 bunkerweb_service_enabled: true
 
+gitea_service_enabled: true
+gitea_host: "git.{{ host }}"
+gitea_port: 3800
+
 rssbridge_service_enabled: true
 rssbridge_host: "rssbridge.{{ host }}"
 rssbridge_port: 3601
