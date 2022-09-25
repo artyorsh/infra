@@ -33,7 +33,7 @@
 - name: "Make sure the Authelia container is created and running"
   docker_container:
     name: "authelia"
-    image: "authelia/authelia"
+    image: "authelia/authelia:latest"
     networks:
       - name: "{{ wireguard_service_id }}"
     pull: true

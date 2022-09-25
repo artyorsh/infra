@@ -18,7 +18,7 @@
 - name: "Run RSSBridge container"
   docker_container:
     name: "{{ rssbridge_service_id }}"
-    image: "rssbridge/rss-bridge"
+    image: "rssbridge/rss-bridge:latest"
     pull: true
     networks:
       - name: "{{ wireguard_service_id }}"

@@ -21,7 +21,7 @@
 - name: "Make sure the Wireguard container is created and running"
   docker_container:
     name: "wg-easy"
-    image: "weejewel/wg-easy"
+    image: "weejewel/wg-easy:latest"
     pull: true
     networks:
       - name: "{{ wireguard_service_id }}"
