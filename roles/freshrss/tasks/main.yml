@@ -4,5 +4,5 @@
     name: "{{ freshrss_service_id }}"
     state: "present"
 
-- include_tasks: "mysql.yml"
+- include_tasks: "db.yml"
 - include_tasks: "freshrss.yml"

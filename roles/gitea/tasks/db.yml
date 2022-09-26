@@ -1,7 +1,7 @@
 ---
 - name: "Create docker directories"
   file:
-    path: "{{ freshrss_docker_dir }}/db"
+    path: "{{ gitea_docker_dir }}/db"
     state: "directory"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
@@ -9,22 +9,22 @@
 
 - name: "Copy env file"
   template:
-    src: "mysql.env.j2"
-    dest: "{{ freshrss_docker_dir }}/db/.env"
+    src: "db.env.j2"
+    dest: "{{ gitea_docker_dir }}/db/.env"
     mode: 0644
 
 - name: "Run db container"
   docker_container:
-    name: "{{ freshrss_service_id }}-db"
-    image: "mysql:latest"
+    name: "{{ gitea_service_id }}-db"
+    image: "mariadb:latest"
     pull: true
     networks:
       - name: "{{ wireguard_service_id }}"
-      - name: "{{ freshrss_service_id }}"
+      - name: "{{ gitea_service_id }}"
     state: "started"
-    env_file: "{{ freshrss_docker_dir }}/db/.env"
+    env_file: "{{ gitea_docker_dir }}/db/.env"
     ports:
-      - "{{ freshrss_db_port }}:{{ freshrss_db_port }}"
+      - "{{ gitea_db_port }}:{{ gitea_db_port }}"
     volumes:
-      - "{{ freshrss_docker_dir }}/db:/var/lib/mysql"
+      - "{{ gitea_docker_dir }}/db:/var/lib/mysql"
     restart_policy: "unless-stopped"
