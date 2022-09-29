@@ -35,6 +35,11 @@ access_control:
     - domain: {{ authelia_host }}
       policy: bypass
 
+    - domain: {{ fireflyiii_host }}
+      policy: bypass
+      resources:
+        - '^\/api([/?].*)?$'
+
     - domain: {{ freshrss_host }}
       policy: bypass
       resources:
