@@ -1,0 +1,7 @@
+---
+- name: "Create docker network"
+  docker_network:
+    name: "{{ sonarr_service_id }}"
+    state: "present"
+
+- include_tasks: "sonarr.yml"

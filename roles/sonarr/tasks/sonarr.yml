@@ -1,0 +1,29 @@
+---
+# https://github.com/linuxserver/docker-sonarr#docker-compose-recommended-click-here-for-more-info
+
+- name: "Create docker directories"
+  file:
+    path: "{{ sonarr_docker_dir }}"
+    state: "directory"
+    owner: "www-data"
+    group: "www-data"
+    mode: 0770
+
+- name: "Run app container"
+  docker_container:
+    name: "{{ sonarr_service_id }}"
+    image: "linuxserver/sonarr:latest"
+    pull: true
+    networks:
+      - name: "{{ wireguard_service_id }}"
+      - name: "{{ sonarr_service_id }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+    ports:
+      - "{{ sonarr_port }}:80"
+    volumes:
+      - "{{ sonarr_docker_dir }}:/config"
+      - "{{ sonarr_docker_dir }}/tv:/tv"
+      - "{{ sonarr_docker_dir }}/downloads:/downloads"
+    restart_policy: "unless-stopped"

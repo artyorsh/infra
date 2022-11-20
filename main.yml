@@ -70,3 +70,9 @@
         - "freshrss"
       when: |
         freshrss_service_enabled
+
+    - role: "sonarr"
+      tags:
+        - "sonarr"
+      when: |
+        sonarr_service_enabled

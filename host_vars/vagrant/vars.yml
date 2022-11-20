@@ -30,3 +30,7 @@ freshrss_port: 3600
 fireflyiii_service_enabled: true
 fireflyiii_host: "{{ host }}:{{ fireflyiii_port }}"
 fireflyiii_port: 3700
+
+sonarr_service_enabled: true
+sonarr_host: "{{ host }}:{{ sonarr_port }}"
+sonarr_port: 4000

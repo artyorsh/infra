@@ -1,0 +1,8 @@
+---
+sonarr_service_id: "sonarr"
+sonarr_docker_dir: "{{ docker_dir }}/{{ sonarr_service_id }}"
+sonarr_user: "{{ user_name }}"
+sonarr_user_password: "{{ user_password }}"
+sonarr_db: "{{ sonarr_service_id }}"
+sonarr_db_port: 3307
+sonarr_update_minutes: 20
