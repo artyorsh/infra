@@ -75,3 +75,7 @@ fireflyiii_cron_token: "Xmc78VUuoaP44egj32BrPQYnZ37pM9p9"
 sonarr_service_enabled: true
 sonarr_host: "sonarr.{{ host }}"
 sonarr_port: 4000
+
+prowlarr_service_enabled: true
+prowlarr_host: "prowlarr.{{ host }}"
+prowlarr_port: 4100

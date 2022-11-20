@@ -76,3 +76,9 @@
         - "sonarr"
       when: |
         sonarr_service_enabled
+
+    - role: "prowlarr"
+      tags:
+        - "prowlarr"
+      when: |
+        prowlarr_service_enabled

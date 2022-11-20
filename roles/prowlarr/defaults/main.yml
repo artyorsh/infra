@@ -1,0 +1,4 @@
+---
+prowlarr_service_id: "prowlarr"
+prowlarr_docker_dir: "{{ docker_dir }}/{{ prowlarr_service_id }}"
+prowlarr_image_channel: "develop"
