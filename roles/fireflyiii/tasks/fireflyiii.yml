@@ -34,3 +34,10 @@
       - "{{ fireflyiii_docker_dir }}/export:/var/www/firefly-iii/storage/export"
       - "{{ fireflyiii_docker_dir }}/upload:/var/www/firefly-iii/storage/upload"
     restart_policy: "unless-stopped"
+
+- name: "Setup a cron job for recurring transactions"
+  ansible.builtin.cron:
+    name: "FireflyIII: Recurring transactions"
+    minute: "0"
+    hour: "0"
+    job: "docker exec -i {{ fireflyiii_service_id }} /usr/local/bin/php /var/www/html/artisan firefly-iii:cron"
