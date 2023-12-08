@@ -1,0 +1,11 @@
+---
+- name: "Authorize ssh key"
+  ansible.posix.authorized_key:
+    user: "{{ user_name }}"
+    key: "{{ security_ssh_public_key }}"
+  when: security_ssh_public_key is defined
+
+- ansible.builtin.include_role:
+    name: "geerlingguy.security"
+
+# - ansible.builtin.include_tasks: "firewall.yml"

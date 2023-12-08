@@ -1,0 +1,54 @@
+---
+- name: "Ensure required packages exist"
+  ansible.builtin.package:
+    name:
+      - "git"
+      - "zsh"
+    state: "present"
+
+- name: "Set ZSH as default shell"
+  ansible.builtin.user:
+    name: "{{ user_name }}"
+    shell: "/bin/zsh"
+
+- name: "Check if Oh My ZSH is installed"
+  ansible.builtin.stat:
+    path: "/home/{{ user_name }}/.oh-my-zsh"
+  register: zsh_ohmyzsh_installed
+
+- name: "Install OhMyZSH"
+  become_user: "{{ user_name }}"
+  block:
+    - name: "Download installer"
+      ansible.builtin.get_url:
+        url: "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+        dest: "/tmp/install-ohmyzsh.sh"
+        mode: "0755"
+
+    - name: "Install Oh My ZSH"
+      ansible.builtin.command: "/tmp/install-ohmyzsh.sh --unattended"
+  when: |
+    not zsh_ohmyzsh_installed.stat.exists
+
+- name: "Install plugins"
+  become_user: "{{ user_name}}"
+  block:
+    - name: "Install plugins"
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "/home/{{ user_name }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
+        force: true
+      loop: "{{ shell_plugins }}"
+      
+    - ansible.builtin.set_fact: 
+        zshrc_plugins: "{{ shell_plugins | map(attribute='name') | join(' ') }}"
+    
+    - name: "Update zshrc"
+      ansible.builtin.lineinfile:
+        dest: "/home/{{ user_name }}/.zshrc"
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.replacer }}"
+        state: "present"
+      loop:
+        - { regexp: "^plugins=", replacer: "plugins=({{ zshrc_plugins }})" }
+        - { regexp: "^ZSH_THEME=", replacer: "ZSH_THEME={{ shell_theme }}" }

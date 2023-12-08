@@ -1,0 +1,23 @@
+---
+- name: "Install wireguard package"
+  ansible.builtin.package:
+    name: "wireguard"
+    state: "present"
+  
+- name: "Copy config files"
+  ansible.builtin.copy:
+    src: "{{ wg_client_tunnel_file }}"
+    dest: "/etc/wireguard/wg-client.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0770
+
+- name: "Connect to wireguard server"
+  ansible.builtin.shell: "wg-quick up wg-client"
+
+- name: "Create an autostart cron"
+  ansible.builtin.cron:
+    name: "Turn on wireguard"
+    user: "{{ user_name }}"
+    special_time: "reboot"
+    job: "sleep 10; wg-quick up wg-client"

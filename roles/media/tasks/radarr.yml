@@ -1,0 +1,34 @@
+---
+# https://github.com/linuxserver/docker-radarr#parameters
+
+- ansible.builtin.set_fact:
+    radarr_service_id: "radarr"
+    radarr_root_dir: "{{ docker_dir }}/radarr"
+
+- name: "Make sure movie directory exists"
+  ansible.builtin.file:
+    path: "{{ media_movies_dir }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0774
+
+- name: "Run Radarr container"
+  community.general.docker_container:
+    name: "{{ radarr_service_id }}"
+    image: "lscr.io/linuxserver/radarr:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+    ports:
+      - "{{ media_radarr_port }}:7878"
+    volumes:
+      - "{{ radarr_root_dir }}:/config"
+      - "{{ media_movies_dir }}:/movies"
+      - "{{ media_downloads_dir }}:/downloads"
+    restart_policy: "unless-stopped"

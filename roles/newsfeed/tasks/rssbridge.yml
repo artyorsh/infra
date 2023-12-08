@@ -1,0 +1,34 @@
+---
+- ansible.builtin.set_fact:
+    rssbridge_service_id: "rssbridge"
+    rssbridge_root_dir: "{{ docker_dir }}/rssbridge"
+
+- name: "Create bridge docker directories"
+  ansible.builtin.file:
+    path: "{{ rssbridge_root_dir }}/config"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0664
+
+- name: "Copy bridge whitelist"
+  ansible.builtin.copy:
+    src: "files/rssbridge-whitelist.txt"
+    dest: "{{ rssbridge_root_dir }}/config/whitelist.txt"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0664
+
+- name: "Run RSSBridge container"
+  community.general.docker_container:
+    name: "{{ rssbridge_service_id }}"
+    image: "rssbridge/rss-bridge:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    ports:
+      - "{{ newsfeed_rssbridge_port }}:80"
+    volumes:
+      - "{{ rssbridge_root_dir }}/config:/config"
+    restart_policy: "unless-stopped"

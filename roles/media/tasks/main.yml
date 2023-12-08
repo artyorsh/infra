@@ -1,0 +1,18 @@
+---
+- name: "Register users' UID and GID"
+  ansible.builtin.include_role:
+    name: "docker"
+    tasks_from: "register-uid.yml"
+
+- ansible.builtin.include_tasks: "storage.yml"
+  when: media_storage_network_location is defined
+
+- ansible.builtin.include_tasks: "transmission.yml"
+
+- ansible.builtin.include_tasks: "prowlarr.yml"
+
+- ansible.builtin.include_tasks: "radarr.yml"
+
+- ansible.builtin.include_tasks: "sonarr.yml"
+
+- ansible.builtin.include_tasks: "jellyfin.yml"

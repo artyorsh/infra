@@ -1,0 +1,28 @@
+---
+- hosts: "vpnhost"
+  become: true
+
+  roles:
+    - role: "system"
+      tags:
+        - "system"
+
+    - role: "security"
+      tags:
+        - "security"
+
+    - role: "docker"
+      tags:
+        - "docker"
+
+    - role: "wireguard"
+      tags:
+        - "wireguard"
+
+    - role: "auth"
+      tags:
+        - "auth"
+
+    - role: "newsfeed"
+      tags:
+        - "newsfeed"
