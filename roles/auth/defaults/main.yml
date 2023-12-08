@@ -1,0 +1,10 @@
+---
+authelia_host: "{{ ansible_host }}:{{ authelia_port }}"
+authelia_port: 9091
+
+authelia_session_expiration_seconds: 3600
+authelia_session_inactivity_seconds: 300
+authelia_ban_seconds: 300
+authelia_max_retries: 3
+
+bunkerweb_version: "1.4.2"

@@ -1,0 +1,39 @@
+---
+# https://github.com/linuxserver/docker-transmission#parameters
+
+- ansible.builtin.set_fact:
+    transmission_service_id: "transmission"
+    transmission_root_dir: "{{ docker_dir }}/transmission"
+    transmission_whitelist: "{{ media_transmission_whitelist | join(',') }}"
+
+- name: "Make sure download directory exists"
+  ansible.builtin.file:
+    path: "{{ media_downloads_dir }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0774
+
+- name: "Run Transmission container"
+  community.general.docker_container:
+    name: "{{ transmission_service_id }}"
+    image: "lscr.io/linuxserver/transmission:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+      WHITELIST: "{{ transmission_whitelist }}"
+      USER: "{{ user_name }}"
+      PASS: "{{ user_password }}"
+    ports:
+      - "{{ media_transmission_ui_port }}:9091"
+      - "{{ media_transmission_peer_port }}:51413"
+      - "{{ media_transmission_peer_port }}:51413/udp"
+    volumes:
+      - "{{ transmission_root_dir }}:/config"
+      - "{{ media_downloads_dir }}:/downloads"
+    restart_policy: "unless-stopped"

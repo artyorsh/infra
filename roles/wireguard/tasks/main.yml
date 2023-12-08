@@ -1,40 +1,10 @@
 ---
-- name: "Create the {{ wireguard_service_id }} network"
-  docker_network:
-    name: "{{ wireguard_service_id }}"
-    state: "present"
+- ansible.builtin.include_tasks: "assertions.yml"
 
-- name: "Create docker directories"
-  file:
-    path: "{{ wireguard_docker_dir }}"
-    state: "directory"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0644
+- name: "Configure host network"
+  ansible.builtin.include_tasks: "wg-host.yml"
+  when: wg_host_mode_enabled
 
-- name: "Copy the env file"
-  template:
-    src: "env.j2"
-    dest: "{{ docker_dir }}/wg-easy/.env"
-    mode: 0644
-
-- name: "Make sure the Wireguard container is created and running"
-  docker_container:
-    name: "wg-easy"
-    image: "weejewel/wg-easy:latest"
-    pull: true
-    networks:
-      - name: "{{ wireguard_service_id }}"
-    sysctls:
-      "net.ipv4.conf.all.src_valid_mark": "1"
-      "net.ipv4.ip_forward": "1"
-    capabilities:
-      - "NET_ADMIN"
-      - "SYS_MODULE"
-    state: "started"
-    env_file: "{{ docker_dir }}/wg-easy/.env"
-    ports:
-      - "51820:51820/udp"
-    volumes:
-      - "{{ docker_dir }}/wg-easy:/etc/wireguard"
-    restart_policy: "unless-stopped"
+- name: "Connect to host network"
+  ansible.builtin.include_tasks: "wg-client.yml"
+  when: wg_client_mode_enabled

@@ -1,3 +1,0 @@
----
-rssbridge_service_id: "rssbridge"
-rssbridge_docker_dir: "{{ docker_dir }}/{{ rssbridge_service_id }}"

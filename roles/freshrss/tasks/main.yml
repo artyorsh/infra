@@ -1,8 +1,0 @@
----
-- name: "Create docker network"
-  docker_network:
-    name: "{{ freshrss_service_id }}"
-    state: "present"
-
-- include_tasks: "db.yml"
-- include_tasks: "freshrss.yml"

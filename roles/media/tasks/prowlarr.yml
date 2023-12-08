@@ -1,0 +1,24 @@
+---
+# https://github.com/linuxserver/docker-prowlarr#parameters
+
+- ansible.builtin.set_fact:
+    prowlarr_service_id: "prowlarr"
+    prowlarr_root_dir: "{{ docker_dir }}/prowlarr"
+
+- name: "Run Prowlarr container"
+  community.general.docker_container:
+    name: "{{ prowlarr_service_id }}"
+    image: "lscr.io/linuxserver/prowlarr:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+    ports:
+      - "{{ media_prowlarr_port }}:9696"
+    volumes:
+      - "{{ prowlarr_root_dir }}:/config"
+    restart_policy: "unless-stopped"

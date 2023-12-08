@@ -1,0 +1,29 @@
+---
+# https://github.com/linuxserver/docker-jellyfin#parameters
+# https://jellyfin.org/docs/general/networking/#port-bindings
+
+- ansible.builtin.set_fact:
+    jellyfin_service_id: "jellyfin"
+    jellyfin_root_dir: "{{ docker_dir }}/jellyfin"
+
+- name: "Run jellyfin container"
+  community.general.docker_container:
+    name: "{{ jellyfin_service_id }}"
+    image: "lscr.io/linuxserver/jellyfin:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+      JELLYFIN_PublishedServerUrl: "{{ remote_host_name | default('ansible_host') }}"
+    ports:
+      - "{{ media_jellyfin_port }}:8096"
+      - "{{ media_jellyfin_discovery_port }}:7359/udp"
+    volumes:
+      - "{{ jellyfin_root_dir }}:/config"
+      - "{{ media_movies_dir }}:/data/movies"
+      - "{{ media_tvseries_dir }}:/data/tvshows"
+    restart_policy: "unless-stopped"

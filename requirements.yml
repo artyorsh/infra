@@ -1,3 +1,17 @@
 ---
+roles:
+  - name: "geerlingguy.docker"
+    src: https://github.com/geerlingguy/ansible-role-docker
+
+  - name: "geerlingguy.security"
+    src: https://github.com/geerlingguy/ansible-role-security
+
+  - name: "geerlingguy.security"
+    src: https://github.com/geerlingguy/ansible-role-firewall
+
 collections:
-  - name: "community.docker"
+  - name: https://github.com/ansible-collections/community.general
+    type: git
+
+  - name: https://github.com/ansible-collections/ansible.posix
+    type: git

@@ -1,2 +1,3 @@
 ---
 docker_dir: "/opt/docker"
+docker_network_name: "docker-network-main"

@@ -1,0 +1,60 @@
+---
+# https://github.com/geerlingguy/ansible-role-security#role-variables
+# https://github.com/geerlingguy/ansible-role-firewall#role-variables
+#
+# https://configserver.com/configserver-security-and-firewall/
+# https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands
+
+security_ssh_port: 22
+security_ssh_password_authentication: "no"
+security_ssh_permit_root_login: "no"
+security_ssh_usedns: "no"
+security_ssh_permit_empty_password: "no"
+security_ssh_challenge_response_auth: "no"
+security_ssh_gss_api_authentication: "no"
+security_ssh_x11_forwarding: "no"
+
+security_ssh_allowed_users:
+  - "{{ user_name }}"
+
+security_sudoers_passwordless:
+  - "{{ user_name }}"
+
+security_autoupdate_reboot_time: "03:00"
+
+security_autoupdate_mail_to: "{{ user_email }}"
+security_autoupdate_mail_on_error: true
+
+security_fail2ban_enabled: true
+
+### Firewall
+
+firewall_enabled_at_boot: true
+
+firewall_allowed_tcp_ports:
+  - "80"
+  - "443"
+  - "{{ security_ssh_port }}"
+  - "{{ media_transmission_ui_port }}"
+  - "{{ media_transmission_peer_port }}"
+  - "{{ newsfeed_freshrss_port }}"
+  - "{{ newsfeed_rssbridge_port }}"
+  - "{{ media_radarr_port }}"
+  - "{{ media_prowlarr_port }}"
+  - "{{ media_jellyfin_port }}"
+  - "{{ wg_host_tcp_port }}"
+
+firewall_allowed_udp_ports:
+  - "{{ media_transmission_peer_port }}"
+  - "{{ media_jellyfin_discovery_port }}"
+  - "{{ wg_host_udp_port }}"
+
+firewall_forwarded_tcp_ports: []
+
+firewall_forwarded_udp_ports: []
+
+firewall_additional_rules: []
+
+firewall_disable_firewalld: true
+firewall_disable_ufw: true
+firewall_enable_ipv6: false

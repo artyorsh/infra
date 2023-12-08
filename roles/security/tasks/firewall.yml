@@ -1,0 +1,19 @@
+---
+- ansible.builtin.include_role: 
+    name: "geerlingguy.firewall"
+
+# TODO: it's not *incorrectly* assigned - it's not assigned at all
+#
+# firewall_allowed_tcp_ports
+# https://github.com/geerlingguy/ansible-role-firewall/blob/master/templates/firewall.bash.j2
+- name: "Firewall: fix incorrectly assigned SSH port"
+  block:
+    - ansible.builtin.lineinfile:
+        dest: "/etc/firewall.bash"
+        regexp: "^iptables -A INPUT -p tcp -m tcp --dport 22"
+        line: "iptables -A INPUT -p tcp -m tcp --dport {{ security_ssh_port }} -j ACCEPT"
+        state: "present"
+
+    - ansible.builtin.service:
+        name: "firewall"
+        state: "restarted"

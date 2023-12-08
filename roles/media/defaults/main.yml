@@ -1,0 +1,25 @@
+---
+# when defined, the role will external storage to media_storage_dir
+# media_external_storage_location: "//192.168.0.1/path/to/shared"
+media_external_storage_user: "{{ user_name }}"
+media_external_storage_password: "{{ user_password }}"
+
+media_storage_dir: "/mnt/media"
+media_downloads_dir: "{{ media_storage_dir }}/Downloads"
+media_movies_dir: "{{ media_storage_dir }}/Movies"
+media_tvseries_dir: "{{ media_storage_dir }}/TV"
+
+media_transmission_ui_port: 3300
+media_transmission_peer_port: 10411
+media_transmission_whitelist:
+  - "127.0.0.1"
+  - "172.23.0.*" # docker network
+  - "192.168.2.*" # lan
+  - "10.8.*.*" # vpn network
+
+media_radarr_port: 3400
+media_sonarr_port: 3700
+media_prowlarr_port: 3500
+
+media_jellyfin_port: 3600
+media_jellyfin_discovery_port: 7359
