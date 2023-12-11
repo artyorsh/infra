@@ -1,6 +1,3 @@
 ---
-newsfeed_freshrss_host: "{{ ansible_host }}:{{ freshrss_port }}"
 newsfeed_freshrss_port: 3100
-
-newsfeed_rssbridge_host: "{{ ansible_host }}:{{ rssbridge_port }}"
 newsfeed_rssbridge_port: 3200

@@ -1,10 +1,42 @@
 ---
-authelia_host: "{{ ansible_host }}:{{ authelia_port }}"
+# It seems everything above comes with breaking (to this setup) changes
+bunkerweb_version: "1.4.2"
+
+# If used with reverse proxy, the first element should always be an auth host.
+bunkerweb_dns: []
+# - name: "auth.example.com"
+#   host: "http://authelia:9091"
+
+bunkerweb_use_reverse_proxy: false
+bunkerweb_rp_request_url: "/authelia"
+bunkerweb_rp_host: "http://authelia:9091/api/verify"
+
+bunkerweb_allowed_methods:
+  - "GET"
+  - "POST"
+  - "PUT"
+  - "DELETE"
+  - "HEAD"
+
+bunkerweb_bad_behavior_ban_time: 300
+bunkerweb_bad_behavior_threshold: 10
+bunkerweb_bad_behavior_status_codes:
+  - 400
+  - 401
+  - 403
+  - 404
+  - 405
+  - 429
+  - 444
+
 authelia_port: 9091
 
+authelia_bypass_rules: []
+# - host: "sub.example.com"
+#   regex: "^\\/api([/?].*)?$"
+
 authelia_session_expiration_seconds: 3600
-authelia_session_inactivity_seconds: 300
+authelia_session_inactivity_seconds: "{{ bunkerweb_bad_behavior_ban_time }}"
 authelia_ban_seconds: 300
 authelia_max_retries: 3
-
-bunkerweb_version: "1.4.2"
+authelia_log_level: "debug"
