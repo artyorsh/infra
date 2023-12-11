@@ -4,7 +4,6 @@ wireguard_host: "{{ ansible_host }}:{{ wg_host_tcp_port }}"
 
 wg_host_mode_enabled: true
 wg_host_network_address: "10.8.0.x"
-wg_host_tcp_port: 51821
 wg_host_udp_port: 51820
 
 wg_client_mode_enabled: false

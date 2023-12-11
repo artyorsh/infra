@@ -1,9 +1,8 @@
 ---
 # https://github.com/geerlingguy/ansible-role-security#role-variables
-# https://github.com/geerlingguy/ansible-role-firewall#role-variables
 #
-# https://configserver.com/configserver-security-and-firewall/
 # https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands
+# https://docs.docker.com/network/packet-filtering-firewalls/
 
 security_ssh_port: 22
 security_ssh_password_authentication: "no"
@@ -29,32 +28,19 @@ security_fail2ban_enabled: true
 
 ### Firewall
 
-firewall_enabled_at_boot: true
+security_firewall_allow_rules:
+  - desc: "Allow HTTP"
+    proto: "tcp"
+    port: "80"
 
-firewall_allowed_tcp_ports:
-  - "80"
-  - "443"
-  - "{{ security_ssh_port }}"
-  - "{{ media_transmission_ui_port }}"
-  - "{{ media_transmission_peer_port }}"
-  - "{{ newsfeed_freshrss_port }}"
-  - "{{ newsfeed_rssbridge_port }}"
-  - "{{ media_radarr_port }}"
-  - "{{ media_prowlarr_port }}"
-  - "{{ media_jellyfin_port }}"
-  - "{{ wg_host_tcp_port }}"
+  - desc: "Allow HTTPS"
+    proto: "tcp"
+    port: "443"
 
-firewall_allowed_udp_ports:
-  - "{{ media_transmission_peer_port }}"
-  - "{{ media_jellyfin_discovery_port }}"
-  - "{{ wg_host_udp_port }}"
+  - desc: "Allow SSH"
+    proto: "tcp"
+    port: "{{ security_ssh_port }}"
 
-firewall_forwarded_tcp_ports: []
-
-firewall_forwarded_udp_ports: []
-
-firewall_additional_rules: []
-
-firewall_disable_firewalld: true
-firewall_disable_ufw: true
-firewall_enable_ipv6: false
+  - desc: "Allow WireGuard"
+    proto: "udp"
+    port: "{{ wg_host_udp_port }}"

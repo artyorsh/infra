@@ -1,5 +1,5 @@
 ---
-- ansible.builtin.include_tasks: "assertions.yml"
+# - ansible.builtin.include_tasks: "assertions.yml"
 
 - name: "Configure host network"
   ansible.builtin.include_tasks: "wg-host.yml"

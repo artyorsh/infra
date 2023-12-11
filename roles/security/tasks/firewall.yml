@@ -1,19 +1,36 @@
 ---
-- ansible.builtin.include_role: 
-    name: "geerlingguy.firewall"
-
-# TODO: it's not *incorrectly* assigned - it's not assigned at all
-#
-# firewall_allowed_tcp_ports
-# https://github.com/geerlingguy/ansible-role-firewall/blob/master/templates/firewall.bash.j2
-- name: "Firewall: fix incorrectly assigned SSH port"
+- name: "Disable ufw firewall"
   block:
-    - ansible.builtin.lineinfile:
-        dest: "/etc/firewall.bash"
-        regexp: "^iptables -A INPUT -p tcp -m tcp --dport 22"
-        line: "iptables -A INPUT -p tcp -m tcp --dport {{ security_ssh_port }} -j ACCEPT"
-        state: "present"
+    - ansible.builtin.command: "service ufw status"
+      register: ufw_installed
+      ignore_errors: true
+      changed_when: false
+      check_mode: false
 
     - ansible.builtin.service:
-        name: "firewall"
-        state: "restarted"
+        name: "ufw"
+        state: "stopped"
+        enabled: false
+      when: ufw_installed.rc == 0
+
+- name: "Template iptables rules"
+  ansible.builtin.template:
+    src: "iptables.conf"
+    dest: "/etc/iptables.conf"
+    owner: "root"
+    group: "root"
+    mode: "0744"
+
+- name: "Copy iptables systemd service"
+  ansible.builtin.copy:
+    src: "files/iptables.service"
+    dest: "/etc/systemd/system/iptables.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "Enable and start iptables service"
+  ansible.builtin.service:
+    name: "iptables"
+    state: "started"
+    enabled: true
