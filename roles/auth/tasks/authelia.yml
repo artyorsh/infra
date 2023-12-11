@@ -43,6 +43,6 @@
     state: "started"
     volumes:
       - "{{ docker_dir }}/authelia:/config"
-    # ports:
-    #   - "{{ authelia_port }}:9091"
+    ports:
+      - "{{ authelia_port }}:9091"
     restart_policy: "unless-stopped"

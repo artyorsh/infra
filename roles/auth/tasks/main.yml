@@ -2,8 +2,8 @@
 
 - ansible.builtin.include_tasks: "assertions.yml"
 
-- name: "Configure auth"
-  ansible.builtin.include_tasks: "authelia.yml"
-
 - name: "Configure reverse proxy"
   ansible.builtin.include_tasks: "bunkerweb.yml"
+
+- name: "Configure auth"
+  ansible.builtin.include_tasks: "authelia.yml"
