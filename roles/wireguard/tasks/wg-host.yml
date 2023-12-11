@@ -10,12 +10,6 @@
     group: "{{ user_name }}"
     mode: 0644
 
-- name: "Copy the env file"
-  ansible.builtin.template:
-    src: "env.j2"
-    dest: "{{ wgeasy_root_dir }}/.env"
-    mode: 0644
-
 - name: "Make sure the Wireguard container is created and running"
   community.general.docker_container:
     name: "wg-easy"
@@ -30,9 +24,12 @@
       - "net_admin"
       - "sys_module"
     state: "started"
-    env_file: "{{ wgeasy_root_dir }}/.env"
+    env:
+      "WG_HOST": "{{ ansible_host }}"
+      "WG_DEFAULT_ADDRESS": "{{ wg_host_network_address }}"
+      "WG_PORT": "{{ wg_host_udp_port | string }}"
+      "WG_PERSISTENT_KEEPALIVE": "25"
     ports:
-      - "{{ wg_host_tcp_port }}:51821/tcp"
       - "{{ wg_host_udp_port }}:51820/udp"
     volumes:
       - "{{ wgeasy_root_dir }}:/etc/wireguard"
