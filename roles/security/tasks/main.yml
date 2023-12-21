@@ -5,6 +5,13 @@
     key: "{{ security_ssh_public_key }}"
   when: security_ssh_public_key is defined
 
+- name: "Update ssh.socket ListenStream"
+  ansible.builtin.lineinfile:
+    dest: "/lib/systemd/system/ssh.socket"
+    regexp: "#?ListenStream"
+    line: "ListenStream={{ security_ssh_port }}"
+    state: "present"
+
 - ansible.builtin.include_role:
     name: "geerlingguy.security"
 
