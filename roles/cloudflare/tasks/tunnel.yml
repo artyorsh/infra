@@ -1,0 +1,17 @@
+---
+- ansible.builtin.set_fact:
+    cloudflare_service_id: "cloudflare"
+    cloudflare_root_dir: "{{ docker_dir }}/cloudflare"
+
+- name: "Run cloudflared container"
+  community.general.docker_container:
+    name: "{{ cloudflare_service_id }}"
+    image: "cloudflare/cloudflared:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TUNNEL_TOKEN: "{{ cloudflare_tunnel_token }}"
+    command: "tunnel --no-autoupdate run"
+    restart_policy: "unless-stopped"
