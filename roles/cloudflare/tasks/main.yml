@@ -1,2 +1,4 @@
 ---
 - ansible.builtin.include_tasks: "tunnel.yml"
+- ansible.builtin.include_tasks: "tunnel-ssh.yml"
+  when: cloudflare_tunnel_ssh_enabled
