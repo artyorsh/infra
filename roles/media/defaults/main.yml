@@ -23,3 +23,5 @@ media_prowlarr_port: 3500
 
 media_jellyfin_port: 3600
 media_jellyfin_discovery_port: 7359
+
+media_jellyseerr_port: 3601
