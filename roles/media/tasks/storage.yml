@@ -7,6 +7,14 @@
     group: "{{ user_name }}"
     mode: 0770
 
+- name: "Create credentials file for network drive"
+  ansible.builtin.template:
+    src: "storage-credentials.j2"
+    dest: "{{ media_storage_dir }}/.credentials"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0440
+
 - name: "Mount external media storage"
   when: media_storage_network_location is defined
   ansible.posix.mount:
@@ -15,4 +23,4 @@
     path: "{{ media_storage_dir }}"
     state: "mounted"
     fstype: "cifs"
-    opts: "username={{ media_external_storage_user }},password={{ media_external_storage_password }},x-systemd.automount"
+    opts: "credentials={{ media_storage_dir }}/.credentials,uid={{ user_name }},gid={{ user_name }},x-systemd.automount"
