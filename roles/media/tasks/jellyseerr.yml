@@ -1,0 +1,24 @@
+---
+# https://hub.docker.com/r/fallenbagel/jellyseerr
+
+- ansible.builtin.set_fact:
+    jellyseerr_service_id: "jellyseerr"
+    jellyseerr_root_dir: "{{ docker_dir }}/jellyseerr"
+
+- name: "Run jellyseerr container"
+  community.general.docker_container:
+    name: "{{ jellyseerr_service_id }}"
+    image: "fallenbagel/jellyseerr:latest"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+    ports:
+      - "{{ media_jellyseerr_port }}:5055"
+    volumes:
+      - "{{ jellyseerr_root_dir }}:/app/config"
+    restart_policy: "unless-stopped"
