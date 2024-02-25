@@ -2,28 +2,7 @@
 # # https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#3-generate-a-short-lived-certificate-public-key
 
 - ansible.builtin.set_fact:
-    cf_repository_key_install_path: "/usr/share/keyrings/cloudflare-main.gpg"
-    cf_repository: "https://pkg.cloudflare.com/cloudflared jammy main"
     cf_certificate_public_key_file: "/etc/ssh/ca.pub"
-
-- name: "Install cloudflared"
-  block:
-    - name: "Add Cloudflare repository GPG key"
-      ansible.builtin.apt_key:
-        url: "https://pkg.cloudflare.com/cloudflare-main.gpg"
-        keyring: "{{ cf_repository_key_install_path }}"
-        state: "present"
-
-    - name: "Add Cloudflare repository to apt sources list"
-      ansible.builtin.apt_repository:
-        repo: "deb [signed-by={{ cf_repository_key_install_path }}] {{ cf_repository }}"
-        state: "present"
-
-    - name: "Install Cloudflared"
-      ansible.builtin.apt:
-        update_cache: true
-        name: "cloudflared"
-        state: "latest"
 
 - name: "Copy short-lived certificate public key"
   ansible.builtin.lineinfile:
@@ -34,13 +13,15 @@
 
 - name: "(SSH) allow public key authentication"
   block:
-    - ansible.builtin.lineinfile:
+    - name: "(SSH) allow PubkeyAuthentication"
+      ansible.builtin.lineinfile:
         dest: "/etc/ssh/sshd_config"
         regexp: "#?PubkeyAuthentication"
         line: "PubkeyAuthentication yes"
         state: "present"
 
-    - ansible.builtin.lineinfile:
+    - name: "(SSH) trust Cloudflare CA key"
+      ansible.builtin.lineinfile:
         path: "/etc/ssh/sshd_config"
         insertafter: "#?PubkeyAuthentication"
         line: "TrustedUserCAKeys {{ cf_certificate_public_key_file }}"
@@ -50,5 +31,5 @@
         state: "restarted"
 
 - name: "Print client configuration follow-up"
-  ansible.builtin.command: |
-    "echo Done. Make sure to configure clients: https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#7-connect-as-a-user"
+  ansible.builtin.debug:
+    msg: "Done. Make sure to configure clients: https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#7-connect-as-a-user"
