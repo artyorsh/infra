@@ -9,7 +9,7 @@
     image: "cloudflare/cloudflared:latest"
     pull: true
     networks:
-      - name: "host"
+      - name: "{{ docker_network_name }}"
     state: "started"
     env:
       TUNNEL_TOKEN: "{{ cloudflare_tunnel_token }}"
