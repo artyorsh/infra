@@ -30,3 +30,7 @@
     - role: "media"
       tags:
         - "media"
+
+    - role: "filebrowser"
+      tags:
+        - "filebrowser"
