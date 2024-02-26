@@ -23,4 +23,4 @@
     path: "{{ media_storage_dir }}"
     state: "mounted"
     fstype: "cifs"
-    opts: "credentials={{ media_storage_dir }}/.credentials,uid={{ user_name }},gid={{ user_name }},x-systemd.automount"
+    opts: "credentials={{ media_storage_dir }}/.credentials,uid={{ user_name }},gid={{ user_name }},file_mode=0770,dir_mode=0770,x-systemd.automount"
