@@ -9,7 +9,7 @@ media_downloads_dir: "{{ media_storage_dir }}/Downloads"
 media_movies_dir: "{{ media_storage_dir }}/Movies"
 media_tvseries_dir: "{{ media_storage_dir }}/TV"
 
-media_transmission_ui_port: 3300
+media_transmission_ui_port: 9091
 media_transmission_peer_port: 10411
 media_transmission_whitelist:
   - "127.0.0.1"
@@ -17,11 +17,11 @@ media_transmission_whitelist:
   - "192.168.2.*" # lan
   - "10.8.*.*" # vpn network
 
-media_radarr_port: 3400
-media_sonarr_port: 3700
-media_prowlarr_port: 3500
+media_radarr_port: 7878
+media_sonarr_port: 8989
+media_prowlarr_port: 9696
 
-media_jellyfin_port: 3600
+media_jellyfin_port: 8096
 media_jellyfin_discovery_port: 7359
 
-media_jellyseerr_port: 3601
+media_jellyseerr_port: 5055
