@@ -25,7 +25,6 @@
   community.general.docker_container:
     name: "{{ filebrowser_service_id }}"
     image: "filebrowser/filebrowser:{{ filebrowser_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"

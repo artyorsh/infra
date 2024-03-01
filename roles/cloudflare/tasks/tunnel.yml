@@ -7,7 +7,6 @@
   community.general.docker_container:
     name: "{{ cloudflare_service_id }}"
     image: "cloudflare/cloudflared:{{ cloudflare_tunnel_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"

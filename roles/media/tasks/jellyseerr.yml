@@ -9,7 +9,6 @@
   community.general.docker_container:
     name: "{{ jellyseerr_service_id }}"
     image: "fallenbagel/jellyseerr:{{ media_jellyseerr_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"
