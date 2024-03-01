@@ -16,7 +16,7 @@
 - name: "Run Radarr container"
   community.general.docker_container:
     name: "{{ radarr_service_id }}"
-    image: "lscr.io/linuxserver/radarr:latest"
+    image: "lscr.io/linuxserver/radarr:{{ media_radarr_version }}"
     pull: true
     networks:
       - name: "{{ docker_network_name }}"

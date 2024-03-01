@@ -17,7 +17,7 @@
 - name: "Run Transmission container"
   community.general.docker_container:
     name: "{{ transmission_service_id }}"
-    image: "lscr.io/linuxserver/transmission:latest"
+    image: "lscr.io/linuxserver/transmission:{{ media_transmission_version }}"
     pull: true
     networks:
       - name: "{{ docker_network_name }}"

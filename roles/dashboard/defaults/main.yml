@@ -1,2 +1,4 @@
 ---
+# https://github.com/ajnart/homarr/pkgs/container/homarr
+dashboard_homarr_version: "latest"
 dashboard_port: 80

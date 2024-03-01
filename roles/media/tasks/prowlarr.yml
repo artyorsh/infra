@@ -8,7 +8,7 @@
 - name: "Run Prowlarr container"
   community.general.docker_container:
     name: "{{ prowlarr_service_id }}"
-    image: "lscr.io/linuxserver/prowlarr:latest"
+    image: "lscr.io/linuxserver/prowlarr:{{ media_prowlarr_version }}"
     pull: true
     networks:
       - name: "{{ docker_network_name }}"

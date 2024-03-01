@@ -1,3 +1,8 @@
 ---
+# https://hub.docker.com/r/linuxserver/freshrss/tags
+newsfeed_freshrss_version: "1.23.1"
 newsfeed_freshrss_port: 8082
+
+# https://hub.docker.com/r/rssbridge/rss-bridge/tags
+newsfeed_rssbridge_version: "latest"
 newsfeed_rssbridge_port: 8083
