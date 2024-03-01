@@ -8,6 +8,7 @@ media_storage_dir: "/mnt/media"
 media_downloads_dir: "{{ media_storage_dir }}/Downloads"
 media_movies_dir: "{{ media_storage_dir }}/Movies"
 media_tvseries_dir: "{{ media_storage_dir }}/TV"
+media_photos_dir: "{{ media_storage_dir }}/Photos"
 
 # https://hub.docker.com/r/linuxserver/transmission/tags
 media_transmission_version: "4.0.5"
@@ -39,3 +40,7 @@ media_jellyfin_discovery_port: 7359
 # https://hub.docker.com/r/fallenbagel/jellyseerr/tags
 media_jellyseerr_version: "1.7.0"
 media_jellyseerr_port: 5055
+
+# https://github.com/immich-app/immich/pkgs/container/immich-server/versions?filters%5Bversion_type%5D=tagged
+media_immich_version: "v1.97.0"
+media_immich_port: 3001
