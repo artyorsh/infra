@@ -13,7 +13,7 @@
 - name: "Make sure the Wireguard container is created and running"
   community.general.docker_container:
     name: "wg-easy"
-    image: "weejewel/wg-easy:latest"
+    image: "ghcr.io/wg-easy/wg-easy:{{ wierguard_wgeasy_version }}"
     pull: true
     networks:
       - name: "{{ docker_network_name }}"

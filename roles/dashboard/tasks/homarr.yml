@@ -20,7 +20,7 @@
 - name: "Run homarr container"
   community.general.docker_container:
     name: "{{ homarr_service_id }}"
-    image: "ghcr.io/ajnart/homarr:latest"
+    image: "ghcr.io/ajnart/homarr:{{ dashboard_homarr_version }}"
     pull: true
     networks:
       - name: "{{ docker_network_name }}"

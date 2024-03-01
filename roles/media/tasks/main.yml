@@ -16,3 +16,5 @@
 - ansible.builtin.include_tasks: "sonarr.yml"
 
 - ansible.builtin.include_tasks: "jellyfin.yml"
+
+- ansible.builtin.include_tasks: "jellyseerr.yml"

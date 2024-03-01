@@ -9,6 +9,8 @@ media_downloads_dir: "{{ media_storage_dir }}/Downloads"
 media_movies_dir: "{{ media_storage_dir }}/Movies"
 media_tvseries_dir: "{{ media_storage_dir }}/TV"
 
+# https://hub.docker.com/r/linuxserver/transmission/tags
+media_transmission_version: "4.0.5"
 media_transmission_ui_port: 9091
 media_transmission_peer_port: 10411
 media_transmission_whitelist:
@@ -17,11 +19,23 @@ media_transmission_whitelist:
   - "192.168.2.*" # lan
   - "10.8.*.*" # vpn network
 
+# https://hub.docker.com/r/linuxserver/radarr/tags
+media_radarr_version: "5.3.6"
 media_radarr_port: 7878
+
+# https://hub.docker.com/r/linuxserver/sonarr/tags
+media_sonarr_version: "4.0.2"
 media_sonarr_port: 8989
+
+# https://hub.docker.com/r/linuxserver/prowlarr/tags
+media_prowlarr_version: "1.13.3"
 media_prowlarr_port: 9696
 
+# https://hub.docker.com/r/linuxserver/jellyfin/tags
+media_jellyfin_version: "10.8.13"
 media_jellyfin_port: 8096
 media_jellyfin_discovery_port: 7359
 
+# https://hub.docker.com/r/fallenbagel/jellyseerr/tags
+media_jellyseerr_version: "1.7.0"
 media_jellyseerr_port: 5055
