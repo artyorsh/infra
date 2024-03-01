@@ -38,7 +38,6 @@
   community.general.docker_container:
     name: "{{ immich_service_id }}-redis"
     image: "redis:{{ immich_redis_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     restart_policy: "always"
@@ -47,7 +46,6 @@
   community.general.docker_container:
     name: "{{ immich_service_id }}-db"
     image: "tensorchord/pgvecto-rs:{{ immich_db_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     env:
@@ -62,7 +60,6 @@
   community.general.docker_container:
     name: "{{ immich_service_id }}"
     image: "ghcr.io/immich-app/immich-server:{{ media_immich_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"

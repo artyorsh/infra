@@ -1,3 +1,13 @@
 ---
 docker_dir: "/opt/docker"
 docker_network_name: "docker-network-main"
+
+docker_watchtower_enabled: true
+# https://hub.docker.com/r/containrrr/watchtower/tags
+watchtower_version: "latest"
+watchtower_schedule: "0 0 3 * * 1" # 3AM every Monday
+watchtower_ignore_list:
+  - "cloudflare"
+  - "wireguard"
+  - "filebrowser"
+watchtower_slack_webhook_url: ""

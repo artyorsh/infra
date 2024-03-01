@@ -23,7 +23,6 @@
   community.general.docker_container:
     name: "{{ rssbridge_service_id }}"
     image: "rssbridge/rss-bridge:{{ newsfeed_rssbridge_version }}"
-    pull: true
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"
