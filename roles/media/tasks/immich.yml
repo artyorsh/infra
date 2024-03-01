@@ -1,0 +1,100 @@
+---
+# https://immich.app/docs/install/docker-compose
+# https://immich.app/docs/install/environment-variables
+# https://immich.app/docs/developer/architecture/#server
+
+- ansible.builtin.set_fact:
+    immich_service_id: "immich"
+    immich_root_dir: "{{ docker_dir }}/immich"
+    immich_upload_dir: "{{ media_photos_dir }}"
+    immich_server_port: "{{ media_immich_port }}"
+    immich_user: "{{ user_name }}"
+    immich_password: "{{ user_password }}"
+    immich_localtime_dir: "/etc/localtime"
+    immich_redis_version: "7.2.4-alpine" # https://hub.docker.com/_/redis/tags?page=1&name=alpine
+    immich_db_version: "pg14-v0.2.0" # https://hub.docker.com/r/tensorchord/pgvecto-rs/tags
+
+- name: "Create service directories"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0774"
+  loop:
+    - "{{ immich_root_dir }}"
+    - "{{ immich_root_dir }}/db"
+    - "{{ immich_root_dir }}/ml-cache"
+
+- name: "Copy the env file"
+  ansible.builtin.template:
+    src: "immich.env.j2"
+    dest: "{{ immich_root_dir }}/.env"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0750"
+
+- name: "Run redis container"
+  community.general.docker_container:
+    name: "{{ immich_service_id }}-redis"
+    image: "redis:{{ immich_redis_version }}"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    restart_policy: "always"
+
+- name: "Run db container"
+  community.general.docker_container:
+    name: "{{ immich_service_id }}-db"
+    image: "tensorchord/pgvecto-rs:{{ immich_db_version }}"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    env:
+      POSTGRES_USER: "{{ immich_user }}"
+      POSTGRES_PASSWORD: "{{ immich_password }}"
+      POSTGRES_DB: "{{ immich_service_id }}"
+    volumes:
+      - "{{ immich_root_dir }}/db:/var/lib/postgresql/data"
+    restart_policy: "always"
+
+- name: "Run immich container"
+  community.general.docker_container:
+    name: "{{ immich_service_id }}"
+    image: "ghcr.io/immich-app/immich-server:{{ media_immich_version }}"
+    pull: true
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env_file: "{{ immich_root_dir }}/.env"
+    ports:
+      - "{{ immich_server_port }}:3001"
+    volumes:
+      - "{{ immich_upload_dir }}:/usr/src/app/upload"
+      - "{{ immich_localtime_dir }}:/etc/localtime:ro"
+    command: ["start.sh", "immich"]
+    restart_policy: "unless-stopped"
+
+- name: "Run immich-microservices container"
+  community.general.docker_container:
+    name: "{{ immich_service_id }}-microservices"
+    image: "ghcr.io/immich-app/immich-server:{{ media_immich_version }}"
+    networks:
+      - name: "{{ docker_network_name }}"
+    env_file: "{{ immich_root_dir }}/.env"
+    volumes:
+      - "{{ immich_upload_dir }}:/usr/src/app/upload"
+      - "{{ immich_localtime_dir }}:/etc/localtime:ro"
+    command: ["start.sh", "microservices"]
+    restart_policy: "unless-stopped"
+
+- name: "Run immich-machine-learning container"
+  community.general.docker_container:
+    name: "{{ immich_service_id }}-machine-learning"
+    image: "ghcr.io/immich-app/immich-machine-learning:{{ media_immich_version }}"
+    networks:
+      - name: "{{ docker_network_name }}"
+    env_file: "{{ immich_root_dir }}/.env"
+    volumes:
+      - "{{ immich_upload_dir }}/ml-cache:/usr/src/app/upload"
+    restart_policy: "always"
