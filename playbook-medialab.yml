@@ -27,10 +27,10 @@
       tags:
         - "dashboard"
 
+    - role: "storage"
+      tags:
+        - "storage"
+
     - role: "media"
       tags:
         - "media"
-
-    - role: "filebrowser"
-      tags:
-        - "filebrowser"

@@ -8,18 +8,18 @@
 - name: "Make sure config directory exists"
   ansible.builtin.file:
     path: "{{ filebrowser_config_dir }}"
-    state: "directory"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: 0774
+    state: "directory"
 
 - name: "Create database"
   ansible.builtin.file:
     path: "{{ filebrowser_config_dir }}/filebrowser.db"
-    state: "touch"
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
     mode: 0774
+    state: "touch"
 
 - name: "Run filebrowser container"
   community.general.docker_container:
