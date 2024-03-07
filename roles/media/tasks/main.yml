@@ -4,9 +4,6 @@
     name: "docker"
     tasks_from: "register-uid.yml"
 
-- ansible.builtin.include_tasks: "storage.yml"
-  when: media_storage_network_location is defined
-
 - ansible.builtin.include_tasks: "transmission.yml"
 
 - ansible.builtin.include_tasks: "prowlarr.yml"

@@ -1,0 +1,10 @@
+---
+smb_share_address: "//192.168.0.1/path/to/shared"
+smb_share_user: "{{ user_name }}"
+smb_share_password: "{{ user_password }}"
+smb_share_local_dir: "/mnt/data"
+
+# https://hub.docker.com/r/filebrowser/filebrowser/tags
+filebrowser_version: "latest"
+filebrowser_port: 8081
+filebrowser_root_dir: "{{ smb_share_local_dir }}"

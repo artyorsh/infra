@@ -1,14 +1,8 @@
 ---
-# when defined, the role will external storage to media_storage_dir
-# media_external_storage_location: "//192.168.0.1/path/to/shared"
-media_external_storage_user: "{{ user_name }}"
-media_external_storage_password: "{{ user_password }}"
-
-media_storage_dir: "/mnt/media"
-media_downloads_dir: "{{ media_storage_dir }}/Downloads"
-media_movies_dir: "{{ media_storage_dir }}/Movies"
-media_tvseries_dir: "{{ media_storage_dir }}/TV"
-media_photos_dir: "{{ media_storage_dir }}/Photos"
+media_downloads_dir: "{{ smb_share_local_dir }}/Downloads"
+media_movies_dir: "{{ smb_share_local_dir }}/Movies"
+media_tvseries_dir: "{{ smb_share_local_dir }}/TV"
+media_photos_dir: "{{ smb_share_local_dir }}/Photos"
 
 # https://hub.docker.com/r/linuxserver/transmission/tags
 media_transmission_version: "latest"

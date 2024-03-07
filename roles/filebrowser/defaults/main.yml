@@ -1,5 +1,0 @@
----
-# https://hub.docker.com/r/filebrowser/filebrowser/tags
-filebrowser_version: "latest"
-filebrowser_port: 8081
-filebrowser_root_dir: "/mnt/media"
