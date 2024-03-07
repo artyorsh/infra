@@ -8,6 +8,10 @@
   community.general.docker_network:
     name: "{{ docker_network_name }}"
 
+- name: "Enable container backups"
+  ansible.builtin.include_tasks: "container-backup.yml"
+  when: docker_backup_enabled
+
 - name: "Enable Watchtower"
   ansible.builtin.include_tasks: "watchtower.yml"
   when: docker_watchtower_enabled
