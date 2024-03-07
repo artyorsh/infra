@@ -36,6 +36,5 @@
       - "{{ filebrowser_port }}:80"
     volumes:
       - "{{ filebrowser_root_dir }}:/srv"
-      - "{{ filebrowser_config_dir }}:/config"
-      - "{{ filebrowser_config_dir }}/filebrowser.db:/database/filebrowser.db"
+      - "{{ filebrowser_config_dir }}/filebrowser.db:/database.db"
     restart_policy: "unless-stopped"
