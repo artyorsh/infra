@@ -1,0 +1,38 @@
+---
+docker_backup_containers:
+  - name: "homarr"
+    volumes:
+      - "/data"
+      - "/app/data/configs"
+
+  - name: "immich-db"
+    volumes:
+      - "/var/lib/postgresql/data"
+
+  - name: "jellyfin"
+    volumes:
+      - "/config"
+
+  - name: "jellyseerr"
+    volumes:
+      - "/app/config"
+
+  - name: "prowlarr"
+    volumes:
+      - "/config"
+
+  - name: "radarr"
+    volumes:
+      - "/config"
+
+  - name: "sonarr"
+    volumes:
+      - "/config"
+
+  - name: "transmission"
+    volumes:
+      - "/config"
+
+  - name: "filebrowser"
+    volumes:
+      - "/database.db"

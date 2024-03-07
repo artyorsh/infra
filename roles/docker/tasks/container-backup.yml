@@ -1,0 +1,21 @@
+---
+- ansible.builtin.set_fact:
+    docker_backup_script: "/etc/docker-backup.sh"
+
+- name: "Template backup script"
+  ansible.builtin.template:
+    src: "docker-backup.sh.j2"
+    dest: "{{ docker_backup_script }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0740"
+
+- name: "Create a backup cron"
+  ansible.builtin.cron:
+    name: "Backup docker containers"
+    user: "{{ user_name }}"
+    job: "{{ docker_backup_script }}"
+    month: "{{ docker_backup_schedule.month | default('*') }}"
+    weekday: "{{ docker_backup_schedule.weekday | default('0') }}"
+    hour: "{{ docker_backup_schedule.hour | default('3') }}"
+    minute: "{{ docker_backup_schedule.minute | default('0') }}"

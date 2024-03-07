@@ -2,6 +2,15 @@
 docker_dir: "/opt/docker"
 docker_network_name: "docker-network-main"
 
+docker_backup_enabled: true
+docker_backups_dir: "{{ docker_dir }}/.backups"
+docker_backup_containers: []
+# - { name: "homarr", volumes: ["/data"] }
+
+docker_backup_schedule: # 0AM every Monday
+  weekday: 1
+  hour: 0
+
 docker_watchtower_enabled: true
 # https://hub.docker.com/r/containrrr/watchtower/tags
 watchtower_version: "latest"
