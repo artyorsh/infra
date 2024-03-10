@@ -36,3 +36,7 @@ docker_backup_containers:
   - name: "filebrowser"
     volumes:
       - "/database.db"
+
+  - name: "vaultwarden"
+    volumes:
+      - "/data"

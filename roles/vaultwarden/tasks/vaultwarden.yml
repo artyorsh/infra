@@ -1,0 +1,39 @@
+---
+- ansible.builtin.set_fact:
+    vaultwarden_service_id: "vaultwarden"
+    vaultwarden_config_dir: "{{ docker_dir }}/vaultwarden"
+
+- name: "Make sure config directory exists"
+  ansible.builtin.file:
+    path: "{{ vaultwarden_config_dir }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0774
+    state: "directory"
+
+- name: "Template the env file"
+  ansible.builtin.template:
+    src: "vaultwarden.env.j2"
+    dest: "{{ vaultwarden_config_dir }}/.env"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0750"
+
+- name: "Run vaultwarden container"
+  community.general.docker_container:
+    name: "{{ vaultwarden_service_id }}"
+    image: "vaultwarden/server:{{ vaultwarden_version }}"
+    networks:
+      - name: "{{ docker_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+      WEBSOCKET_ENABLED: "true"
+      SIGNUPS_ALLOWED: "false"
+    ports:
+      - "{{ vaultwarden_port }}:443"
+    volumes:
+      - "{{ vaultwarden_config_dir }}:/data"
+    restart_policy: "unless-stopped"
