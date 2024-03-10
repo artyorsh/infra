@@ -34,3 +34,7 @@
     - role: "media"
       tags:
         - "media"
+
+    - role: "vaultwarden"
+      tags:
+        - "vaultwarden"
