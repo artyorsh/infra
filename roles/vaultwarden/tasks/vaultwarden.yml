@@ -32,6 +32,7 @@
       PGID: "{{ docker_gid }}"
       WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "false"
+      ADMIN_TOKEN: "{{ vaultwarden_admin_token }}"
     ports:
       - "{{ vaultwarden_port }}:443"
     volumes:
