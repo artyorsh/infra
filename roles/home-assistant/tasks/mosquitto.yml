@@ -1,0 +1,55 @@
+---
+- ansible.builtin.set_fact:
+    mosquitto_service_id: "mosquitto"
+    mosquitto_root_dir: "{{ docker_dir }}/mosquitto"
+    mosquitto_passwd_local_file: "/mosquitto/config/passwd"
+
+- name: "Create service directories"
+  ansible.builtin.file:
+    path: "{{ mosquitto_root_dir }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0770"
+
+- name: "Template mosquitto.conf"
+  ansible.builtin.template:
+    src: "mosquitto.conf.j2"
+    dest: "{{ mosquitto_root_dir }}/mosquitto.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0644"
+
+- block:
+    - name: "Template passwd"
+      ansible.builtin.template:
+        src: "mosquitto-passwd.txt.j2"
+        dest: "{{ mosquitto_root_dir }}/mosquitto-passwd.txt"
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+        mode: "0700"
+
+    - name: "Encrypt passwd"
+      ansible.builtin.shell: >
+        docker run --rm -v {{ mosquitto_root_dir }}/mosquitto-passwd.txt:{{ mosquitto_passwd_local_file }} \
+        eclipse-mosquitto:{{ home_mosquitto_version }} \
+        mosquitto_passwd -U {{ mosquitto_passwd_local_file }}
+
+- name: "Run mosquitto container"
+  community.general.docker_container:
+    name: "{{ mosquitto_service_id }}"
+    image: "eclipse-mosquitto:{{ home_mosquitto_version }}"
+    networks:
+      - name: "{{ home_network_name }}"
+    state: "started"
+    env:
+      TZ: "{{ system_timezone }}"
+      PUID: "{{ docker_uid }}"
+      PGID: "{{ docker_gid }}"
+    volumes:
+      - "{{ mosquitto_root_dir }}/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+      - "{{ mosquitto_root_dir }}/mosquitto-passwd.txt:{{ mosquitto_passwd_local_file }}"
+    ports:
+      - "{{ home_mosquitto_port }}:1883"
+      - "{{ home_mosquitto_websocket_port }}:9001"
+    restart_policy: "unless-stopped"
