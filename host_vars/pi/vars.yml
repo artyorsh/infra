@@ -40,3 +40,11 @@ docker_backup_containers:
   - name: "vaultwarden"
     volumes:
       - "/data"
+
+  - name: "home-assistant"
+    volumes:
+      - "/config"
+
+  - name: "zigbee2mqtt"
+    volumes:
+      - "/app/data"
