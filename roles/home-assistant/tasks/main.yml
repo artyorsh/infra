@@ -1,0 +1,15 @@
+---
+- name: "Register users' UID and GID"
+  ansible.builtin.include_role:
+    name: "docker"
+    tasks_from: "register-uid.yml"
+
+- name: "Create home-assistant network"
+  community.general.docker_network:
+    name: "{{ home_network_name }}"
+
+- ansible.builtin.include_tasks: "home-assistant.yml"
+
+- ansible.builtin.include_tasks: "mosquitto.yml"
+
+- ansible.builtin.include_tasks: "zigbee2mqtt.yml"
