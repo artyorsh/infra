@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "redhat.ansible",
+    "vmware.vscode-manifest-yaml",
+  ]
+}
