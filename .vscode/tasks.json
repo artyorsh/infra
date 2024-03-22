@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Play",
+      "type": "shell",
+      "command": "ansible-playbook playbook-${input:host}.yml",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Play Tags",
+      "type": "shell",
+      "command": "ansible-playbook playbook-${input:host}.yml -t ${input:tags}",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Vault",
+      "type": "shell",
+      "command": "ansible-vault edit host_vars/${input:host}/vault.yml",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+  ],
+  "inputs": [
+    {
+      "id": "host",
+      "description": "Host: [pi, vps]",
+      "default": "pi",
+      "type": "promptString"
+    },
+    {
+      "id": "tags",
+      "description": "E.g: media,docker",
+      "type": "promptString"
+    }
+  ]
+}
