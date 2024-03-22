@@ -31,7 +31,7 @@ ssh-copy-id root@IP_ADDRESS
 Then use --extra-vars to proceed using servers' initial settings
 
 ```
-ansible-playbook playbook-medialab.yml --extra-vars "ansible_ssh_port=22 ansible_user=root ansible_ssh_password=yourpassword"
+ansible-playbook playbook-pi.yml --extra-vars "ansible_ssh_port=22 ansible_user=root ansible_ssh_password=yourpassword"
 ```
 
 For each host, adjust the variables. See in [./host_vars](https://github.com/artyorsh/selfhosted/blob/main/host_vars).
@@ -41,5 +41,5 @@ For secret variables, be sure to use [Vault](https://docs.ansible.com/ansible/la
 For every subsequent run:
 
 ```
-ansible-playbook playbook-medialab.yml
+ansible-playbook playbook-pi.yml
 ```

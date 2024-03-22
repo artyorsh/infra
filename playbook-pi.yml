@@ -1,5 +1,5 @@
 ---
-- hosts: "medialab"
+- hosts: "pi"
   become: true
 
   roles:
