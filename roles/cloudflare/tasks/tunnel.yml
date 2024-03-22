@@ -3,12 +3,15 @@
     cloudflare_service_id: "cloudflare"
     cloudflare_root_dir: "{{ docker_dir }}/cloudflare"
 
+- ansible.builtin.set_fact:
+    tunnel_networks: "{{ tunnel_networks | default([]) + [{ 'name': item }] }}"
+  loop: "{{ cloudflare_tunnel_networks }}"
+
 - name: "Run cloudflared container"
   community.general.docker_container:
     name: "{{ cloudflare_service_id }}"
     image: "cloudflare/cloudflared:{{ cloudflare_tunnel_version }}"
-    networks:
-      - name: "{{ docker_network_name }}"
+    networks: "{{ tunnel_networks | list }}"
     state: "started"
     env:
       TUNNEL_TOKEN: "{{ cloudflare_tunnel_token }}"
