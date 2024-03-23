@@ -1,0 +1,38 @@
+# https://github.com/geerlingguy/ansible-collection-mac/tree/master/roles/homebrew#role-variables
+# https://github.com/Homebrew/homebrew-autoupdate#usage
+---
+- name: "Copy brewfile"
+  ansible.builtin.copy:
+    src: "files/brewfile-{{ inventory_hostname }}"
+    dest: "$HOME/Brewfile"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+    mode: "0644"
+
+- name: "Install and configure Homebrew"
+  ansible.builtin.include_role:
+    name: "geerlingguy.mac.homebrew"
+  vars:
+    homebrew_taps: []
+    homebrew_cask_apps: []
+    homebrew_installed_packages: []
+    homebrew_use_brewfile: true
+    homebrew_brewfile_dir: "$HOME"
+    homebrew_clear_cache: false
+    homebrew_upgrade_all_packages: true
+
+- name: "Schedule autoupdates"
+  block:
+    - name: "Autoupdate delete"
+      ansible.builtin.command: "brew autoupdate delete"
+      changed_when: false
+
+    - name: "Autoupdate start"
+      ansible.builtin.command: >
+        brew autoupdate start {{ homebrew_autoupdate_interval }} \
+        --verbose \
+        --sudo \
+        --upgrade \
+        --greedy \
+        --cleanup
+      changed_when: false

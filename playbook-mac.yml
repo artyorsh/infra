@@ -1,0 +1,10 @@
+---
+- name: "Mac"
+  hosts: "mac"
+
+  roles:
+    - role: "elliotweiser.osx-command-line-tools"
+
+    - role: "homebrew"
+      tags:
+        - "homebrew"
