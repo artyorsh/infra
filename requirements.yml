@@ -6,9 +6,13 @@ roles:
   - name: "geerlingguy.security"
     src: https://github.com/geerlingguy/ansible-role-security
 
+  - name: elliotweiser.osx-command-line-tools
+
 collections:
   - name: https://github.com/ansible-collections/community.general
     type: git
 
   - name: https://github.com/ansible-collections/ansible.posix
     type: git
+
+  - name: geerlingguy.mac
