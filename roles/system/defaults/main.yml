@@ -5,9 +5,3 @@ system_timezone: "Etc/UTC"
 user_name: "{{ ansible_user }}"
 user_group: "{{ user_name }}"
 user_email: "{{ user_name }}@example.com"
-
-shell_theme: "refined"
-shell_plugins:
-  - { name: "zsh-vi-mode", repo: "https://github.com/jeffreytse/zsh-vi-mode" }
-  - { name: "zsh-autocomplete", repo: "https://github.com/marlonrichert/zsh-autocomplete" }
-  - { name: "zsh-autosuggestions", repo: "https://github.com/zsh-users/zsh-autosuggestions" }

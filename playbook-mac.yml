@@ -8,3 +8,7 @@
     - role: "homebrew"
       tags:
         - "homebrew"
+
+    - role: "zsh"
+      tags:
+        - "zsh"

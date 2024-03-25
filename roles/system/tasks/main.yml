@@ -4,6 +4,3 @@
 
 - name: "Configure user"
   ansible.builtin.include_tasks: "user.yml"
-
-- name: "Configure shell"
-  ansible.builtin.include_tasks: "shell.yml"

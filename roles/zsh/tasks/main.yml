@@ -13,7 +13,7 @@
 
 - name: "Check if Oh My ZSH is installed"
   ansible.builtin.stat:
-    path: "/home/{{ user_name }}/.oh-my-zsh"
+    path: "$HOME/.oh-my-zsh"
   register: zsh_ohmyzsh_installed
 
 - name: "Install OhMyZSH"
@@ -27,6 +27,7 @@
 
     - name: "Install Oh My ZSH"
       ansible.builtin.command: "/tmp/install-ohmyzsh.sh --unattended"
+      changed_when: not zsh_ohmyzsh_installed.stat.exists
   when: |
     not zsh_ohmyzsh_installed.stat.exists
 
@@ -36,19 +37,18 @@
     - name: "Install plugins"
       ansible.builtin.git:
         repo: "{{ item.repo }}"
-        dest: "/home/{{ user_name }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
+        dest: "$HOME/.oh-my-zsh/custom/plugins/{{ item.name }}"
         force: true
-      loop: "{{ shell_plugins }}"
-      
-    - ansible.builtin.set_fact: 
-        zshrc_plugins: "{{ shell_plugins | map(attribute='name') | join(' ') }}"
-    
-    - name: "Update zshrc"
+      loop: "{{ zsh_install_plugins }}"
+
+    - ansible.builtin.set_fact:
+        zshrc_plugins: "{{ zsh_install_plugins | map(attribute='name') | join(' ') }}"
+
+    - name: "Update .zshrc"
       ansible.builtin.lineinfile:
-        dest: "/home/{{ user_name }}/.zshrc"
+        dest: "$HOME/.zshrc"
         regexp: "{{ item.regexp }}"
         line: "{{ item.replacer }}"
         state: "present"
       loop:
         - { regexp: "^plugins=", replacer: "plugins=({{ zshrc_plugins }})" }
-        - { regexp: "^ZSH_THEME=", replacer: "ZSH_THEME={{ shell_theme }}" }

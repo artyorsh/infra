@@ -7,6 +7,10 @@
       tags:
         - "system"
 
+    - role: "zsh"
+      tags:
+        - "zsh"
+
     - role: "security"
       tags:
         - "security"
