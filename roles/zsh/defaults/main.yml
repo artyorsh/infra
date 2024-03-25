@@ -1,0 +1,11 @@
+---
+zsh_install_plugins:
+  - { name: "zsh-vi-mode", repo: "https://github.com/jeffreytse/zsh-vi-mode" }
+  - {
+      name: "zsh-autocomplete",
+      repo: "https://github.com/marlonrichert/zsh-autocomplete",
+    }
+  - {
+      name: "zsh-autosuggestions",
+      repo: "https://github.com/zsh-users/zsh-autosuggestions",
+    }
