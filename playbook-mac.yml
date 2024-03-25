@@ -5,10 +5,6 @@
   roles:
     - role: "elliotweiser.osx-command-line-tools"
 
-    - role: "homebrew"
-      tags:
-        - "homebrew"
-
     - role: "zsh"
       tags:
         - "zsh"
@@ -16,3 +12,7 @@
     - role: "dotfiles"
       tags:
         - "dotfiles"
+
+    - role: "homebrew"
+      tags:
+        - "homebrew"
