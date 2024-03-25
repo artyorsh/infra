@@ -1,0 +1,26 @@
+---
+- name: "Ensure dotfiles repository is cloned locally"
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_repo_local_destination }}"
+    version: "master"
+
+- name: "Ensure all configured dotfiles are links"
+  command: "ls -F {{ item.dest }}"
+  failed_when: false
+  check_mode: false
+  changed_when: false
+  with_items: "{{ dotfiles_files }}"
+
+- name: "Link dotfiles into destionation folders"
+  ansible.builtin.file:
+    src: "{{ dotfiles_repo_local_destination }}/{{ item.src }}"
+    dest: "{{ item.dest }}"
+    force: true
+    state: "link"
+    mode: "0644"
+  with_items: "{{ dotfiles_files }}"
+
+- name: "Install vscode extensions"
+  ansible.builtin.shell: "cat {{ dotfiles_repo_local_destination }}/vscode/extensions | xargs -n1 code --install-extension"
+  # changed_when: false
