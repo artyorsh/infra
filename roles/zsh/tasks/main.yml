@@ -51,4 +51,4 @@
         line: "{{ item.replacer }}"
         state: "present"
       loop:
-        - { regexp: "^plugins=", replacer: "plugins=({{ zshrc_plugins }})" }
+        - { regexp: "^plugins=", replacer: "plugins=(git {{ zshrc_plugins }})" }
