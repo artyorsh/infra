@@ -1,0 +1,17 @@
+---
+- name: "Ensure zsh package installed"
+  ansible.builtin.package:
+    name: "zsh"
+    state: "present"
+  register: zsh_package_installed
+
+- name: "Set ZSH as default shell for {{ user_name }}"
+  block:
+    - name: "Write zsh to /etc/shells"
+      when: zsh_package_installed.changed
+      ansible.builtin.command: "echo $(which zsh) >> /etc/shells"
+      changed_when: zsh_package_installed.changed
+
+    - name: "Set ZSH as default shell for {{ user_name }}"
+      ansible.builtin.shell: "chsh -s $(which zsh) {{ user_name }}"
+      changed_when: zsh_package_installed.changed

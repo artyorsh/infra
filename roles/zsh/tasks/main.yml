@@ -1,58 +1,10 @@
 ---
-- name: "Ensure required packages exist"
-  ansible.builtin.package:
-    name:
-      - "git"
-      - "zsh"
-    state: "present"
-
-- name: "Set ZSH as default shell for {{ user_name }}"
-  block:
-    - name: "Write zsh to /etc/shells"
-      ansible.builtin.command: "echo $(which zsh) >> /etc/shells"
-      changed_when: false
-
-    - name: "Set ZSH as default shell for {{ user_name }}"
-      ansible.builtin.shell: "chsh -s $(which zsh) {{ user_name }}"
-
-- name: "Check if Oh My ZSH is installed"
-  ansible.builtin.stat:
-    path: "$HOME/.oh-my-zsh"
-  register: zsh_ohmyzsh_installed
+- name: "Install ZSH (if not macos)"
+  ansible.builtin.include_tasks: "zsh.yml"
+  when: ansible_distribution != "MacOSX"
 
 - name: "Install OhMyZSH"
-  become_user: "{{ user_name }}"
-  block:
-    - name: "Download installer"
-      ansible.builtin.get_url:
-        url: "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-        dest: "/tmp/install-ohmyzsh.sh"
-        mode: "0755"
+  ansible.builtin.include_tasks: "omz.yml"
 
-    - name: "Install Oh My ZSH"
-      ansible.builtin.command: "/tmp/install-ohmyzsh.sh --unattended"
-      changed_when: not zsh_ohmyzsh_installed.stat.exists
-  when: |
-    not zsh_ohmyzsh_installed.stat.exists
-
-- name: "Install plugins"
-  become_user: "{{ user_name}}"
-  block:
-    - name: "Install plugins"
-      ansible.builtin.git:
-        repo: "{{ item.repo }}"
-        dest: "$HOME/.oh-my-zsh/custom/plugins/{{ item.name }}"
-        force: true
-      loop: "{{ zsh_install_plugins }}"
-
-    - ansible.builtin.set_fact:
-        zshrc_plugins: "{{ zsh_install_plugins | map(attribute='name') | join(' ') }}"
-
-    - name: "Update .zshrc"
-      ansible.builtin.lineinfile:
-        dest: "$HOME/.zshrc"
-        regexp: "{{ item.regexp }}"
-        line: "{{ item.replacer }}"
-        state: "present"
-      loop:
-        - { regexp: "^plugins=", replacer: "plugins=(git {{ zshrc_plugins }})" }
+- name: "Install OhMyZSH plugins"
+  ansible.builtin.include_tasks: "omz-plugins.yml"
