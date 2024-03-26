@@ -6,10 +6,14 @@
       - "zsh"
     state: "present"
 
-- name: "Set ZSH as default shell"
-  ansible.builtin.user:
-    name: "{{ user_name }}"
-    shell: "/bin/zsh"
+- name: "Set ZSH as default shell for {{ user_name }}"
+  block:
+    - name: "Write zsh to /etc/shells"
+      ansible.builtin.command: "echo $(which zsh) >> /etc/shells"
+      changed_when: false
+
+    - name: "Set ZSH as default shell for {{ user_name }}"
+      ansible.builtin.shell: "chsh -s $(which zsh) {{ user_name }}"
 
 - name: "Check if Oh My ZSH is installed"
   ansible.builtin.stat:
