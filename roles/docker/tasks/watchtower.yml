@@ -2,7 +2,8 @@
 # https://containrrr.dev/watchtower/usage-overview/
 # https://containrrr.dev/watchtower/arguments/
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     watchtower_service_id: "watchtower"
     watchtower_http_port: 80
     watchtower_https_port: 443
@@ -11,17 +12,17 @@
 - name: "Run watchtower container"
   community.general.docker_container:
     name: "{{ watchtower_service_id }}"
-    image: "containrrr/watchtower:{{ watchtower_version }}"
+    image: "containrrr/watchtower:{{ docker_watchtower_version }}"
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"
     env:
       TZ: "{{ system_timezone }}"
-      WATCHTOWER_SCHEDULE: "{{ watchtower_schedule }}"
+      WATCHTOWER_SCHEDULE: "{{ docker_watchtower_schedule }}"
       WATCHTOWER_REMOVE_VOLUMES: "true"
       WATCHTOWER_NOTIFICATIONS: "slack"
-      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: "{{ watchtower_slack_webhook_url }}"
-      WATCHTOWER_DISABLE_CONTAINERS: "{{ watchtower_ignore_list | join(' ') }}"
+      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: "{{ docker_watchtower_slack_webhook_url }}"
+      WATCHTOWER_DISABLE_CONTAINERS: "{{ docker_watchtower_ignore_list | join(' ') }}"
       WATCHTOWER_NO_STARTUP_MESSAGE: "true"
     ports:
       - "{{ watchtower_https_port }}:3443"

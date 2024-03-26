@@ -1,7 +1,8 @@
 ---
 # https://hub.docker.com/r/fallenbagel/jellyseerr
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     jellyseerr_service_id: "jellyseerr"
     jellyseerr_root_dir: "{{ docker_dir }}/jellyseerr"
 

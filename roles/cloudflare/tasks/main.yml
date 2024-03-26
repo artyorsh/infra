@@ -1,4 +1,7 @@
 ---
-- ansible.builtin.include_tasks: "tunnel.yml"
-- ansible.builtin.include_tasks: "tunnel-ssh.yml"
+- name: "Install cloudflared"
+  ansible.builtin.include_tasks: "cloudflared.yml"
+
+- name: "Allow SSH via cloudflare tunnel"
   when: cloudflare_tunnel_ssh_enabled
+  ansible.builtin.include_tasks: "cloudflared-ssh.yml"

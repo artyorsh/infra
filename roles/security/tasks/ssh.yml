@@ -1,0 +1,13 @@
+---
+- name: "Authorize ssh key"
+  when: security_ssh_public_key is defined
+  ansible.posix.authorized_key:
+    user: "{{ system_user_name }}"
+    key: "{{ security_ssh_public_key }}"
+
+- name: "Update ssh.socket ListenStream"
+  ansible.builtin.lineinfile:
+    dest: "/lib/systemd/system/ssh.socket"
+    regexp: "#?ListenStream"
+    line: "ListenStream={{ security_ssh_port }}"
+    state: "present"

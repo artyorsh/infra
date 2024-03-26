@@ -3,8 +3,8 @@
 
 - name: "Configure host network"
   ansible.builtin.include_tasks: "wg-host.yml"
-  when: wg_host_mode_enabled
+  when: wireguard_host_mode_enabled
 
 - name: "Connect to host network"
   ansible.builtin.include_tasks: "wg-client.yml"
-  when: wg_client_mode_enabled
+  when: wireguard_client_mode_enabled

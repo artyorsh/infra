@@ -1,12 +1,14 @@
 - name: "For client mode, assert that tunnel file exists"
-  when: wg_client_mode_enabled
+  when: wireguard_client_mode_enabled
   block:
-    - ansible.builtin.stat:
-        path: "{{ wg_client_tunnel_file }}"
+    - name: "Get tunnel file stats"
+      ansible.builtin.stat:
+        path: "{{ wireguard_client_tunnel_file }}"
       register: wg_client_tunnel_file_stat
 
-    - ansible.builtin.assert:
+    - name: "Assert tunnel file exists"
+      ansible.builtin.assert:
         that: wg_client_tunnel_file_stat.stat.exists
         fail_msg: |
-          "Tunnel file does not exist at path {{ wg_client_tunnel_file }}"
-          "Please check the wg_client_tunnel_file variable"
+          "Tunnel file does not exist at path {{ wireguard_client_tunnel_file }}"
+          "Please check the wireguard_client_tunnel_file variable"

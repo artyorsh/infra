@@ -1,7 +1,9 @@
 ---
-# # https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#3-generate-a-short-lived-certificate-public-key
+# https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#3-generate-a-short-lived-certificate-public-key
+# https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#7-connect-as-a-user"
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     cf_certificate_public_key_file: "/etc/ssh/ca.pub"
 
 - name: "Copy short-lived certificate public key"
@@ -10,6 +12,7 @@
     line: "{{ cf_certificate_public_key }}"
     state: "present"
     create: true
+    mode: "0644"
 
 - name: "(SSH) allow public key authentication"
   block:
@@ -26,10 +29,7 @@
         insertafter: "#?PubkeyAuthentication"
         line: "TrustedUserCAKeys {{ cf_certificate_public_key_file }}"
 
-    - ansible.builtin.service:
+    - name: "Restart ssh service"
+      ansible.builtin.service:
         name: "ssh"
         state: "restarted"
-
-- name: "Print client configuration follow-up"
-  ansible.builtin.debug:
-    msg: "Done. Make sure to configure clients: https://developers.cloudflare.com/cloudflare-one/identity/users/short-lived-certificates#7-connect-as-a-user"

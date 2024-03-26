@@ -1,5 +1,5 @@
 ---
-- name: "Mac"
+- name: "Provision mac host"
   hosts: "mac"
 
   roles:

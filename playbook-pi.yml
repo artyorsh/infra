@@ -1,5 +1,6 @@
 ---
-- hosts: "pi"
+- name: "Provision pi host"
+  hosts: "pi"
   become: true
 
   roles:

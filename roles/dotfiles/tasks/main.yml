@@ -22,5 +22,8 @@
   with_items: "{{ dotfiles_files }}"
 
 - name: "Install vscode extensions"
-  ansible.builtin.shell: "cat {{ dotfiles_repo_local_destination }}/vscode/extensions | xargs -n1 code --install-extension"
-  # changed_when: false
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      cat {{ dotfiles_repo_local_destination }}/vscode/extensions | xargs -n1 code --install-extension
+  changed_when: false

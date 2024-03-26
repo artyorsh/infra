@@ -1,19 +1,20 @@
 ---
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     wgeasy_root_dir: "{{ docker_dir }}/wg-easy"
 
 - name: "Create docker directories"
   ansible.builtin.file:
     path: "{{ wgeasy_root_dir }}"
     state: "directory"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0644
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
+    mode: "0644"
 
 - name: "Make sure the Wireguard container is created and running"
   community.general.docker_container:
     name: "wg-easy"
-    image: "ghcr.io/wg-easy/wg-easy:{{ wierguard_wgeasy_version }}"
+    image: "ghcr.io/wg-easy/wg-easy:{{ wireguard_wgeasy_version }}"
     networks:
       - name: "{{ docker_network_name }}"
     sysctls:
@@ -25,11 +26,11 @@
     state: "started"
     env:
       "WG_HOST": "{{ ansible_host }}"
-      "WG_DEFAULT_ADDRESS": "{{ wg_host_network_address }}"
-      "WG_PORT": "{{ wg_host_udp_port | string }}"
+      "WG_DEFAULT_ADDRESS": "{{ wireguard_host_network_address }}"
+      "WG_PORT": "{{ wireguard_host_udp_port | string }}"
       "WG_PERSISTENT_KEEPALIVE": "25"
     ports:
-      - "{{ wg_host_udp_port }}:51820/udp"
+      - "{{ wireguard_host_udp_port }}:51820/udp"
     volumes:
       - "{{ wgeasy_root_dir }}:/etc/wireguard"
     restart_policy: "unless-stopped"

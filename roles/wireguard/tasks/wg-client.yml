@@ -3,24 +3,29 @@
   ansible.builtin.package:
     name: "wireguard"
     state: "present"
-  
+
 - name: "Copy tunnel file"
   ansible.builtin.copy:
-    src: "{{ wg_client_tunnel_file }}"
+    src: "{{ wireguard_client_tunnel_file }}"
     dest: "/etc/wireguard/wg-client.conf"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0770
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
+    mode: "0770"
 
 - name: "Make sure wireguard connection is established"
   block:
-    - ansible.builtin.shell: "wg-quick down wg-client"
-      ignore_errors: true
-    - ansible.builtin.shell: "wg-quick up wg-client"
+    - name: "Disconnect tunnel"
+      ansible.builtin.command: "wg-quick down wg-client"
+      failed_when: false
+      changed_when: false
+
+    - name: "Connect tunnel"
+      ansible.builtin.command: "wg-quick up wg-client"
+      changed_when: false
 
 - name: "Create an autostart cron"
   ansible.builtin.cron:
     name: "Turn on wireguard"
-    user: "{{ user_name }}"
+    user: "{{ system_user_name }}"
     special_time: "reboot"
     job: "sleep 10; wg-quick up wg-client"

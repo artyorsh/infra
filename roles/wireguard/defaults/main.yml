@@ -1,11 +1,11 @@
 ---
 # https://github.com/wg-easy/wg-easy/pkgs/container/wg-easy/versions?filters%5Bversion_type%5D=tagged
-wierguard_wgeasy_version: "latest"
+wireguard_wgeasy_version: "latest"
 wireguard_service_id: "wireguard"
 
-wg_host_mode_enabled: true
-wg_host_network_address: "10.8.0.x"
-wg_host_udp_port: 51820
+wireguard_host_mode_enabled: true
+wireguard_host_network_address: "10.8.0.x"
+wireguard_host_udp_port: 51820
 
-wg_client_mode_enabled: false
-wg_client_tunnel_file: "/path/to/wg0.conf"
+wireguard_client_mode_enabled: false
+wireguard_client_tunnel_file: "/path/to/wg0.conf"

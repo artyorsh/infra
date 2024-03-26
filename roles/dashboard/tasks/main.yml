@@ -4,4 +4,5 @@
     name: "docker"
     tasks_from: "register-uid.yml"
 
-- ansible.builtin.include_tasks: "homarr.yml"
+- name: "Install Homarr"
+  ansible.builtin.include_tasks: "homarr.yml"

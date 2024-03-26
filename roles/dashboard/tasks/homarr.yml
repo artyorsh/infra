@@ -1,7 +1,8 @@
 ---
 # https://github.com/linuxserver/docker-homarr#parameters
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     homarr_service_id: "homarr"
     homarr_root_dir: "{{ docker_dir }}/homarr"
 
@@ -9,9 +10,9 @@
   ansible.builtin.file:
     path: "{{ homarr_root_dir }}/{{ item }}"
     state: "directory"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0774
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
+    mode: "0774"
   loop:
     - "configs"
     - "icons"

@@ -1,8 +1,8 @@
 ---
-media_downloads_dir: "{{ smb_share_local_dir }}/Downloads"
-media_movies_dir: "{{ smb_share_local_dir }}/Movies"
-media_tvseries_dir: "{{ smb_share_local_dir }}/TV"
-media_photos_dir: "{{ smb_share_local_dir }}/Photos"
+media_downloads_dir: "{{ storage_smb_share_local_dir }}/Downloads"
+media_movies_dir: "{{ storage_smb_share_local_dir }}/Movies"
+media_tvseries_dir: "{{ storage_smb_share_local_dir }}/TV"
+media_photos_dir: "{{ storage_smb_share_local_dir }}/Photos"
 
 # https://hub.docker.com/r/linuxserver/transmission/tags
 media_transmission_version: "latest"

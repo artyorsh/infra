@@ -1,24 +1,24 @@
 ---
 - name: "Create a login user"
   ansible.builtin.user:
-    name: "{{ user_name }}"
-    password: "{{ user_password | string | password_hash('sha512') }}"
+    name: "{{ system_user_name }}"
+    password: "{{ system_user_password | string | password_hash('sha512') }}"
     groups:
       - "sudo"
       - "users"
     state: "present"
     append: true
 
-- name: "Ensure group {{ user_name }} exists"
+- name: "Ensure group exists: {{ system_user_name }}"
   ansible.builtin.group:
-    name: "{{ user_name }}"
+    name: "{{ system_user_name }}"
     state: "present"
 
 - name: "Chmod the user home directory"
   ansible.builtin.file:
-    path: "/home/{{ user_name }}"
+    path: "/home/{{ system_user_name }}"
     state: "directory"
-    mode: 0755
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     recurse: true
+    mode: "0755"

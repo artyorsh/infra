@@ -14,5 +14,5 @@ home_mosquitto_version: "latest"
 home_mosquitto_port: 1883
 home_mosquitto_websocket_port: 9001
 # https://mosquitto.org/documentation/authentication-methods
-home_mosquitto_user: "{{ user_name }}"
-home_mosquitto_password: "{{ user_password }}"
+home_mosquitto_user: "{{ system_user_name }}"
+home_mosquitto_password: "{{ system_user_password }}"

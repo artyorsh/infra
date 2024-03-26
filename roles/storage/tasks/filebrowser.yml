@@ -1,30 +1,31 @@
 ---
 # https://docs.linuxserver.io/images/docker-filebrowser/#parameters
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     filebrowser_service_id: "filebrowser"
     filebrowser_config_dir: "{{ docker_dir }}/filebrowser"
 
 - name: "Make sure config directory exists"
   ansible.builtin.file:
     path: "{{ filebrowser_config_dir }}"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0774
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     state: "directory"
+    mode: "0774"
 
 - name: "Create database"
   ansible.builtin.file:
     path: "{{ filebrowser_config_dir }}/filebrowser.db"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0774
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     state: "touch"
+    mode: "0774"
 
 - name: "Run filebrowser container"
   community.general.docker_container:
     name: "{{ filebrowser_service_id }}"
-    image: "filebrowser/filebrowser:{{ filebrowser_version }}"
+    image: "filebrowser/filebrowser:{{ storage_filebrowser_version }}"
     networks:
       - name: "{{ docker_network_name }}"
     state: "started"
@@ -33,8 +34,8 @@
       PUID: "{{ docker_uid }}"
       PGID: "{{ docker_gid }}"
     ports:
-      - "{{ filebrowser_port }}:80"
+      - "{{ storage_filebrowser_port }}:80"
     volumes:
-      - "{{ filebrowser_root_dir }}:/srv"
+      - "{{ storage_filebrowser_root_dir }}:/srv"
       - "{{ filebrowser_config_dir }}/filebrowser.db:/database.db"
     restart_policy: "unless-stopped"

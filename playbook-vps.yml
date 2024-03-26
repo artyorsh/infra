@@ -1,5 +1,6 @@
 ---
-- hosts: "vps"
+- name: "Provision vps host"
+  hosts: "vps"
   become: true
 
   roles:

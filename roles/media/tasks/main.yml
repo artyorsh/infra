@@ -4,16 +4,23 @@
     name: "docker"
     tasks_from: "register-uid.yml"
 
-- ansible.builtin.include_tasks: "transmission.yml"
+- name: "Install Transmission"
+  ansible.builtin.include_tasks: "transmission.yml"
 
-- ansible.builtin.include_tasks: "prowlarr.yml"
+- name: "Install Prowlarr"
+  ansible.builtin.include_tasks: "prowlarr.yml"
 
-- ansible.builtin.include_tasks: "radarr.yml"
+- name: "Install Radarr"
+  ansible.builtin.include_tasks: "radarr.yml"
 
-- ansible.builtin.include_tasks: "sonarr.yml"
+- name: "Install Sonarr"
+  ansible.builtin.include_tasks: "sonarr.yml"
 
-- ansible.builtin.include_tasks: "jellyfin.yml"
+- name: "Install Jellyfin"
+  ansible.builtin.include_tasks: "jellyfin.yml"
 
-- ansible.builtin.include_tasks: "jellyseerr.yml"
+- name: "Install Jellyseerr"
+  ansible.builtin.include_tasks: "jellyseerr.yml"
 
-- ansible.builtin.include_tasks: "immich.yml"
+- name: "Install Immich"
+  ansible.builtin.include_tasks: "immich.yml"
