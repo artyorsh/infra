@@ -9,7 +9,7 @@
     path: "{{ rssbridge_root_dir }}/config"
     state: "directory"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0664"
 
 - name: "Copy bridge whitelist"
@@ -17,7 +17,7 @@
     src: "files/rssbridge-whitelist.txt"
     dest: "{{ rssbridge_root_dir }}/config/whitelist.txt"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0664"
 
 - name: "Run RSSBridge container"

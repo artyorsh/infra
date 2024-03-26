@@ -8,7 +8,7 @@
     src: "docker-backup.sh.j2"
     dest: "{{ docker_backup_script }}"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0740"
 
 - name: "Create a backup cron"

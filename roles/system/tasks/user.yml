@@ -19,6 +19,6 @@
     path: "/home/{{ system_user_name }}"
     state: "directory"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     recurse: true
     mode: "0755"

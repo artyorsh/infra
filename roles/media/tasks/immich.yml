@@ -20,7 +20,7 @@
     path: "{{ item }}"
     state: "directory"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0774"
   loop:
     - "{{ immich_root_dir }}"
@@ -32,7 +32,7 @@
     src: "immich.env.j2"
     dest: "{{ immich_root_dir }}/.env"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0750"
 
 - name: "Run redis container"

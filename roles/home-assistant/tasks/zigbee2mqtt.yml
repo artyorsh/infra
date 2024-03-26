@@ -11,7 +11,7 @@
     path: "{{ zigbee2mqtt_root_dir }}"
     state: "directory"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0770"
 
 - name: "Register mqtt broker address"
@@ -30,7 +30,7 @@
     src: "zigbee2mqtt-configuration.yaml.j2"
     dest: "{{ zigbee2mqtt_root_dir }}/configuration.yaml"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0700"
 
 - name: "Run zigbee2mqtt container"

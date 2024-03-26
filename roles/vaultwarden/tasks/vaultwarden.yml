@@ -8,7 +8,7 @@
   ansible.builtin.file:
     path: "{{ vaultwarden_config_dir }}"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     state: "directory"
     mode: "0774"
 
@@ -17,7 +17,7 @@
     src: "vaultwarden.env.j2"
     dest: "{{ vaultwarden_config_dir }}/.env"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0750"
 
 - name: "Run vaultwarden container"

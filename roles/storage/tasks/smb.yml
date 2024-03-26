@@ -8,7 +8,7 @@
   ansible.builtin.file:
     path: "{{ storage_smb_share_local_dir }}"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "{{ smb_share_permissions }}"
     state: "directory"
 
@@ -17,7 +17,7 @@
     src: "smb-credentials.j2"
     dest: "{{ smb_share_cerdentials_file }}"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0440"
 
 - name: "Mount SMB share"
