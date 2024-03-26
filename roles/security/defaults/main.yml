@@ -14,14 +14,14 @@ security_ssh_gss_api_authentication: "no"
 security_ssh_x11_forwarding: "no"
 
 security_ssh_allowed_users:
-  - "{{ user_name }}"
+  - "{{ system_user_name }}"
 
 security_sudoers_passwordless:
-  - "{{ user_name }}"
+  - "{{ system_user_name }}"
 
 security_autoupdate_reboot_time: "03:00"
 
-security_autoupdate_mail_to: "{{ user_email }}"
+security_autoupdate_mail_to: "{{ system_user_email }}"
 security_autoupdate_mail_on_error: true
 
 security_fail2ban_enabled: true

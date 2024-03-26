@@ -1,13 +1,14 @@
 ---
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     smb_share_permissions: "0740"
-    smb_share_cerdentials_file: "/home/{{ user_name }}/.smb"
+    smb_share_cerdentials_file: "/home/{{ system_user_name }}/.smb"
 
 - name: "Ensure media directory exists"
   ansible.builtin.file:
-    path: "{{ smb_share_local_dir }}"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    path: "{{ storage_smb_share_local_dir }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "{{ smb_share_permissions }}"
     state: "directory"
 
@@ -15,15 +16,15 @@
   ansible.builtin.template:
     src: "smb-credentials.j2"
     dest: "{{ smb_share_cerdentials_file }}"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0440
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
+    mode: "0440"
 
 - name: "Mount SMB share"
   ansible.posix.mount:
     boot: true
-    src: "{{ smb_share_address }}"
-    path: "{{ smb_share_local_dir }}"
+    src: "{{ storage_smb_share_address }}"
+    path: "{{ storage_smb_share_local_dir }}"
     state: "mounted"
     fstype: "cifs"
     opts: "credentials={{ smb_share_cerdentials_file }},uid={{ docker_uid }},gid={{ docker_gid }},file_mode={{ smb_share_permissions }},dir_mode={{ smb_share_permissions }},x-systemd.automount"

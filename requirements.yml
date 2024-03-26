@@ -1,18 +1,18 @@
 ---
 roles:
   - name: "geerlingguy.docker"
-    src: https://github.com/geerlingguy/ansible-role-docker
+    src: "https://github.com/geerlingguy/ansible-role-docker"
 
   - name: "geerlingguy.security"
-    src: https://github.com/geerlingguy/ansible-role-security
+    src: "https://github.com/geerlingguy/ansible-role-security"
 
-  - name: elliotweiser.osx-command-line-tools
+  - name: "elliotweiser.osx-command-line-tools"
 
 collections:
-  - name: https://github.com/ansible-collections/community.general
-    type: git
+  - name: "https://github.com/ansible-collections/community.general"
+    type: "git"
 
-  - name: https://github.com/ansible-collections/ansible.posix
-    type: git
+  - name: "https://github.com/ansible-collections/ansible.posix"
+    type: "git"
 
-  - name: geerlingguy.mac
+  - name: "geerlingguy.mac"

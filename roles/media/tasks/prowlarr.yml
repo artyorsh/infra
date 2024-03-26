@@ -1,7 +1,8 @@
 ---
 # https://github.com/linuxserver/docker-prowlarr#parameters
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     prowlarr_service_id: "prowlarr"
     prowlarr_root_dir: "{{ docker_dir }}/prowlarr"
 

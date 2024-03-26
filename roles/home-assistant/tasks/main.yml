@@ -8,8 +8,11 @@
   community.general.docker_network:
     name: "{{ home_network_name }}"
 
-- ansible.builtin.include_tasks: "home-assistant.yml"
+- name: "Install HomeAssistant"
+  ansible.builtin.include_tasks: "home-assistant.yml"
 
-- ansible.builtin.include_tasks: "mosquitto.yml"
+- name: "Install Mosquitto"
+  ansible.builtin.include_tasks: "mosquitto.yml"
 
-- ansible.builtin.include_tasks: "zigbee2mqtt.yml"
+- name: "Install Zigbee2MQTT"
+  ansible.builtin.include_tasks: "zigbee2mqtt.yml"

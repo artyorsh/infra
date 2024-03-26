@@ -1,0 +1,16 @@
+---
+- name: "Ensure UFW is not installed"
+  block:
+    - name: "Check if UFW is installed" # noqa: command-instead-of-module
+      ansible.builtin.command: "service ufw status"
+      register: ufw_installed
+      ignore_errors: true
+      changed_when: false
+      check_mode: false
+
+    - name: "Stop UFW (when not installed)"
+      when: ufw_installed.rc == 0
+      ansible.builtin.service:
+        name: "ufw"
+        state: "stopped"
+        enabled: false

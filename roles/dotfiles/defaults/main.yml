@@ -3,19 +3,32 @@ dotfiles_repo: "https://github.com/artyorsh/dotfiles.git"
 dotfiles_repo_local_destination: "$HOME/Documents/dotfiles"
 
 dotfiles_files:
-  - { src: ".vimrc", dest: "$HOME/.vimrc" }
-  - { src: "Brewfile", dest: "$HOME/Brewfile" }
-  - { src: "gpg-agent.conf", dest: "$HOME/.gnupg/gpg-agent.conf" }
-  - { src: ".gitconfig", dest: "$HOME/.gitconfig" }
-  - { src: ".gitignore_global", dest: "$HOME/.gitignore_global" }
-  - { src: "gh_config.yml", dest: "$HOME/.config/gh/config.yml" }
-  - {
-      src: "vscode/settings.json",
-      dest: "$HOME/Library/Application Support/Code/User/settings.json",
-    }
-  - {
-      src: "vscode/keybindings.json",
-      dest: "$HOME/Library/Application Support/Code/User/keybindings.json",
-    }
-  - { src: ".zshrc", dest: "$HOME/.zshrc" }
-  - { src: ".zprofile", dest: "$HOME/.zprofile" }
+  - src: ".vimrc"
+    dest: "$HOME/.vimrc"
+
+  - src: "Brewfile"
+    dest: "$HOME/Brewfile"
+
+  - src: "gpg-agent.conf"
+    dest: "$HOME/.gnupg/gpg-agent.conf"
+
+  - src: ".gitconfig"
+    dest: "$HOME/.gitconfig"
+
+  - src: ".gitignore_global"
+    dest: "$HOME/.gitignore_global"
+
+  - src: "gh_config.yml"
+    dest: "$HOME/.config/gh/config.yml"
+
+  - src: "vscode/settings.json"
+    dest: "$HOME/Library/Application Support/Code/User/settings.json"
+
+  - src: "vscode/keybindings.json"
+    dest: "$HOME/Library/Application Support/Code/User/keybindings.json"
+
+  - src: ".zshrc"
+    dest: "$HOME/.zshrc"
+
+  - src: ".zprofile"
+    dest: "$HOME/.zprofile"

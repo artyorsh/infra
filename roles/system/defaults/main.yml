@@ -2,6 +2,6 @@
 system_locale: "en_US.UTF-8"
 system_timezone: "Etc/UTC"
 
-user_name: "{{ ansible_user }}"
-user_group: "{{ user_name }}"
-user_email: "{{ user_name }}@example.com"
+system_user_name: "{{ ansible_user }}"
+system_user_group: "{{ system_user_name }}"
+system_user_email: "{{ system_user_name }}@example.com"

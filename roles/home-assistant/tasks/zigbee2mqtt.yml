@@ -1,7 +1,8 @@
 # https://www.zigbee2mqtt.io/guide/installation/02_docker.html
 # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html#parameter-devices
 ---
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     zigbee2mqtt_service_id: "zigbee2mqtt"
     zigbee2mqtt_root_dir: "{{ docker_dir }}/zigbee2mqtt"
 
@@ -9,25 +10,27 @@
   ansible.builtin.file:
     path: "{{ zigbee2mqtt_root_dir }}"
     state: "directory"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0770"
 
-- name: "Register {{ mosquitto_service_id }} ip address"
+- name: "Register mqtt broker address"
   block:
-    - community.docker.docker_container_info:
+    - name: "Get mosquitto container info"
+      community.docker.docker_container_info:
         name: "{{ mosquitto_service_id }}"
       register: mosquitto_container_info
 
-    - ansible.builtin.set_fact:
+    - name: "Set mosquitto container IP in mqtt broker address"
+      ansible.builtin.set_fact:
         home_zigbee2mqtt_broker_address: "{{ mosquitto_container_info.container.NetworkSettings.Networks[home_network_name].IPAddress }}"
 
 - name: "Template configuration.yml"
   ansible.builtin.template:
     src: "zigbee2mqtt-configuration.yaml.j2"
     dest: "{{ zigbee2mqtt_root_dir }}/configuration.yaml"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0700"
 
 - name: "Run zigbee2mqtt container"

@@ -3,13 +3,14 @@
 # https://immich.app/docs/install/environment-variables
 # https://immich.app/docs/developer/architecture/#server
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     immich_service_id: "immich"
     immich_root_dir: "{{ docker_dir }}/immich"
     immich_upload_dir: "{{ media_photos_dir }}"
     immich_server_port: "{{ media_immich_port }}"
-    immich_user: "{{ user_name }}"
-    immich_password: "{{ user_password }}"
+    immich_user: "{{ system_user_name }}"
+    immich_password: "{{ system_user_password }}"
     immich_localtime_dir: "/etc/localtime"
     immich_redis_version: "7.2.4-alpine" # https://hub.docker.com/_/redis/tags?page=1&name=alpine
     immich_db_version: "pg14-v0.2.0" # https://hub.docker.com/r/tensorchord/pgvecto-rs/tags
@@ -18,8 +19,8 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: "directory"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0774"
   loop:
     - "{{ immich_root_dir }}"
@@ -30,8 +31,8 @@
   ansible.builtin.template:
     src: "immich.env.j2"
     dest: "{{ immich_root_dir }}/.env"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0750"
 
 - name: "Run redis container"

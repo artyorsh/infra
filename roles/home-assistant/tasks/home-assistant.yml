@@ -7,7 +7,8 @@
 #
 # HomeKit: https://www.home-assistant.io/integrations/homekit/
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     homeassistant_service_id: "homeassistant"
     homeassistant_root_dir: "{{ docker_dir }}/homeassistant"
 
@@ -15,17 +16,19 @@
   ansible.builtin.file:
     path: "{{ homeassistant_root_dir }}"
     state: "directory"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0770"
 
 - name: "Permit cloudflare access"
   block:
-    - community.docker.docker_container_info:
+    - name: "Get cloudflare container info"
+      community.docker.docker_container_info:
         name: "cloudflare"
       register: cloudflare_container_info
 
-    - ansible.builtin.set_fact:
+    - name: "Set cloudflare container IP in trusted proxies"
+      ansible.builtin.set_fact:
         home_homeassistant_trusted_proxies:
           - desc: "cloudflare@{{ home_network_name }}"
             address: "{{ cloudflare_container_info.container.NetworkSettings.Networks[home_network_name].IPAddress }}"
@@ -34,8 +37,8 @@
   ansible.builtin.template:
     src: "ha-configuration.yaml.j2"
     dest: "{{ homeassistant_root_dir }}/configuration.yaml"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0644"
 
 - name: "Run homeassistant container"

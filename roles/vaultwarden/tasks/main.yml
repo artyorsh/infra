@@ -1,6 +1,8 @@
 ---
-- ansible.builtin.include_role:
+- name: "Register users' UID and GID"
+  ansible.builtin.include_role:
     name: "docker"
     tasks_from: "register-uid.yml"
 
-- ansible.builtin.include_tasks: "vaultwarden.yml"
+- name: "Install Vaultwarden"
+  ansible.builtin.include_tasks: "vaultwarden.yml"

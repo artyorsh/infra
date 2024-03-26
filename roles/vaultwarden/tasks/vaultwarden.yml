@@ -1,22 +1,23 @@
 ---
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     vaultwarden_service_id: "vaultwarden"
     vaultwarden_config_dir: "{{ docker_dir }}/vaultwarden"
 
 - name: "Make sure config directory exists"
   ansible.builtin.file:
     path: "{{ vaultwarden_config_dir }}"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: 0774
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     state: "directory"
+    mode: "0774"
 
 - name: "Template the env file"
   ansible.builtin.template:
     src: "vaultwarden.env.j2"
     dest: "{{ vaultwarden_config_dir }}/.env"
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
+    owner: "{{ system_user_name }}"
+    group: "{{ system_user_name }}"
     mode: "0750"
 
 - name: "Run vaultwarden container"

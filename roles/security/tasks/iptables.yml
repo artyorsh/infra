@@ -1,27 +1,15 @@
 ---
-- block:
-  - name: "Ensure UFW is not installed"
-    ansible.builtin.command: "service ufw status"
-      register: ufw_installed
-      ignore_errors: true
-      changed_when: false
-      check_mode: false
-
-  - name: "Stop UFW (when not installed)"
-    ansible.builtin.service:
-      name: "ufw"
-      state: "stopped"
-      enabled: false
-    when: ufw_installed.rc == 0
-
 - name: "Define ipv4 interface for Docker"
   block:
-    - ansible.builtin.set_fact:
+    - name: "Define ipv4 interface for Docker (wireguard host)"
+      when: wireguard_host_mode_enabled
+      ansible.builtin.set_fact:
         security_iptables_docker_interface: "{{ ansible_default_ipv4.interface }}"
-      when: wg_host_mode_enabled
-    - ansible.builtin.set_fact:
+
+    - name: "Define ipv4 interface for Docker (wireguard client)"
+      when: wireguard_client_mode_enabled
+      ansible.builtin.set_fact:
         security_iptables_docker_interface: "ens33"
-      when: wg_client_mode_enabled
 
 - name: "Template iptables rules"
   ansible.builtin.template:

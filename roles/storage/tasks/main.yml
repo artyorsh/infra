@@ -4,7 +4,9 @@
     name: "docker"
     tasks_from: "register-uid.yml"
 
-- ansible.builtin.include_tasks: "smb.yml"
-  when: smb_share_address is defined
+- name: "Connect SMB Share"
+  when: storage_smb_share_address is defined
+  ansible.builtin.include_tasks: "smb.yml"
 
-- ansible.builtin.include_tasks: "filebrowser.yml"
+- name: "Install Filebrowser"
+  ansible.builtin.include_tasks: "filebrowser.yml"

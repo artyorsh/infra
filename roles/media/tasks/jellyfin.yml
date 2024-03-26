@@ -2,7 +2,8 @@
 # https://github.com/linuxserver/docker-jellyfin#parameters
 # https://jellyfin.org/docs/general/networking/#port-bindings
 
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     jellyfin_service_id: "jellyfin"
     jellyfin_root_dir: "{{ docker_dir }}/jellyfin"
 
@@ -17,7 +18,6 @@
       TZ: "{{ system_timezone }}"
       PUID: "{{ docker_uid }}"
       PGID: "{{ docker_gid }}"
-      JELLYFIN_PublishedServerUrl: "{{ remote_host_name | default('ansible_host') }}"
     ports:
       - "{{ media_jellyfin_port }}:8096"
       - "{{ media_jellyfin_discovery_port }}:7359/udp"

@@ -1,10 +1,12 @@
 ---
-- ansible.builtin.set_fact:
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
     cloudflare_service_id: "cloudflare"
     cloudflare_root_dir: "{{ docker_dir }}/cloudflare"
 
-- ansible.builtin.set_fact:
-    tunnel_networks: "{{ tunnel_networks | default([]) + [{ 'name': item }] }}"
+- name: "Prepare task variables"
+  ansible.builtin.set_fact:
+    tunnel_networks: "{{ tunnel_networks | default([]) + [{'name': item}] }}"
   loop: "{{ cloudflare_tunnel_networks }}"
 
 - name: "Run cloudflared container"

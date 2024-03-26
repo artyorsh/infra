@@ -1,11 +1,14 @@
 ---
-- block:
-  - ansible.builtin.getent:
-      database: passwd
-    no_log: true
+- name: "Register users' UID and GID"
+  block:
+    - name: "Get passwd"
+      ansible.builtin.getent:
+        database: "passwd"
+      no_log: true
 
-  - ansible.builtin.set_fact:
-      docker_uid: "{{ getent_passwd[item].1 }}"
-      docker_gid: "{{ getent_passwd[item].2 }}"
-    loop:
-      - "{{ user_name }}"
+    - name: "Set docker_uid and docker_git facts"
+      ansible.builtin.set_fact:
+        docker_uid: "{{ getent_passwd[item].1 }}"
+        docker_gid: "{{ getent_passwd[item].2 }}"
+      loop:
+        - "{{ system_user_name }}"
