@@ -17,7 +17,7 @@
     path: "{{ homeassistant_root_dir }}"
     state: "directory"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0770"
 
 - name: "Permit cloudflare access"
@@ -38,7 +38,7 @@
     src: "ha-configuration.yaml.j2"
     dest: "{{ homeassistant_root_dir }}/configuration.yaml"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0644"
 
 - name: "Run homeassistant container"

@@ -12,7 +12,7 @@
     path: "{{ media_downloads_dir }}"
     state: "directory"
     owner: "{{ system_user_name }}"
-    group: "{{ system_user_name }}"
+    group: "{{ system_user_group }}"
     mode: "0774"
 
 - name: "Run Transmission container"
