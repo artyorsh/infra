@@ -1,0 +1,14 @@
+---
+- name: "Install Oh My ZSH plugins"
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "$HOME/.oh-my-zsh/custom/plugins/{{ item.name }}"
+    version: "{{ item.version }}"
+  loop: "{{ zsh_install_plugins }}"
+
+- name: "Update .zshrc"
+  ansible.builtin.lineinfile:
+    dest: "$HOME/.zshrc"
+    regexp: "^plugins="
+    line: "plugins=(git {{ zsh_install_plugins | map(attribute='name') | join(' ') }})"
+    state: "present"
