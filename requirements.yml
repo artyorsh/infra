@@ -15,6 +15,9 @@ collections:
   - name: "https://github.com/ansible-collections/ansible.posix"
     type: "git"
 
+  - name: "https://github.com/artyorsh/ansible-collection-yams"
+    type: "git"
+
   - name: "https://github.com/artyorsh/ansible-collection-mobiledev"
     type: "git"
 

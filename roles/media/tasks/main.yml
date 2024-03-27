@@ -4,23 +4,22 @@
     name: "docker"
     tasks_from: "register-uid.yml"
 
-- name: "Install Transmission"
-  ansible.builtin.include_tasks: "transmission.yml"
+- name: "Bootstrap media server"
+  ansible.builtin.include_role:
+    name: "artyorsh.yams.yams"
+  vars:
+    yams_user:
+      name: "{{ system_user_name }}"
+      password: "{{ system_user_password }}"
 
-- name: "Install Prowlarr"
-  ansible.builtin.include_tasks: "prowlarr.yml"
+    yams_dir:
+      downloads: "{{ storage_smb_share_local_dir }}/Downloads"
+      photos: "{{ storage_smb_share_local_dir }}/Photos"
+      movies: "{{ storage_smb_share_local_dir }}/Movies"
+      tvshows: "{{ storage_smb_share_local_dir }}/TV"
 
-- name: "Install Radarr"
-  ansible.builtin.include_tasks: "radarr.yml"
-
-- name: "Install Sonarr"
-  ansible.builtin.include_tasks: "sonarr.yml"
-
-- name: "Install Jellyfin"
-  ansible.builtin.include_tasks: "jellyfin.yml"
-
-- name: "Install Jellyseerr"
-  ansible.builtin.include_tasks: "jellyseerr.yml"
-
-- name: "Install Immich"
-  ansible.builtin.include_tasks: "immich.yml"
+    yams_docker_settings:
+      network: "{{ docker_network_name }}"
+      puid: "{{ docker_uid }}"
+      pgid: "{{ docker_gid }}"
+      tz: "{{ system_timezone }}"
