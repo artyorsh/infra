@@ -16,3 +16,10 @@
     - role: "homebrew"
       tags:
         - "homebrew"
+
+  tasks:
+    - name: "Configure mobile dev environment"
+      ansible.builtin.include_role:
+        name: "artyorsh.mobiledev.rn"
+      vars:
+        rn_shell_paths_file: "$HOME/.zprofile"
