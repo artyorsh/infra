@@ -1,0 +1,38 @@
+---
+- name: "Register users' UID and GID"
+  ansible.builtin.include_role:
+    name: "docker"
+    tasks_from: "register-uid.yml"
+
+- name: "Create smarthome network"
+  community.general.docker_network:
+    name: "{{ smarthome_network_name }}"
+
+- name: "Permit cloudflare access"
+  block:
+    - name: "Get cloudflare container info"
+      community.docker.docker_container_info:
+        name: "cloudflare"
+      register: cloudflare_container_info
+
+    - name: "Set cloudflare container IP in trusted proxies"
+      ansible.builtin.set_fact:
+        homeassistant_trusted_proxies:
+          - desc: "cloudflare@{{ smarthome_network_name }}"
+            address: "{{ cloudflare_container_info.container.NetworkSettings.Networks[smarthome_network_name].IPAddress }}"
+
+- name: "Bootstrap smarthome server"
+  ansible.builtin.include_role:
+    name: "artyorsh.smarthome.smarthome"
+  vars:
+    smarthome_user:
+      name: "{{ system_user_name }}"
+      password: "{{ system_user_password }}"
+
+    smarthome_zigbee_coordinator: "/dev/ttyUSB0"
+
+    smarthome_docker_settings:
+      network: "{{ smarthome_network_name }}"
+      puid: "{{ docker_uid }}"
+      pgid: "{{ docker_gid }}"
+      tz: "{{ system_timezone }}"
