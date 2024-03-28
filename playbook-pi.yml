@@ -44,6 +44,6 @@
       tags:
         - "vaultwarden"
 
-    - role: "home-assistant"
+    - role: "smarthome"
       tags:
-        - "home-assistant"
+        - "smarthome"
