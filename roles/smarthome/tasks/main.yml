@@ -1,9 +1,4 @@
 ---
-- name: "Register users' UID and GID"
-  ansible.builtin.include_role:
-    name: "docker"
-    tasks_from: "register-uid.yml"
-
 - name: "Create smarthome network"
   community.general.docker_network:
     name: "{{ smarthome_network_name }}"
@@ -33,6 +28,6 @@
 
     smarthome_docker_settings:
       network: "{{ smarthome_network_name }}"
-      puid: "{{ docker_uid }}"
-      pgid: "{{ docker_gid }}"
+      puid: "{{ system_user_uid }}"
+      pgid: "{{ system_user_gid }}"
       tz: "{{ system_timezone }}"

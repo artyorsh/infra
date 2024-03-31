@@ -3,5 +3,4 @@
 cloudflare_tunnel_version: "latest"
 cloudflare_tunnel_ssh_enabled: true
 
-cloudflare_tunnel_networks:
-  - "{{ docker_network_name }}"
+cloudflare_tunnel_networks: []
