@@ -41,6 +41,11 @@ security_firewall_allow_rules:
     proto: "tcp"
     port: "{{ security_ssh_port }}"
 
+  # https://www.home-assistant.io/integrations/homekit/#firewall
+  - desc: "Allow mDNS (for HomeKit)"
+    proto: "udp"
+    port: "5353"
+
   # Should not be changed to "{{ wg_host_udp_port }}"
   # https://github.com/wg-easy/wg-easy/pull/87#issuecomment-949541262
   - desc: "Allow WireGuard"
