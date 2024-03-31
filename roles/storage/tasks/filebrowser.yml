@@ -31,8 +31,8 @@
     state: "started"
     env:
       TZ: "{{ system_timezone }}"
-      PUID: "{{ docker_uid }}"
-      PGID: "{{ docker_gid }}"
+      PUID: "{{ system_user_uid }}"
+      PGID: "{{ system_user_gid }}"
     ports:
       - "{{ storage_filebrowser_port }}:80"
     volumes:

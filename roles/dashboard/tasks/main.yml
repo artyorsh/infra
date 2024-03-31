@@ -1,8 +1,3 @@
 ---
-- name: "Register users' UID and GID"
-  ansible.builtin.include_role:
-    name: "docker"
-    tasks_from: "register-uid.yml"
-
 - name: "Install Homarr"
   ansible.builtin.include_tasks: "homarr.yml"

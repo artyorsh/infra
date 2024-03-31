@@ -27,4 +27,4 @@
     path: "{{ storage_smb_share_local_dir }}"
     state: "mounted"
     fstype: "cifs"
-    opts: "credentials={{ smb_share_cerdentials_file }},uid={{ docker_uid }},gid={{ docker_gid }},file_mode={{ smb_share_permissions }},dir_mode={{ smb_share_permissions }},x-systemd.automount"
+    opts: "credentials={{ smb_share_cerdentials_file }},uid={{ system_user_uid }},gid={{ system_user_gid }},file_mode={{ smb_share_permissions }},dir_mode={{ smb_share_permissions }},x-systemd.automount"

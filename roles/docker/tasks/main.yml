@@ -16,6 +16,3 @@
 - name: "Enable Watchtower"
   ansible.builtin.include_tasks: "watchtower.yml"
   when: docker_watchtower_enabled
-
-- name: "Register users' UID and GID"
-  ansible.builtin.include_tasks: "register-uid.yml"
