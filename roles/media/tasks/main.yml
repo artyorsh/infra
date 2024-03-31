@@ -1,8 +1,7 @@
 ---
-- name: "Register users' UID and GID"
-  ansible.builtin.include_role:
-    name: "docker"
-    tasks_from: "register-uid.yml"
+- name: "Create media network"
+  community.general.docker_network:
+    name: "{{ media_network_name }}"
 
 - name: "Bootstrap media server"
   ansible.builtin.include_role:
@@ -19,7 +18,7 @@
       tvshows: "{{ storage_smb_share_local_dir }}/TV"
 
     yams_docker_settings:
-      network: "{{ docker_network_name }}"
-      puid: "{{ docker_uid }}"
-      pgid: "{{ docker_gid }}"
+      network: "{{ media_network_name }}"
+      puid: "{{ system_user_uid }}"
+      pgid: "{{ system_user_gid }}"
       tz: "{{ system_timezone }}"

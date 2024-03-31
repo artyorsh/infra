@@ -3,15 +3,17 @@
   ansible.builtin.user:
     name: "{{ system_user_name }}"
     password: "{{ system_user_password | string | password_hash('sha512') }}"
+    uid: "{{ system_user_uid }}"
     groups:
       - "sudo"
       - "users"
     state: "present"
     append: true
 
-- name: "Ensure group exists: {{ system_user_name }}"
+- name: "Ensure group exists: {{ system_user_group }}"
   ansible.builtin.group:
-    name: "{{ system_user_name }}"
+    name: "{{ system_user_group }}"
+    gid: "{{ system_user_gid }}"
     state: "present"
 
 - name: "Chmod the user home directory"

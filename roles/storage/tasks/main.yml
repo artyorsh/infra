@@ -1,9 +1,4 @@
 ---
-- name: "Register users' UID and GID"
-  ansible.builtin.include_role:
-    name: "docker"
-    tasks_from: "register-uid.yml"
-
 - name: "Connect SMB Share"
   when: storage_smb_share_address is defined
   ansible.builtin.include_tasks: "smb.yml"

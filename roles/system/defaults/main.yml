@@ -5,3 +5,6 @@ system_timezone: "Etc/UTC"
 system_user_name: "{{ ansible_user }}"
 system_user_group: "{{ system_user_name }}"
 system_user_email: "{{ system_user_name }}@example.com"
+
+system_user_uid: "1010"
+system_user_gid: "1010"

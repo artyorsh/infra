@@ -27,8 +27,8 @@
     state: "started"
     env:
       TZ: "{{ system_timezone }}"
-      PUID: "{{ docker_uid }}"
-      PGID: "{{ docker_gid }}"
+      PUID: "{{ system_user_uid }}"
+      PGID: "{{ system_user_gid }}"
       DISABLE_ANALYTICS: "true"
     ports:
       - "{{ dashboard_port }}:7575"
