@@ -10,13 +10,3 @@ docker_backup_containers: []
 docker_backup_schedule: # 0AM every Monday
   weekday: 1
   hour: 0
-
-docker_watchtower_enabled: true
-# https://hub.docker.com/r/containrrr/watchtower/tags
-docker_watchtower_version: "latest"
-docker_watchtower_schedule: "0 0 3 * * 1" # 3AM every Monday
-docker_watchtower_ignore_list:
-  - "cloudflare"
-  - "wireguard"
-  - "filebrowser"
-docker_watchtower_slack_webhook_url: ""

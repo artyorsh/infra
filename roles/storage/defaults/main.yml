@@ -3,8 +3,3 @@ storage_smb_share_address: "//192.168.0.1/path/to/shared"
 storage_smb_share_user: "{{ system_user_name }}"
 storage_smb_share_password: "{{ system_user_password }}"
 storage_smb_share_local_dir: "/mnt/data"
-
-# https://hub.docker.com/r/filebrowser/filebrowser/tags
-storage_filebrowser_version: "latest"
-storage_filebrowser_port: 8081
-storage_filebrowser_root_dir: "{{ storage_smb_share_local_dir }}"

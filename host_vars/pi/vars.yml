@@ -1,4 +1,10 @@
 ---
+docker_default_settings:
+  network: "docker-network-main"
+  puid: "{{ system_user_uid }}"
+  pgid: "{{ system_user_gid }}"
+  tz: "{{ system_timezone }}"
+
 docker_backup_containers:
   - name: "homarr"
     volumes:
