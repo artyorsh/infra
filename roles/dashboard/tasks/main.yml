@@ -1,3 +1,0 @@
----
-- name: "Install Homarr"
-  ansible.builtin.include_tasks: "homarr.yml"

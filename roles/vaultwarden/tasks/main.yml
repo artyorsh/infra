@@ -1,3 +1,0 @@
----
-- name: "Install Vaultwarden"
-  ansible.builtin.include_tasks: "vaultwarden.yml"

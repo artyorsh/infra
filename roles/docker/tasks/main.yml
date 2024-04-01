@@ -14,5 +14,12 @@
   when: docker_backup_enabled
 
 - name: "Enable Watchtower"
-  ansible.builtin.include_tasks: "watchtower.yml"
-  when: docker_watchtower_enabled
+  ansible.builtin.include_role:
+    name: "artyorsh.selfhosted.watchtower"
+  vars:
+    watchtower_schedule: "0 0 3 * * 1" # 3AM every Monday
+    watchtower_ignore_list:
+      - "cloudflare"
+      - "wireguard"
+      - "filebrowser"
+    watchtower_docker_settings: "{{ docker_default_settings }}"

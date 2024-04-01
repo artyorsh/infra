@@ -15,6 +15,9 @@ collections:
   - name: "https://github.com/ansible-collections/ansible.posix"
     type: "git"
 
+  - name: "https://github.com/artyorsh/ansible-collection-selfhosted"
+    type: "git"
+
   - name: "https://github.com/artyorsh/ansible-collection-smarthome"
     type: "git"
 

@@ -1,10 +1,9 @@
 ---
-# - ansible.builtin.include_tasks: "assertions.yml"
-
 - name: "Configure host network"
-  ansible.builtin.include_tasks: "wg-host.yml"
   when: wireguard_host_mode_enabled
+  ansible.builtin.include_role:
+    name: "artyorsh.selfhosted.wgeasy"
 
 - name: "Connect to host network"
-  ansible.builtin.include_tasks: "wg-client.yml"
   when: wireguard_client_mode_enabled
+  ansible.builtin.include_tasks: "wg-client.yml"

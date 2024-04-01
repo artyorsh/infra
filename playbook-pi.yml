@@ -20,17 +20,13 @@
       tags:
         - "docker"
 
-    - role: "cloudflare"
+    - role: "artyorsh.selfhosted.cloudflare"
       tags:
         - "cloudflare"
 
     - role: "wireguard"
       tags:
         - "wireguard"
-
-    - role: "dashboard"
-      tags:
-        - "dashboard"
 
     - role: "storage"
       tags:
@@ -40,10 +36,24 @@
       tags:
         - "media"
 
-    - role: "vaultwarden"
-      tags:
-        - "vaultwarden"
-
     - role: "smarthome"
       tags:
         - "smarthome"
+
+    - role: "artyorsh.selfhosted.homarr"
+      vars:
+        homarr_docker_settings: "{{ docker_default_settings }}"
+      tags:
+        - "homarr"
+
+    - role: "artyorsh.selfhosted.freshrss"
+      vars:
+        freshrss_docker_settings: "{{ docker_default_settings }}"
+      tags:
+        - "freshrss"
+
+    - role: "artyorsh.selfhosted.vaultwarden"
+      vars:
+        vaultwarden_docker_settings: "{{ docker_default_settings }}"
+      tags:
+        - "vaultwarden"
