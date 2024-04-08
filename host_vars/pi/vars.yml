@@ -6,6 +6,11 @@ docker_default_settings:
   tz: "{{ system_timezone }}"
 
 docker_backup_containers:
+  - name: "paperlessngx"
+    volumes:
+      - "/usr/src/paperless/data"
+      - "/usr/src/paperless/media"
+
   - name: "homarr"
     volumes:
       - "/data"
