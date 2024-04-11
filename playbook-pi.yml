@@ -64,3 +64,11 @@
         vaultwarden_docker_settings: "{{ docker_default_settings }}"
       tags:
         - "vaultwarden"
+
+    - role: "artyorsh.selfhosted.duplicati"
+      vars:
+        duplicati_source_dir: "{{ storage_smb_share_local_dir }}"
+        duplicati_backups_dir: "{{ storage_smb_share_local_dir }}/backups"
+        duplicati_docker_settings: "{{ docker_default_settings }}"
+      tags:
+        - "duplicati"
