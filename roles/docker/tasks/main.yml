@@ -13,6 +13,10 @@
   ansible.builtin.include_tasks: "container-backup.yml"
   when: docker_backup_enabled
 
+- name: "Enable docker system prune"
+  ansible.builtin.include_tasks: "docker-prune.yml"
+  when: docker_autoprune_enabled
+
 - name: "Enable Watchtower"
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.watchtower"

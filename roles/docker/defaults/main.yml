@@ -10,3 +10,9 @@ docker_backup_containers: []
 docker_backup_schedule: # 0AM every Monday
   weekday: 1
   hour: 0
+
+docker_autoprune_enabled: true
+docker_autoprune_schedule: # 0AM every Monday
+  weekday: 1
+  hour: 0
+docker_autoprune_until_hours: 720
