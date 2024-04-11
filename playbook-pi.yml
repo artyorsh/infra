@@ -54,7 +54,8 @@
 
     - role: "artyorsh.selfhosted.paperlessngx"
       vars:
-        paperlessngx_consume_dir: "{{ storage_smb_share_local_dir }}/Documents"
+        paperlessngx_consume_dir: "{{ storage_smb_share_local_dir }}/Documents/inbox"
+        paperlessngx_media_dir: "{{ storage_smb_share_local_dir }}/Documents"
         paperlessngx_docker_settings: "{{ docker_default_settings }}"
       tags:
         - "paperlessngx"
