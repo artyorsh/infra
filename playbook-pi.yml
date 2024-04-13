@@ -40,6 +40,12 @@
       tags:
         - "smarthome"
 
+    - role: "artyorsh.selfhosted.glances"
+      vars:
+        glances_docker_settings: "{{ docker_default_settings }}"
+      tags:
+        - "glances"
+
     - role: "artyorsh.selfhosted.homarr"
       vars:
         homarr_docker_settings: "{{ docker_default_settings }}"
