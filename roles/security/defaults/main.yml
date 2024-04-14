@@ -51,3 +51,7 @@ security_firewall_allow_rules:
   - desc: "Allow WireGuard"
     proto: "udp"
     port: "51820"
+
+  - desc: "Allow Glances"
+    proto: "tcp"
+    port: "{{ glances_webui_port }}"
