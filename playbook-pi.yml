@@ -40,23 +40,9 @@
       tags:
         - "smarthome"
 
-    - role: "artyorsh.selfhosted.glances"
-      vars:
-        glances_fs_volumes:
-          - "{{ storage_smb_share_local_dir }}"
-        glances_docker_settings:
-          network: "host"
-          puid: "host"
-          pgid: "{{ system_user_gid }}"
-          tz: "{{ system_timezone }}"
+    - role: "monitoring"
       tags:
-        - "glances"
-
-    - role: "artyorsh.selfhosted.homarr"
-      vars:
-        homarr_docker_settings: "{{ docker_default_settings }}"
-      tags:
-        - "homarr"
+        - "monitoring"
 
     - role: "artyorsh.selfhosted.freshrss"
       vars:
