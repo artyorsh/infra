@@ -1,29 +1,21 @@
 ---
-# https://github.com/geerlingguy/ansible-role-docker/issues/434#issuecomment-1815767476
-
-- name: "Run geerlingguy.docker role"
+- name: "Install and configure Docker"
   ansible.builtin.include_role:
-    name: "geerlingguy.docker"
+    name: "artyorsh.selfhosted.docker"
+  vars:
+    docker_autobackup_enabled: true
+    docker_autobackup_dest_dir: "{{ storage_smb_share_local_dir }}/backups/docker-volumes"
+    docker_autobackup_schedule: { weekday: "*", hour: 2 }
+    # docker_autobackup_containers: []
+
+    docker_autoprune_enabled: true
+    docker_autoprune_schedule: { weekday: "*", hour: 1, minute: 30 }
+    docker_autoprune_until_hours: 168
+
+    docker_autoupdate_enabled: true
+    docker_autoupdate_ignore_list: ["cloudflare", "wireguard"]
+    docker_autoupdate_watchtower_docker_settings: "{{ docker_default_settings }}"
 
 - name: "Create shared network"
   community.general.docker_network:
     name: "{{ docker_network_name }}"
-
-- name: "Enable container backups"
-  ansible.builtin.include_tasks: "container-backup.yml"
-  when: docker_backup_enabled
-
-- name: "Enable docker system prune"
-  ansible.builtin.include_tasks: "docker-prune.yml"
-  when: docker_autoprune_enabled
-
-- name: "Enable Watchtower"
-  ansible.builtin.include_role:
-    name: "artyorsh.selfhosted.watchtower"
-  vars:
-    watchtower_schedule: "0 0 3 * * 1" # 3AM every Monday
-    watchtower_ignore_list:
-      - "cloudflare"
-      - "wireguard"
-      - "filebrowser"
-    watchtower_docker_settings: "{{ docker_default_settings }}"
