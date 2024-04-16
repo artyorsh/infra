@@ -1,9 +1,3 @@
 ---
-- name: "Configure host network"
-  when: wireguard_host_mode_enabled
-  ansible.builtin.include_role:
-    name: "artyorsh.selfhosted.wgeasy"
-
-- name: "Connect to host network"
-  when: wireguard_client_mode_enabled
-  ansible.builtin.include_tasks: "wg-client.yml"
+- name: "Configure Wireguard ({{ wireguard_mode }})"
+  ansible.builtin.include_tasks: "wg-{{ wireguard_mode }}.yml"

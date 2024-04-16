@@ -1,0 +1,4 @@
+---
+- name: "Configure Wireguard ({{ wireguard_mode }})"
+  ansible.builtin.include_role:
+    name: "artyorsh.selfhosted.wgeasy"
