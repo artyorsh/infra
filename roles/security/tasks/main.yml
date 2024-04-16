@@ -2,9 +2,14 @@
 - name: "Configure SSH"
   ansible.builtin.include_tasks: "ssh.yml"
 
+# See https://github.com/geerlingguy/ansible-role-security
 - name: "Run geerlingguy.security role"
   ansible.builtin.include_role:
     name: "geerlingguy.security"
+  vars:
+    security_ssh_allowed_users: ["{{ system_user_name }}"]
+    security_sudoers_passwordless: ["{{ system_user_name }}"]
+    security_autoupdate_mail_to: "{{ system_user_email }}"
 
 - name: "Uninstall UFW"
   ansible.builtin.include_tasks: "uninstall-ufw.yml"

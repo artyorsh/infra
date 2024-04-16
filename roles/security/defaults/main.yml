@@ -1,33 +1,5 @@
 ---
-# https://github.com/geerlingguy/ansible-role-security#role-variables
-#
-# https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands
-# https://docs.docker.com/network/packet-filtering-firewalls/
-
-security_ssh_port: 22
-security_ssh_password_authentication: "no"
-security_ssh_permit_root_login: "no"
-security_ssh_usedns: "no"
-security_ssh_permit_empty_password: "no"
-security_ssh_challenge_response_auth: "no"
-security_ssh_gss_api_authentication: "no"
-security_ssh_x11_forwarding: "no"
-
-security_ssh_allowed_users:
-  - "{{ system_user_name }}"
-
-security_sudoers_passwordless:
-  - "{{ system_user_name }}"
-
-security_autoupdate_reboot_time: "03:00"
-
-security_autoupdate_mail_to: "{{ system_user_email }}"
-security_autoupdate_mail_on_error: true
-
-security_fail2ban_enabled: true
-
-### Firewall
-
+# See templates/iptables.conf
 security_firewall_allow_rules:
   - desc: "Allow HTTP"
     proto: "tcp"
