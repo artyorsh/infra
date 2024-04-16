@@ -20,7 +20,7 @@
       tags:
         - "docker"
 
-    - role: "cloudflare"
+    - role: "artyorsh.selfhosted.cloudflare"
       tags:
         - "cloudflare"
 
