@@ -25,5 +25,7 @@
         - "cloudflare"
 
     - role: "wireguard"
+      vars:
+        wireguard_mode: "server"
       tags:
         - "wireguard"

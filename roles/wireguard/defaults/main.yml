@@ -1,4 +1,5 @@
 ---
-wireguard_host_mode_enabled: true
-wireguard_client_mode_enabled: false
+# server / client
+# The `server` will host wg-easy container, the client will connect to it.
+wireguard_mode: "client"
 wireguard_client_tunnel_file: "/path/to/wg0.conf"
