@@ -5,7 +5,7 @@ docker_default_settings:
   pgid: "{{ system_user_gid }}"
   tz: "{{ system_timezone }}"
 
-docker_backup_containers:
+docker_autobackup_containers:
   - name: "duplicati"
     volumes:
       - "/config"
