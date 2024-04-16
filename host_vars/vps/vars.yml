@@ -1,0 +1,6 @@
+---
+docker_default_settings:
+  network: "docker-network-main"
+  puid: "{{ system_user_uid }}"
+  pgid: "{{ system_user_gid }}"
+  tz: "{{ system_timezone }}"
