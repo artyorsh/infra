@@ -20,6 +20,16 @@
       tags:
         - "docker"
 
+    - role: "artyorsh.selfhosted.adguardhome"
+      tags:
+        - "adguardhome"
+      vars:
+        adguardhome_docker_settings:
+          network: "host"
+          puid: "host"
+          pgid: "{{ system_user_gid }}"
+          tz: "{{ system_timezone }}"
+
     - role: "artyorsh.selfhosted.cloudflare"
       tags:
         - "cloudflare"

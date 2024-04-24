@@ -6,6 +6,11 @@ docker_default_settings:
   tz: "{{ system_timezone }}"
 
 docker_autobackup_containers:
+  - name: "adguardhome"
+    volumes:
+      - "/opt/adguardhome/work"
+      - "/opt/adguardhome/conf"
+
   - name: "duplicati"
     volumes:
       - "/config"
