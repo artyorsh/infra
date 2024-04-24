@@ -1,7 +1,13 @@
 ---
-docker_default_settings:
+docker_bridge_network_settings:
   network: "docker-network-main"
   puid: "{{ system_user_uid }}"
+  pgid: "{{ system_user_gid }}"
+  tz: "{{ system_timezone }}"
+
+docker_host_network_settings:
+  network: "host"
+  puid: "host"
   pgid: "{{ system_user_gid }}"
   tz: "{{ system_timezone }}"
 
