@@ -8,4 +8,4 @@
     name: "artyorsh.selfhosted.filebrowser"
   vars:
     filebrowser_storage_root_dir: "{{ storage_smb_share_local_dir }}"
-    filebrowser_docker_settings: "{{ docker_default_settings }}"
+    filebrowser_docker_settings: "{{ docker_bridge_network_settings }}"

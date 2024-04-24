@@ -14,10 +14,6 @@
     glances_notifier: "/opt/docker/glances/notify.sh"
     glances_fs_volumes:
       - "{{ storage_smb_share_local_dir }}"
-    glances_docker_settings:
-      network: "host"
-      puid: "host"
-      pgid: "{{ system_user_gid }}"
-      tz: "{{ system_timezone }}"
+    glances_docker_settings: "{{ docker_host_network_settings }}"
   tags:
     - "glances"

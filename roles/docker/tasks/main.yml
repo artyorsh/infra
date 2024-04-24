@@ -14,7 +14,7 @@
 
     docker_autoupdate_enabled: true
     docker_autoupdate_ignore_list: ["cloudflare", "wireguard"]
-    docker_autoupdate_watchtower_docker_settings: "{{ docker_default_settings }}"
+    docker_autoupdate_watchtower_docker_settings: "{{ docker_bridge_network_settings }}"
 
 - name: "Create shared network"
   community.general.docker_network:

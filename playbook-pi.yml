@@ -24,11 +24,7 @@
       tags:
         - "adguardhome"
       vars:
-        adguardhome_docker_settings:
-          network: "host"
-          puid: "host"
-          pgid: "{{ system_user_gid }}"
-          tz: "{{ system_timezone }}"
+        adguardhome_docker_settings: "{{ docker_host_network_settings }}"
 
     - role: "artyorsh.selfhosted.cloudflare"
       tags:
@@ -58,7 +54,7 @@
 
     - role: "artyorsh.selfhosted.freshrss"
       vars:
-        freshrss_docker_settings: "{{ docker_default_settings }}"
+        freshrss_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "freshrss"
 
@@ -66,13 +62,13 @@
       vars:
         paperlessngx_consume_dir: "{{ storage_smb_share_local_dir }}/Documents/inbox"
         paperlessngx_media_dir: "{{ storage_smb_share_local_dir }}/Documents"
-        paperlessngx_docker_settings: "{{ docker_default_settings }}"
+        paperlessngx_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "paperlessngx"
 
     - role: "artyorsh.selfhosted.vaultwarden"
       vars:
-        vaultwarden_docker_settings: "{{ docker_default_settings }}"
+        vaultwarden_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "vaultwarden"
 
@@ -80,6 +76,6 @@
       vars:
         duplicati_source_dir: "{{ storage_smb_share_local_dir }}"
         duplicati_backups_dir: "{{ storage_smb_share_local_dir }}/backups"
-        duplicati_docker_settings: "{{ docker_default_settings }}"
+        duplicati_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "duplicati"
