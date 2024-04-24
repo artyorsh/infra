@@ -2,12 +2,12 @@
 - name: "Define ipv4 interface for Docker"
   block:
     - name: "Define ipv4 interface for Docker (wireguard host)"
-      when: wireguard_host_mode_enabled
+      when: wireguard_mode == 'host'
       ansible.builtin.set_fact:
         security_iptables_docker_interface: "{{ ansible_default_ipv4.interface }}"
 
     - name: "Define ipv4 interface for Docker (wireguard client)"
-      when: wireguard_client_mode_enabled
+      when: wireguard_mode == 'client'
       ansible.builtin.set_fact:
         security_iptables_docker_interface: "ens33"
 
