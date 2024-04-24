@@ -27,3 +27,15 @@ security_firewall_allow_rules:
   - desc: "Allow Glances"
     proto: "tcp"
     port: "{{ glances_webui_port }}"
+
+  - desc: "Allow AdGuardHome (DNS)"
+    proto: "tcp"
+    port: "{{ adguardhome_dns_port }}"
+
+  - desc: "Allow AdGuardHome (DNS)"
+    proto: "udp"
+    port: "{{ adguardhome_dns_port }}"
+
+  - desc: "Allow AdGuardHome (Web UI)"
+    proto: "tcp"
+    port: "{{ adguardhome_webui_port }}"
