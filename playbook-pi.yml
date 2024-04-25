@@ -66,6 +66,12 @@
       tags:
         - "paperlessngx"
 
+    - role: "artyorsh.selfhosted.homebox"
+      vars:
+        homebox_docker_settings: "{{ docker_bridge_network_settings }}"
+      tags:
+        - "homebox"
+
     - role: "artyorsh.selfhosted.vaultwarden"
       vars:
         vaultwarden_docker_settings: "{{ docker_bridge_network_settings }}"
