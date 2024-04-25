@@ -26,6 +26,10 @@ docker_autobackup_containers:
       - "/usr/src/paperless/data"
       - "/usr/src/paperless/media"
 
+  - name: "homebox"
+    volumes:
+      - "/data"
+
   - name: "homarr"
     volumes:
       - "/data"
