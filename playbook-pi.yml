@@ -52,11 +52,15 @@
       tags:
         - "monitoring"
 
-    - role: "artyorsh.selfhosted.freshrss"
+    - role: "artyorsh.selfhosted.rss"
       vars:
-        freshrss_docker_settings: "{{ docker_bridge_network_settings }}"
+        rss_docker_settings: "{{ docker_bridge_network_settings }}"
+        rss_miniflux_admin_user:
+          name: "{{ system_user_name }}"
+          password: "{{ system_user_password }}"
+        rss_rssbridge_bridges: ["Soundcloud", "Mixcloud", "Filter"]
       tags:
-        - "freshrss"
+        - "rss"
 
     - role: "artyorsh.selfhosted.paperlessngx"
       vars:
