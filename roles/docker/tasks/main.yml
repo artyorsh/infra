@@ -13,7 +13,11 @@
     docker_autoprune_until_hours: 168
 
     docker_autoupdate_enabled: true
-    docker_autoupdate_ignore_list: ["cloudflare", "wireguard"]
+    docker_autoupdate_ignore_list:
+      - "cloudflare"
+      - "wireguard"
+      - "homeassistant"
+      - "miniflux-db"
     docker_autoupdate_watchtower_docker_settings: "{{ docker_bridge_network_settings }}"
 
 - name: "Create shared network"
