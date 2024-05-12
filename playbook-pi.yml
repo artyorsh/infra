@@ -120,6 +120,12 @@
       tags:
         - "changedetection"
 
+    - role: "artyorsh.selfhosted.wallos"
+      vars:
+        wallos_docker_settings: "{{ docker_bridge_network_settings }}"
+      tags:
+        - "wallos"
+
     - role: "artyorsh.selfhosted.cloudflare"
       tags:
         - "cloudflare"

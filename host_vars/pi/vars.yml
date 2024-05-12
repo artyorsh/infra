@@ -82,3 +82,7 @@ docker_autobackup_containers:
   - name: "changedetection"
     volumes:
       - "/datastore"
+
+  - name: "wallos"
+    volumes:
+      - "/var/www/html/db"
