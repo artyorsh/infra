@@ -43,6 +43,7 @@
           password: "{{ system_user_password }}"
 
         yams_dir:
+          documents: "{{ storage_smb_share_local_dir }}/Documents"
           downloads: "{{ storage_smb_share_local_dir }}/Downloads"
           photos: "{{ storage_smb_share_local_dir }}/Photos"
           movies: "{{ storage_smb_share_local_dir }}/Movies"
@@ -85,14 +86,6 @@
         rss_rssbridge_bridges: ["Soundcloud", "Mixcloud", "Filter"]
       tags:
         - "rss"
-
-    - role: "artyorsh.selfhosted.paperlessngx"
-      vars:
-        paperlessngx_consume_dir: "{{ storage_smb_share_local_dir }}/Documents/inbox"
-        paperlessngx_media_dir: "{{ storage_smb_share_local_dir }}/Documents"
-        paperlessngx_docker_settings: "{{ docker_bridge_network_settings }}"
-      tags:
-        - "paperlessngx"
 
     - role: "artyorsh.selfhosted.homebox"
       vars:
