@@ -78,3 +78,7 @@ docker_autobackup_containers:
   - name: "zigbee2mqtt"
     volumes:
       - "/app/data"
+
+  - name: "changedetection"
+    volumes:
+      - "/datastore"
