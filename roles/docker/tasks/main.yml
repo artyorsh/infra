@@ -1,4 +1,8 @@
 ---
+- name: "Create shared network"
+  community.general.docker_network:
+    name: "{{ docker_network_name }}"
+
 - name: "Install and configure Docker"
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.docker"
@@ -19,7 +23,3 @@
       - "homeassistant"
       - "miniflux-db"
     docker_autoupdate_watchtower_docker_settings: "{{ docker_bridge_network_settings }}"
-
-- name: "Create shared network"
-  community.general.docker_network:
-    name: "{{ docker_network_name }}"
