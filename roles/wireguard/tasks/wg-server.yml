@@ -2,5 +2,3 @@
 - name: "Configure Wireguard ({{ wireguard_mode }})"
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.wgeasy"
-  vars:
-    wgeasy_version: "12"
