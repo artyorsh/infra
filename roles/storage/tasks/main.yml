@@ -7,5 +7,6 @@
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.filebrowser"
   vars:
+    filebrowser_port: "{{ storage_filebrowser_port }}"
     filebrowser_storage_root_dir: "{{ storage_smb_share_local_dir }}"
     filebrowser_docker_settings: "{{ docker_bridge_network_settings }}"
