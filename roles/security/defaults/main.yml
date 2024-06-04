@@ -18,11 +18,9 @@ security_firewall_allow_rules:
     proto: "udp"
     port: "5353"
 
-  # Should not be changed to "{{ wg_host_udp_port }}"
-  # https://github.com/wg-easy/wg-easy/pull/87#issuecomment-949541262
   - desc: "Allow WireGuard"
     proto: "udp"
-    port: "51820"
+    port: "{{ wgeasy_udp_port }}"
 
   - desc: "Allow Glances"
     proto: "tcp"

@@ -1,8 +1,11 @@
 ---
-- name: "Install wireguard package"
+- name: "Install required packages"
   ansible.builtin.package:
-    name: "wireguard"
+    name: "{{ item }}"
     state: "present"
+  loop:
+    - "wireguard"
+    - "openresolv"
 
 - name: "Copy tunnel file"
   ansible.builtin.copy:
@@ -10,7 +13,7 @@
     dest: "/etc/wireguard/wg-client.conf"
     owner: "{{ system_user_name }}"
     group: "{{ system_user_group }}"
-    mode: "0770"
+    mode: "0400"
 
 - name: "Make sure wireguard connection is established"
   block:
@@ -23,6 +26,7 @@
       ansible.builtin.command: "wg-quick up wg-client"
       changed_when: false
 
+# TODO: https://www.ivpn.net/knowledgebase/linux/linux-autostart-wireguard-in-systemd/
 - name: "Create an autostart cron"
   ansible.builtin.cron:
     name: "Turn on wireguard"
