@@ -1,0 +1,29 @@
+name: "Setup"
+description: "Installs dependencies and sets up the environment"
+
+inputs:
+  ssh-keys:
+    description: "SSH keys for private repositories https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys"
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: "Install deploy keys for private dependencies"
+      uses: "webfactory/ssh-agent@v0.9.0"
+      with:
+        ssh-private-key: "${{ inputs.ssh-keys }}"
+
+    - name: "Print Ansible environment"
+      run: "ansible --version"
+      shell: "bash"
+
+    - name: "Install from requirements.yml"
+      run: |
+        # Make passlib available in python environment
+        # https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
+        /opt/pipx/venvs/ansible-core/bin/python -m pip install passlib
+
+        ansible-galaxy install -r requirements.yml
+      shell: "bash"
