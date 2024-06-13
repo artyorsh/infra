@@ -1,4 +1,12 @@
 ---
+- name: "Make sure iptables packages are installed"
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: "present"
+  loop:
+    - "iptables"
+    - "iptables-persistent"
+
 - name: "Define ipv4 interface for Docker"
   block:
     - name: "Define ipv4 interface for Docker (wireguard host)"
