@@ -1,0 +1,151 @@
+name: "Test Ansible roles"
+
+on:
+  pull_request:
+    branches:
+      - "master"
+
+  push:
+    branches:
+      - "master"
+
+  workflow_dispatch:
+
+env:
+  SYSTEM_USER: "runner_42" # should match ansible_user (host_vars/github_ci/vars.yml)
+  SLEEP_BEFORE_LOADING_APP_URL_SECONDS: 120
+  SLEEP_BEFORE_SCREENSHOT_SECONDS: 10
+
+jobs:
+  system:
+    runs-on: "ubuntu-22.04"
+
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - uses: "./.github/workflows/actions/setup"
+        with:
+          ssh-keys: |
+            ${{ secrets.GH_DEPLOYKEY_ANSIBLE_COLLECTION_SELFHOSTED }}
+            ${{ secrets.GH_DEPLOYKEY_ANSIBLE_COLLECTION_SMARTHOME }}
+            ${{ secrets.GH_DEPLOYKEY_ANSIBLE_COLLECTION_YAMS }}
+
+      - uses: "./.github/workflows/actions/run-playbook"
+        with:
+          tags: "system,zsh"
+
+      - name: "Test if ${{ env.SYSTEM_USER }} user exists"
+        run: "sudo passwd --status ${{ env.SYSTEM_USER }}"
+
+  docker:
+    runs-on: "ubuntu-22.04"
+
+    strategy:
+      matrix:
+        role:
+          - name: "immich"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3001"
+
+          - name: "jellyfin"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3002"
+
+          - name: "jellyseerr"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3003"
+
+          - name: "paperlessngx"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3004"
+
+          - name: "prowlarr"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3005"
+
+          - name: "radarr"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3006"
+
+          - name: "sonarr"
+            tags: "system,docker,media"
+            screenshot_url: "http://localhost:3007"
+
+          - name: "transmission"
+            tags: "system,docker,media"
+            screenshot_url: "http://runner_42:test4242@localhost:3008"
+
+          - name: "duplicati"
+            tags: "system,docker,duplicati"
+            screenshot_url: "http://localhost:3009"
+
+          - name: "filebrowser"
+            tags: "system,docker,storage"
+            screenshot_url: "http://localhost:3010"
+
+          - name: "glances"
+            tags: "system,docker,monitoring"
+            screenshot_url: "http://localhost:61208"
+
+          - name: "homebox"
+            tags: "system,docker,homebox"
+            screenshot_url: "http://localhost:3011"
+
+          - name: "miniflux"
+            tags: "system,docker,rss"
+            screenshot_url: "http://localhost:3012"
+
+          - name: "rssbridge"
+            tags: "system,docker,rss"
+            screenshot_url: "http://localhost:3013"
+
+          - name: "vaultwarden"
+            tags: "system,docker,vaultwarden"
+            screenshot_url: "http://localhost:3014"
+
+          - name: "wallos"
+            tags: "system,docker,wallos"
+            screenshot_url: "http://localhost:3015"
+
+          - name: "wg-easy"
+            tags: "system,docker,wireguard"
+            screenshot_url: "http://localhost:3016"
+
+          - name: "homeassistant"
+            tags: "system,docker,smarthome"
+            screenshot_url: "http://localhost:3017"
+
+    steps:
+      - uses: "actions/checkout@v4"
+
+      - uses: "./.github/workflows/actions/setup"
+        with:
+          ssh-keys: |
+            ${{ secrets.GH_DEPLOYKEY_ANSIBLE_COLLECTION_SELFHOSTED }}
+            ${{ secrets.GH_DEPLOYKEY_ANSIBLE_COLLECTION_SMARTHOME }}
+            ${{ secrets.GH_DEPLOYKEY_ANSIBLE_COLLECTION_YAMS }}
+
+      - uses: "./.github/workflows/actions/run-playbook"
+        with:
+          tags: "${{ matrix.role.tags }}"
+
+      - name: "Sleep before loading app"
+        run: "sleep ${{ env.SLEEP_BEFORE_LOADING_APP_URL_SECONDS }}"
+
+      - name: "Print docker processes"
+        run: "docker ps -a"
+
+      - name: "Make a screenshot of ${{ matrix.role.screenshot_url }}"
+        uses: "karol-brejna-i/webpage-screenshot-action@v1"
+        with:
+          url: "${{ matrix.role.screenshot_url }}"
+          scriptBefore: |
+            var waitTill = new Date(new Date().getTime() + ${{ env.SLEEP_BEFORE_SCREENSHOT_SECONDS }} * 1000);
+            while(waitTill > new Date()){}
+          output: "screenshot-${{ matrix.role.name }}.png"
+
+      - name: "Upload screenshots"
+        uses: "actions/upload-artifact@v3"
+        with:
+          name: "screenshots"
+          path: "${{ github.workspace }}/screenshot-*.png"

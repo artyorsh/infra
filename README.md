@@ -1,5 +1,7 @@
 # artyorsh/homelab
 
+![Tests](https://github.com/artyorsh/infra/actions/workflows/test-ansible-roles.yml/badge.svg?event=push)
+
 ## Usage (macOS)
 
 Install Ansible
