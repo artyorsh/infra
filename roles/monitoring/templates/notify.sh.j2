@@ -1,5 +1,5 @@
 #!/bin/sh
 
-curl -s -X POST https://api.telegram.org/bot{{ glances_telegram_bot_token }}/sendMessage \
--d chat_id={{ glances_telegram_bot_chatid }} \
+curl -s -X POST https://api.telegram.org/bot{{ glances_telegram_bot_token | default('') }}/sendMessage \
+-d chat_id={{ glances_telegram_bot_chatid | default('') }} \
 -d text="$1"
