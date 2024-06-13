@@ -1,6 +1,6 @@
 ---
 - name: "Connect SMB Share"
-  when: storage_smb_share_address is defined
+  when: storage_smb_share_address | length > 0
   ansible.builtin.include_tasks: "smb.yml"
 
 - name: "Install Filebrowser"
