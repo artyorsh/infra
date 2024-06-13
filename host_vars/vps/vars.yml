@@ -10,3 +10,5 @@ docker_host_network_settings:
   puid: "host"
   pgid: "{{ system_user_gid }}"
   tz: "{{ system_timezone }}"
+
+docker_autoupdate_enabled: true

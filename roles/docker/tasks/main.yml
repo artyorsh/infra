@@ -12,7 +12,7 @@
     docker_autoprune_schedule: { weekday: "*", hour: 1, minute: 30 }
     docker_autoprune_until_hours: 168
 
-    docker_autoupdate_enabled: true
+    # docker_autoupdate_enabled: true
     docker_autoupdate_ignore_list:
       - "cloudflare"
       - "wireguard"
