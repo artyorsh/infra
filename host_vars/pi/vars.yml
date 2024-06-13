@@ -13,6 +13,8 @@ docker_host_network_settings:
   pgid: "{{ system_user_gid }}"
   tz: "{{ system_timezone }}"
 
+docker_autoupdate_enabled: true
+
 docker_autobackup_containers:
   - name: "adguardhome"
     volumes:
