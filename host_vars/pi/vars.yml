@@ -1,4 +1,6 @@
 ---
+smarthome_zigbee_coordinator: "/dev/ttyUSB0"
+
 docker_bridge_network_settings:
   network: "docker-network-main"
   puid: "{{ system_user_uid }}"
