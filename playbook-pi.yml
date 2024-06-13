@@ -59,7 +59,7 @@
 
     - role: "artyorsh.smarthome.smarthome"
       vars:
-        smarthome_zigbee_coordinator: "/dev/ttyUSB0"
+        # smarthome_zigbee_coordinator: "/dev/ttyUSB0"
 
         smarthome_user:
           name: "{{ system_user_name }}"
