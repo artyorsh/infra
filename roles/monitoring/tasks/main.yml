@@ -2,7 +2,7 @@
 - name: "Template notification script"
   ansible.builtin.template:
     src: "notify.sh.j2"
-    dest: "/opt/docker/glances/notify.sh"
+    dest: "/etc/glances-notify.sh"
     owner: "{{ system_user_name }}"
     group: "{{ system_user_group }}"
     mode: "0740"
@@ -11,7 +11,7 @@
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.glances"
   vars:
-    glances_notifier: "/opt/docker/glances/notify.sh"
+    glances_notifier: "/etc/glances-notify.sh"
     glances_fs_volumes:
       - "{{ storage_smb_share_local_dir }}"
     glances_docker_settings: "{{ docker_host_network_settings }}"
