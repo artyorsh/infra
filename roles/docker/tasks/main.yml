@@ -1,8 +1,4 @@
 ---
-- name: "Create shared network"
-  community.general.docker_network:
-    name: "{{ docker_network_name }}"
-
 - name: "Install and configure Docker"
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.docker"
