@@ -9,27 +9,26 @@
 
 - name: "Copy tunnel file"
   ansible.builtin.copy:
+    remote_src: true
     src: "{{ wireguard_client_tunnel_file }}"
-    dest: "/etc/wireguard/wg-client.conf"
+    dest: "/etc/wireguard/wg0.conf"
     owner: "{{ system_user_name }}"
     group: "{{ system_user_group }}"
     mode: "0400"
 
+- name: "Enable and start Wireguard service"
+  ansible.builtin.service:
+    name: "wg-quick@wg0"
+    state: "started"
+    enabled: true
+
 - name: "Make sure wireguard connection is established"
   block:
     - name: "Disconnect tunnel"
-      ansible.builtin.command: "wg-quick down wg-client"
+      ansible.builtin.command: "wg-quick down wg0"
       failed_when: false
       changed_when: false
 
     - name: "Connect tunnel"
-      ansible.builtin.command: "wg-quick up wg-client"
+      ansible.builtin.command: "wg-quick up wg0"
       changed_when: false
-
-# TODO: https://www.ivpn.net/knowledgebase/linux/linux-autostart-wireguard-in-systemd/
-- name: "Create an autostart cron"
-  ansible.builtin.cron:
-    name: "Turn on wireguard"
-    user: "{{ system_user_name }}"
-    special_time: "reboot"
-    job: "sleep 10; wg-quick up wg-client"
