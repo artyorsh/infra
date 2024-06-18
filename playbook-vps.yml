@@ -16,7 +16,7 @@
       tags:
         - "security"
 
-    - role: "docker"
+    - role: "artyorsh.selfhosted.docker"
       tags:
         - "docker"
 
