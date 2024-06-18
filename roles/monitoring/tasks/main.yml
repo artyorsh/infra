@@ -10,10 +10,3 @@
 - name: "Install and configure Glances"
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.glances"
-  vars:
-    glances_notifier: "/etc/glances-notify.sh"
-    glances_fs_volumes:
-      - "{{ storage_smb_share_local_dir }}"
-    glances_docker_settings: "{{ docker_host_network_settings }}"
-  tags:
-    - "glances"

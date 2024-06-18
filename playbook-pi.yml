@@ -16,15 +16,13 @@
       tags:
         - "security"
 
-    - role: "docker"
+    - role: "artyorsh.selfhosted.docker"
       tags:
         - "docker"
 
     - role: "artyorsh.selfhosted.adguardhome"
       tags:
         - "adguardhome"
-      vars:
-        adguardhome_docker_settings: "{{ docker_host_network_settings }}"
 
     - role: "wireguard"
       vars:
@@ -37,39 +35,10 @@
         - "storage"
 
     - role: "artyorsh.yams.yams"
-      vars:
-        yams_user:
-          name: "{{ system_user_name }}"
-          password: "{{ system_user_password }}"
-
-        yams_dir:
-          documents: "{{ storage_smb_share_local_dir }}/Documents"
-          downloads: "{{ storage_smb_share_local_dir }}/Downloads"
-          photos: "{{ storage_smb_share_local_dir }}/Photos"
-          movies: "{{ storage_smb_share_local_dir }}/Movies"
-          tvshows: "{{ storage_smb_share_local_dir }}/TV"
-
-        yams_docker_settings:
-          network: "media"
-          puid: "{{ system_user_uid }}"
-          pgid: "{{ system_user_gid }}"
-          tz: "{{ system_timezone }}"
       tags:
         - "media"
 
     - role: "artyorsh.smarthome.smarthome"
-      vars:
-        # smarthome_zigbee_coordinator: "/dev/ttyUSB0"
-
-        smarthome_user:
-          name: "{{ system_user_name }}"
-          password: "{{ system_user_password }}"
-
-        smarthome_docker_settings:
-          network: "home"
-          puid: "{{ system_user_uid }}"
-          pgid: "{{ system_user_gid }}"
-          tz: "{{ system_timezone }}"
       tags:
         - "smarthome"
 
@@ -78,38 +47,22 @@
         - "monitoring"
 
     - role: "artyorsh.selfhosted.rss"
-      vars:
-        rss_docker_settings: "{{ docker_bridge_network_settings }}"
-        rss_miniflux_admin_user:
-          name: "{{ system_user_name }}"
-          password: "{{ system_user_password }}"
-        rss_rssbridge_bridges: ["Soundcloud", "Mixcloud", "Filter"]
       tags:
         - "rss"
 
     - role: "artyorsh.selfhosted.homebox"
-      vars:
-        homebox_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "homebox"
 
     - role: "artyorsh.selfhosted.vaultwarden"
-      vars:
-        vaultwarden_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "vaultwarden"
 
     - role: "artyorsh.selfhosted.duplicati"
-      vars:
-        duplicati_source_dir: "{{ storage_smb_share_local_dir }}"
-        duplicati_backups_dir: "{{ storage_smb_share_local_dir }}/backups"
-        duplicati_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "duplicati"
 
     - role: "artyorsh.selfhosted.wallos"
-      vars:
-        wallos_docker_settings: "{{ docker_bridge_network_settings }}"
       tags:
         - "wallos"
 

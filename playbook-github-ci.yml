@@ -12,7 +12,7 @@
       tags:
         - "zsh"
 
-    - role: "docker"
+    - role: "artyorsh.selfhosted.docker"
       tags:
         - "docker"
 

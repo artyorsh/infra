@@ -8,6 +8,10 @@ system_timezone: "Europe/Amsterdam"
 system_user_uid: "4242"
 system_user_gid: "4242"
 
+#################################
+# docker                        #
+#################################
+
 docker_bridge_network_settings:
   network: "docker-network-main"
   puid: "{{ system_user_uid }}"
@@ -58,7 +62,7 @@ duplicati_docker_settings: "{{ docker_bridge_network_settings }}"
 duplicati_port: 3009
 
 filebrowser_docker_settings: "{{ docker_bridge_network_settings }}"
-storage_filebrowser_port: 3010
+filebrowser_port: 3010
 
 glances_docker_settings: "{{ docker_host_network_settings }}"
 glances_webui_port: 61208
