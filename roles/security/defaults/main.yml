@@ -12,28 +12,3 @@ security_firewall_allow_rules:
   - desc: "Allow SSH"
     proto: "tcp"
     port: "{{ security_ssh_port }}"
-
-  # https://www.home-assistant.io/integrations/homekit/#firewall
-  - desc: "Allow mDNS (for HomeKit)"
-    proto: "udp"
-    port: "5353"
-
-  - desc: "Allow WireGuard"
-    proto: "udp"
-    port: "{{ wgeasy_udp_port }}"
-
-  - desc: "Allow Glances"
-    proto: "tcp"
-    port: "{{ glances_webui_port }}"
-
-  - desc: "Allow AdGuardHome (DNS)"
-    proto: "tcp"
-    port: "{{ adguardhome_dns_port }}"
-
-  - desc: "Allow AdGuardHome (DNS)"
-    proto: "udp"
-    port: "{{ adguardhome_dns_port }}"
-
-  - desc: "Allow AdGuardHome (Web UI)"
-    proto: "tcp"
-    port: "{{ adguardhome_webui_port }}"
