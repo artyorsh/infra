@@ -3,8 +3,8 @@
   ansible.builtin.template:
     src: "notify.sh.j2"
     dest: "/etc/glances-notify.sh"
-    owner: "{{ system_user_name }}"
-    group: "{{ system_user_group }}"
+    owner: "{{ system_user.name }}"
+    group: "{{ system_user.group }}"
     mode: "0740"
 
 - name: "Install and configure Glances"

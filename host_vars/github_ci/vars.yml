@@ -1,12 +1,14 @@
 ---
 ansible_user: "runner_42"
 
-system_user_name: "{{ ansible_user }}"
-system_user_password: "test4242"
-system_timezone: "Europe/Amsterdam"
+system_user:
+  name: "{{ ansible_user }}"
+  password: "changeme"
+  group: "{{ ansible_user }}"
+  uid: "4242"
+  gid: "4242"
 
-system_user_uid: "4242"
-system_user_gid: "4242"
+system_timezone: "Europe/Amsterdam"
 
 #################################
 # docker                        #
@@ -14,14 +16,14 @@ system_user_gid: "4242"
 
 docker_bridge_network_settings:
   network: "docker-network-main"
-  puid: "{{ system_user_uid }}"
-  pgid: "{{ system_user_gid }}"
+  puid: "{{ system_user.uid }}"
+  pgid: "{{ system_user.gid }}"
   tz: "{{ system_timezone }}"
 
 docker_host_network_settings:
   network: "host"
   puid: "host"
-  pgid: "{{ system_user_gid }}"
+  pgid: "{{ system_user.gid }}"
   tz: "{{ system_timezone }}"
 
 # TODO: with this variable being "false", Watchtower installation is ignored, making it not testable
@@ -33,9 +35,7 @@ docker_autoupdate_enabled: false
 #################################
 
 yams_docker_settings: "{{ docker_bridge_network_settings }}"
-yams_user:
-  name: "{{ system_user_name }}"
-  password: "{{ system_user_password }}"
+yams_user: "{{ system_user }}"
 
 immich_port: 3001
 
@@ -89,6 +89,7 @@ wgeasy_webui_port: 3016
 #################################
 
 smarthome_docker_settings: "{{ docker_bridge_network_settings }}"
+smarthome_user: "{{ system_user }}"
 
 # TODO: with this variable being empty, zigbee2mqtt installation is ignored, making it not testable
 smarthome_zigbee_coordinator: ""

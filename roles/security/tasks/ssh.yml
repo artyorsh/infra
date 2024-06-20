@@ -2,7 +2,7 @@
 - name: "Authorize ssh key"
   when: security_ssh_public_key is defined
   ansible.posix.authorized_key:
-    user: "{{ system_user_name }}"
+    user: "{{ system_user.name }}"
     key: "{{ security_ssh_public_key }}"
 
 - name: "Update ssh.socket ListenStream"
