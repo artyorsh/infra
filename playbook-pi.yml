@@ -62,6 +62,10 @@
       tags:
         - "duplicati"
 
+    - role: "artyorsh.selfhosted.watchtower"
+      tags:
+        - "watchtower"
+
     - role: "artyorsh.selfhosted.wallos"
       tags:
         - "wallos"

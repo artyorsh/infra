@@ -26,10 +26,6 @@ docker_host_network_settings:
   pgid: "{{ system_user.gid }}"
   tz: "{{ system_timezone }}"
 
-# TODO: with this variable being "false", Watchtower installation is ignored, making it not testable
-# The underlying role needs to be splitted
-docker_autoupdate_enabled: false
-
 #################################
 # ansilbe-collection-yams       #
 #################################
@@ -76,6 +72,8 @@ rss_rssbridge_webui_port: 3013
 
 vaultwarden_docker_settings: "{{ docker_bridge_network_settings }}"
 vaultwarden_port: 3014
+
+watchtower_docker_settings: "{{ docker_bridge_network_settings }}"
 
 wallos_docker_settings: "{{ docker_bridge_network_settings }}"
 wallos_webui_port: 3015
