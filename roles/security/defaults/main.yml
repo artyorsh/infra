@@ -12,3 +12,9 @@ security_firewall_allow_rules:
   - desc: "Allow SSH"
     proto: "tcp"
     port: "{{ security_ssh_port }}"
+
+security_firewall_allow_ips: []
+#  - desc: "Allow localhost"
+#    address: "192.168.0.0/24"
+
+security_firewall_allow_cloudflare: true
