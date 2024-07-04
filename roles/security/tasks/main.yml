@@ -13,5 +13,9 @@
 - name: "Uninstall UFW"
   ansible.builtin.include_tasks: "uninstall-ufw.yml"
 
+- name: "Append cloudflare ip addresses into iptables whitelist"
+  when: security_firewall_allow_cloudflare
+  ansible.builtin.include_tasks: "allow-cloudflare.yml"
+
 - name: "Configure iptables"
   ansible.builtin.include_tasks: "iptables.yml"

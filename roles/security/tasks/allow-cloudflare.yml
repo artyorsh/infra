@@ -1,0 +1,17 @@
+---
+- name: "Fetch cloudflare ipv4 addresses"
+  ansible.builtin.uri:
+    url: "https://www.cloudflare.com/ips-v4"
+    return_content: true
+  register: cloudflare_ipv4
+
+- name: "Fetch cloudflare ipv6 addresses"
+  ansible.builtin.uri:
+    url: "https://www.cloudflare.com/ips-v6"
+    return_content: true
+  register: cloudflare_ipv6
+
+- name: "Append cloudflare addresses to security_firewall_allow_ips"
+  ansible.builtin.set_fact:
+    security_firewall_allow_ips: "{{ security_firewall_allow_ips | default([]) + [{ 'address': item, 'desc': 'Allow Cloudflare ipv4' }] }}"
+  loop: "{{ cloudflare_ipv4.content | split('\n') }}"
