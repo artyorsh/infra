@@ -115,6 +115,10 @@ jobs:
             tags: "system,docker,smarthome"
             screenshot_url: "http://localhost:3017"
 
+          - name: "authelia"
+            tags: "system,docker,authelia"
+            screenshot_url: "http://localhost:3019"
+
     steps:
       - uses: "actions/checkout@v4"
 
