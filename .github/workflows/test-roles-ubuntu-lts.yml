@@ -135,6 +135,9 @@ jobs:
       - name: "Print docker processes"
         run: "docker ps -a"
 
+      - name: "Print docker logs"
+        run: "docker logs ${{ matrix.role.name }}"
+
       - name: "Make a screenshot of ${{ matrix.role.screenshot_url }}"
         uses: "karol-brejna-i/webpage-screenshot-action@v1"
         with:
