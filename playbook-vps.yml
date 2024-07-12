@@ -20,12 +20,12 @@
       tags:
         - "docker"
 
-    - role: "artyorsh.selfhosted.cloudflare"
-      tags:
-        - "cloudflare"
-
     - role: "wireguard"
       vars:
         wireguard_mode: "server"
       tags:
         - "wireguard"
+
+    - role: "artyorsh.selfhosted.nginx"
+      tags:
+        - "nginx"

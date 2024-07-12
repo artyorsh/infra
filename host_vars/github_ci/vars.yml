@@ -69,6 +69,9 @@ glances_webui_port: 61208
 homebox_docker_settings: "{{ docker_bridge_network_settings }}"
 homebox_webui_port: 3011
 
+nginx_docker_settings: "{{ docker_bridge_network_settings }}"
+nginx_port_admin: 3018
+
 rss_docker_settings: "{{ docker_bridge_network_settings }}"
 rss_miniflux_webui_port: 3012
 rss_rssbridge_webui_port: 3013
