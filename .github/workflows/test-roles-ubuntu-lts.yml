@@ -115,6 +115,10 @@ jobs:
             tags: "system,docker,smarthome"
             screenshot_url: "http://localhost:3017"
 
+          - name: "nginx-proxy-manager"
+            tags: "system,docker,nginx"
+            screenshot_url: "http://localhost:3018"
+
           - name: "authelia"
             tags: "system,docker,authelia"
             screenshot_url: "http://localhost:3019"
