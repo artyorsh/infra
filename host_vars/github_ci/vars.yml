@@ -54,6 +54,9 @@ transmission_whitelist:
 # ansilbe-collection-selfhosted #
 #################################
 
+authelia_docker_settings: "{{ docker_bridge_network_settings }}"
+authelia_port: 3019
+
 duplicati_docker_settings: "{{ docker_bridge_network_settings }}"
 duplicati_port: 3009
 

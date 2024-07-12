@@ -70,6 +70,12 @@
       tags:
         - "wallos"
 
+    - role: "artyorsh.selfhosted.authelia"
+      vars:
+        authelia_version: "4.38.9"
+      tags:
+        - "authelia"
+
     - role: "artyorsh.selfhosted.cloudflare"
       tags:
         - "cloudflare"
