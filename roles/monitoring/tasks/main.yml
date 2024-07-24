@@ -10,3 +10,6 @@
 - name: "Install and configure Glances"
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.glances"
+
+- name: "Install and configure OliveTin"
+  ansible.builtin.include_tasks: "olivetin.yml"
