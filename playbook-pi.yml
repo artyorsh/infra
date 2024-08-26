@@ -39,6 +39,8 @@
         - "media"
 
     - role: "artyorsh.smarthome.smarthome"
+      vars:
+        smarthome_zigbee_adapter: "/dev/ttyUSB0"
       tags:
         - "smarthome"
 
