@@ -27,4 +27,6 @@ collections:
   - name: "https://github.com/artyorsh/ansible-collection-mobiledev"
     type: "git"
 
+  - name: "artyorsh.smarthome"
+
   - name: "geerlingguy.mac"
