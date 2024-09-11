@@ -29,3 +29,8 @@
     - role: "artyorsh.selfhosted.nginx"
       tags:
         - "nginx"
+
+  tasks:
+    - ansible.builtin.import_tasks: "tasks/scheduled-reboot.yml"
+      tags:
+        - "reboot"
