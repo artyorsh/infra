@@ -44,6 +44,11 @@ This document describes the automated tasks performed on the hosts.
   - Time: Sundays at 03:00AM
   - Managed by: [artyorsh.selfhosted.watchtower](https://github.com/artyorsh/ansible-collection-selfhosted/tree/master/roles/watchtower). See `watchtower_env.WATCHTOWER_SCHEDULE`.
 
+- ** Refresh RSS feeds**
+
+  - Time: Every 2 hours
+  - Managed by: [artyorsh.selfhosted.miniflux](https://github.com/artyorsh/ansible-collection-selfhosted/tree/master/roles/rss). See `rss_miniflux_env.POLLING_FREQUENCY`
+
 ## VPS
 
 - **Prune Docker System**
