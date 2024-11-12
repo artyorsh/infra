@@ -1,0 +1,10 @@
+---
+- name: "Run website container"
+  community.docker.docker_container:
+    name: "website"
+    image: "ghcr.io/artyorsh/website:latest"
+    networks:
+      - name: "{{ website_docker_settings.network }}"
+    state: "started"
+    ports:
+      - "{{ website_port }}:80"
