@@ -3,6 +3,9 @@
   hosts: "pi"
   become: true
 
+  pre_tasks:
+    - ansible.builtin.import_tasks: "tasks/docker-registry-login.yml"
+
   roles:
     - role: "system"
       tags:

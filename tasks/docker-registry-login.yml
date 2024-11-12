@@ -1,0 +1,7 @@
+---
+- name: "Log in to GHCR"
+  community.docker.docker_login:
+    registry_url: "ghcr.io"
+    username: "{{ docker_registry_ghcr_user.name }}"
+    password: "{{ docker_registry_ghcr_user.password }}"
+    state: present
