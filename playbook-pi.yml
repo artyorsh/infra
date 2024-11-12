@@ -48,6 +48,14 @@
       tags:
         - "monitoring"
 
+    - role: "artyorsh.selfhosted.anki_sync_server"
+      vars:
+        anki_sync_server_env:
+          SYNC_USER1: "{{ system_user.name }}:{{ system_user.password }}"
+        anki_sync_server_docker_settings: "{{ docker_bridge_network_settings }}"
+      tags:
+        - "anki-sync-server"
+
     - role: "artyorsh.selfhosted.rss"
       tags:
         - "rss"
