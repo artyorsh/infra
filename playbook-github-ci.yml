@@ -16,10 +16,6 @@
       tags:
         - "docker"
 
-    - role: "storage"
-      tags:
-        - "storage"
-
     - role: "monitoring"
       tags:
         - "monitoring"

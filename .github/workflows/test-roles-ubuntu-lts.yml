@@ -79,8 +79,8 @@ jobs:
             tags: "system,docker,duplicati"
             screenshot_url: "http://localhost:3009"
 
-          - name: "filebrowser"
-            tags: "system,docker,storage"
+          - name: "forjego"
+            tags: "system,docker,forjego"
             screenshot_url: "http://localhost:3010"
 
           - name: "glances"

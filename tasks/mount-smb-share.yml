@@ -1,0 +1,34 @@
+---
+- name: "Prepare task variables"
+  block:
+    - ansible.builtin.set_fact:
+        smb_share_credentials_file: "/home/{{ system_user.name }}/.smb"
+    - ansible.builtin.set_fact:
+        smb_share_default_mount_opts: "credentials={{ smb_share_credentials_file }},uid={{ system_user.uid }},gid={{ system_user.gid }},file_mode=0740,dir_mode=0740,sec=ntlmv2,x-systemd.automount"
+
+- name: "Ensure mount directory exists"
+  ansible.builtin.file:
+    path: "{{ path }}"
+    owner: "{{ system_user.name }}"
+    group: "{{ system_user.group }}"
+    mode: "{{ mode | default('0740') }}"
+    state: "directory"
+
+- name: "Create credentials file"
+  ansible.builtin.copy:
+    content: |
+      username={{ smb_share_user.name }}
+      password={{ smb_share_user.password }}
+    dest: "{{ smb_share_credentials_file }}"
+    owner: "{{ system_user.name }}"
+    group: "{{ system_user.group }}"
+    mode: "0440"
+
+- name: "Mount SMB share"
+  ansible.posix.mount:
+    boot: true
+    src: "{{ src }}"
+    path: "{{ path }}"
+    state: "mounted"
+    fstype: "cifs"
+    opts: "{{ opts | default(smb_share_default_mount_opts) }}"

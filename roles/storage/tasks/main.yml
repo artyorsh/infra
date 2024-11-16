@@ -1,8 +1,0 @@
----
-- name: "Connect SMB Share"
-  when: storage_smb_share_address | length > 0
-  ansible.builtin.include_tasks: "smb.yml"
-
-- name: "Install Filebrowser"
-  ansible.builtin.include_role:
-    name: "artyorsh.selfhosted.filebrowser"

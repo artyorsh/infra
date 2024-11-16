@@ -60,8 +60,8 @@ authelia_port: 3019
 duplicati_docker_settings: "{{ docker_bridge_network_settings }}"
 duplicati_port: 3009
 
-filebrowser_docker_settings: "{{ docker_bridge_network_settings }}"
-filebrowser_port: 3010
+forgejo_docker_settings: "{{ docker_bridge_network_settings }}"
+forgejo_webui_port: 3010
 
 glances_docker_settings: "{{ docker_host_network_settings }}"
 glances_webui_port: 61208

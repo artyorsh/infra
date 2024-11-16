@@ -5,6 +5,23 @@
 
   pre_tasks:
     - ansible.builtin.import_tasks: "tasks/docker-registry-login.yml"
+      tags:
+        - "docker"
+
+    - ansible.builtin.import_tasks: "tasks/mount-smb-share.yml"
+      vars:
+        src: "{{ smb_share_base_url }}"
+        path: "{{ smb_share_local_dir }}"
+      tags:
+        - "media"
+        - "duplicati"
+
+    - ansible.builtin.import_tasks: "tasks/mount-smb-share.yml"
+      vars:
+        src: "{{ smb_share_base_url }}/repositories"
+        path: "{{ forgejo_repositories_dir }}"
+      tags:
+        - "forgejo"
 
   roles:
     - role: "system"
@@ -32,10 +49,6 @@
         wireguard_mode: "client"
       tags:
         - "wireguard"
-
-    - role: "storage"
-      tags:
-        - "storage"
 
     - role: "artyorsh.yams.yams"
       tags:
@@ -74,6 +87,10 @@
     - role: "artyorsh.selfhosted.wallos"
       tags:
         - "wallos"
+
+    - role: "artyorsh.selfhosted.forgejo"
+      tags:
+        - "forgejo"
 
     - role: "artyorsh.selfhosted.authelia"
       vars:
