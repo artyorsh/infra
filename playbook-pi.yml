@@ -92,12 +92,6 @@
       tags:
         - "forgejo"
 
-    - role: "artyorsh.selfhosted.authelia"
-      vars:
-        authelia_version: "4.38.9"
-      tags:
-        - "authelia"
-
     - role: "website"
       tags:
         - "website"
