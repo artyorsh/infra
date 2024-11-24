@@ -68,6 +68,10 @@
       tags:
         - "vaultwarden"
 
+    - role: "artyorsh.selfhosted.documenso"
+      tags:
+        - "documenso"
+
     - role: "artyorsh.selfhosted.duplicati"
       tags:
         - "duplicati"
