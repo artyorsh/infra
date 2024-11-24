@@ -40,10 +40,6 @@
       tags:
         - "docker"
 
-    - role: "artyorsh.selfhosted.adguardhome"
-      tags:
-        - "adguardhome"
-
     - role: "wireguard"
       vars:
         wireguard_mode: "client"
@@ -59,10 +55,6 @@
         smarthome_zigbee_adapter: "/dev/ttyUSB0"
       tags:
         - "smarthome"
-
-    - role: "monitoring"
-      tags:
-        - "monitoring"
 
     - role: "artyorsh.selfhosted.rss"
       tags:
