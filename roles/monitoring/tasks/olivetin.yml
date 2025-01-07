@@ -5,8 +5,31 @@
   ansible.builtin.include_role:
     name: "artyorsh.selfhosted.olivetin"
   vars:
-    olivetin_docker_settings: "{{ docker_host_network_settings }}"
+    # olivetin_docker_settings: "{{ docker_host_network_settings }}"
     olivetin_config:
+      authLocalUsers:
+        enabled: true
+        users:
+          - username: "olivetin"
+            password: "$argon2id$v=19$m=65536,t=4,p=6$ZVNzd3pMNU5IaTJLb0dtSg$jY+gKyEKdQNnqAlzbBlLkQ"
+            usergroup: "admins"
+
+      defaultPermissions:
+        view: false
+        exec: false
+        logs: false
+
+      accessControlLists:
+        - name: "admins"
+          matchUsergroups:
+            - "admins"
+          permissions:
+            view: true
+            exec: true
+            logs: true
+          addToEveryAction: true
+
+
       actions:
         - title: "Check ip address"
           icon: "🌐"
@@ -22,8 +45,19 @@
               title: "Container Name"
               choices:
                 - value: "jellyfin jellyseerr"
-                - value: "immich-db immich immich-microservices immich-machine-learning"
+                - value: "immich-redis immich-db immich immich-machine-learning"
                 - value: "miniflux-db rssbridge miniflux"
                 - value: "mosquitto zigbee2mqtt homeassistant"
                 - value: "paperlessngx-redis paperlessngx"
-                - value: "transmission radarr sonarr prowlarr searcharr"
+                - value: "transmission radarr sonarr prowlarr searcharr suggestarr"
+                - value: "website"
+
+        - title: "Restart Docker Container (Input)"
+          icon: "🔄"
+          shell: "{% raw %}docker restart {{ container }}{% endraw %}"
+          timeout: 20
+          popupOnStart: execution-dialog-stdout-only
+          arguments:
+            - name: "container"
+              title: "Container Name"
+              type: ascii_identifier
