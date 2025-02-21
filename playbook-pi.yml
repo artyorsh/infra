@@ -54,6 +54,15 @@
       tags:
         - "monitoring"
 
+    - role: "artyorsh.selfhosted.paperlessngx"
+      tags:
+        - "paperlessngx"
+
+    - role: "artyorsh.selfhosted.paperless_ai"
+      tags:
+        - "paperlessngx"
+        - "paperless-ai"
+
     - role: "artyorsh.smarthome.smarthome"
       vars:
         smarthome_zigbee_adapter: "/dev/ttyUSB0"
