@@ -63,6 +63,10 @@
         - "paperlessngx"
         - "paperless-ai"
 
+    - role: "artyorsh.selfhosted.postiz"
+      tags:
+        - "postiz"
+
     - role: "artyorsh.smarthome.smarthome"
       vars:
         smarthome_zigbee_adapter: "/dev/ttyUSB0"
