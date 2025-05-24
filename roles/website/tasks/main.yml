@@ -8,3 +8,4 @@
     state: "started"
     ports:
       - "{{ website_port }}:80"
+    restart_policy: "unless-stopped"
