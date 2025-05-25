@@ -18,14 +18,13 @@ collections:
   - name: "https://github.com/artyorsh/ansible-collection-selfhosted"
     type: "git"
 
-  - name: "https://github.com/artyorsh/ansible-collection-smarthome"
-    type: "git"
-
   - name: "https://github.com/artyorsh/ansible-collection-yams"
     type: "git"
 
   - name: "https://github.com/artyorsh/ansible-collection-mobiledev"
     type: "git"
+
+  - name: "artyorsh.selfhosted"
 
   - name: "artyorsh.smarthome"
 
