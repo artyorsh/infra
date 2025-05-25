@@ -1,7 +1,5 @@
 # artyorsh/homelab
 
-[![Test (Ubuntu 22.04)](https://github.com/artyorsh/infra/actions/workflows/test-roles-ubuntu-lts.yml/badge.svg?event=push)](https://github.com/artyorsh/infra/actions/workflows/test-roles-ubuntu-lts.yml)
-
 ## Usage (macOS)
 
 Install Ansible
