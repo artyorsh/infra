@@ -101,6 +101,10 @@
       tags:
         - "forgejo"
 
+    - role: "artyorsh.selfhosted.weblate"
+      tags:
+        - "weblate"
+
     - role: "website"
       tags:
         - "website"
