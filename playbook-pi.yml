@@ -77,6 +77,10 @@
       tags:
         - "rss"
 
+    - role: "artyorsh.selfhosted.syncthing"
+      tags:
+        - "syncthing"
+
     - role: "artyorsh.selfhosted.homebox"
       tags:
         - "homebox"
