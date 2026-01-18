@@ -54,6 +54,10 @@
       tags:
         - "monitoring"
 
+    - role: "artyorsh.selfhosted.nginx"
+      tags:
+        - "nginx"
+
     - role: "artyorsh.selfhosted.openarchiver"
       tags:
         - "openarchiver"

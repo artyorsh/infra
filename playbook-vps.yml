@@ -20,6 +20,10 @@
       tags:
         - "docker"
 
+    - role: "artyorsh.selfhosted.adguardhome"
+      tags:
+        - "adguardhome"
+
     - role: "wireguard"
       vars:
         wireguard_mode: "server"
