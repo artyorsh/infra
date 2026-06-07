@@ -20,19 +20,13 @@
       tags:
         - "docker"
 
-    - role: "artyorsh.selfhosted.adguardhome"
+    - role: "artyorsh.selfhosted.headscale"
       tags:
-        - "adguardhome"
+        - "headscale"
 
-    - role: "wireguard"
-      vars:
-        wireguard_mode: "server"
+    - role: "tailscale"
       tags:
-        - "wireguard"
-
-    - role: "artyorsh.selfhosted.nginx"
-      tags:
-        - "nginx"
+        - "tailscale"
 
   tasks:
     - ansible.builtin.import_tasks: "tasks/scheduled-reboot.yml"
