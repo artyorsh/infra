@@ -11,7 +11,6 @@ Homelab playbooks, inventory, host vars, and local roles.
 
 ```bash
 ansible-playbook playbook-pi.yml --syntax-check
-ansible-playbook playbook-vps.yml --syntax-check
 ansible-playbook playbook-mac.yml --syntax-check
 ```
 

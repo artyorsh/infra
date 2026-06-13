@@ -41,8 +41,6 @@
         - "docker"
 
     - role: "wireguard"
-      vars:
-        wireguard_mode: "client"
       tags:
         - "wireguard"
 

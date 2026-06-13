@@ -1,8 +1,0 @@
----
-- name: "Ensure reboot at 03:00AM is present in crontab"
-  ansible.builtin.cron:
-    name: "Nightly reboot (performance maintenance)"
-    user: "{{ ansible_user }}"
-    job: "/sbin/shutdown -r now"
-    minute: "00"
-    hour: "3"

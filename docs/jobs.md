@@ -48,15 +48,3 @@ This document describes the automated tasks performed on the hosts.
 
   - Time: Every 2 hours
   - Managed by: [artyorsh.selfhosted.miniflux](https://github.com/artyorsh/ansible-collection-selfhosted/tree/master/roles/rss). See `rss_miniflux_env.POLLING_FREQUENCY`
-
-## VPS
-
-- **Prune Docker System**
-
-  - Time: Daily at 02:45AM.
-  - Managed by: [artyorsh.selfhosted.docker](https://github.com/artyorsh/ansible-collection-selfhosted/tree/master/roles/docker). See `docker_autoprune_schedule` and `docker_autoprune_until_hours`.
-
-- **Reboot**
-
-  - Time: Daily at 03:00AM.
-  - Managed by: [tasks/scheduled-reboot](https://github.com/artyorsh/infra/blob/master/tasks/scheduled-reboot.yml).
