@@ -1,34 +1,52 @@
 ---
-- name: "Install required packages"
-  ansible.builtin.package:
-    name: "{{ item }}"
-    state: "present"
-  loop:
-    - "wireguard"
-    - "openresolv"
+- name: "Ask for local wg0.conf path"
+  when: not ansible_check_mode
+  ansible.builtin.pause:
+    prompt: "Path to wg0.conf on this machine (leave empty to skip)"
+  register: wireguard_config_path_prompt
 
-- name: "Copy tunnel file"
-  ansible.builtin.copy:
-    remote_src: true
-    src: "{{ wireguard_client_tunnel_file }}"
-    dest: "/etc/wireguard/wg0.conf"
-    owner: "{{ system_user.name }}"
-    group: "{{ system_user.group }}"
-    mode: "0400"
-
-- name: "Enable and start Wireguard service"
-  ansible.builtin.service:
-    name: "wg-quick@wg0"
-    state: "started"
-    enabled: true
-
-- name: "Make sure wireguard connection is established"
+- name: "Deploy wg0.conf from local file"
+  when:
+    - not ansible_check_mode
+    - wireguard_config_path_prompt.user_input | default('') | trim | length > 0
+  vars:
+    wireguard_local_config_path: "{{ wireguard_config_path_prompt.user_input | trim }}"
   block:
-    - name: "Disconnect tunnel"
-      ansible.builtin.command: "wg-quick down wg0"
-      failed_when: false
-      changed_when: false
+    - ansible.builtin.stat:
+        path: "{{ wireguard_local_config_path }}"
+      delegate_to: "localhost"
+      become: false
+      register: wireguard_local_conf
 
-    - name: "Connect tunnel"
-      ansible.builtin.command: "wg-quick up wg0"
-      changed_when: false
+    - ansible.builtin.assert:
+        that: wireguard_local_conf.stat.exists
+        fail_msg: "File not found: {{ wireguard_local_config_path }}"
+
+    - ansible.builtin.copy:
+        src: "{{ wireguard_local_config_path }}"
+        dest: "/etc/wireguard/wg0.conf"
+        owner: "{{ system_user.name }}"
+        group: "{{ system_user.group }}"
+        mode: "0400"
+
+- name: "Check for wg0.conf on host"
+  ansible.builtin.stat:
+    path: "/etc/wireguard/wg0.conf"
+  register: wireguard_wg0_conf
+
+- name: "Configure Wireguard client"
+  when: wireguard_wg0_conf.stat.exists
+  block:
+    - name: "Install required packages"
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: "present"
+      loop:
+        - "wireguard"
+        - "openresolv"
+
+    - name: "Enable and start Wireguard service"
+      ansible.builtin.service:
+        name: "wg-quick@wg0"
+        state: "started"
+        enabled: true
