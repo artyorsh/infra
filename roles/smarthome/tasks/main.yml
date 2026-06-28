@@ -1,0 +1,34 @@
+---
+- name: "Install HomeAssistant"
+  ansible.builtin.include_role:
+    name: "homeassistant"
+  vars:
+    homeassistant_mdns_host_network_interface: "end0"
+
+- name: "Install Mosquitto"
+  ansible.builtin.include_role:
+    name: "mosquitto"
+  vars:
+    mosquitto_user: "{{ smarthome_user }}"
+
+- name: "Install Zigbee2MQTT"
+  ansible.builtin.include_role:
+    name: "zigbee2mqtt"
+  vars:
+    zigbee2mqtt_adapter: "/dev/ttyUSB0"
+    zigbee2mqtt_config:
+      mqtt:
+        server: "mqtt://mosquitto"
+        user: "{{ smarthome_user.name }}"
+        password: "{{ smarthome_user.password }}"
+
+- name: "Prepare HomeKit iptables task variables"
+  block:
+    - ansible.builtin.set_fact:
+        smarthome_homekit_iptables: "{{ smarthome_homekit_iptables_default | combine(smarthome_homekit_iptables, recursive=true) }}"
+    - ansible.builtin.set_fact:
+        smarthome_homekit_iptables: "{{ smarthome_homekit_iptables | combine({'lan_subnet': smarthome_homekit_iptables.lan_address | ansible.utils.ipsubnet(24)}) }}"
+
+- name: "Configure HomeKit iptables routing"
+  when: smarthome_homekit_iptables.enabled | bool
+  ansible.builtin.include_tasks: "homekit-iptables.yml"

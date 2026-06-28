@@ -1,0 +1,35 @@
+---
+- name: "Install HomeKit iptables routing script"
+  ansible.builtin.copy:
+    src: "homekit-iptables.sh"
+    dest: "{{ smarthome_homekit_iptables.script_path }}"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  register: smarthome_homekit_iptables_script
+
+- name: "Install HomeKit iptables systemd unit"
+  ansible.builtin.template:
+    src: "homekit-iptables.service.j2"
+    dest: "/etc/systemd/system/{{ smarthome_homekit_iptables.service_name }}.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  register: smarthome_homekit_iptables_unit
+
+- name: "Reload systemd after HomeKit iptables unit change"
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: smarthome_homekit_iptables_unit.changed
+
+- name: "Enable and apply HomeKit iptables routing"
+  ansible.builtin.systemd:
+    name: "{{ smarthome_homekit_iptables.service_name }}"
+    state: "started"
+    enabled: true
+
+- name: "Re-apply HomeKit iptables routing after script update"
+  ansible.builtin.systemd:
+    name: "{{ smarthome_homekit_iptables.service_name }}"
+    state: "restarted"
+  when: smarthome_homekit_iptables_script.changed

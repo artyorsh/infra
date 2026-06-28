@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+[Unit]
+Description=HomeKit LAN reply routing (connmark)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=LAN_IF={{ smarthome_homekit_iptables.lan_interface }}
+Environment=LAN_IP={{ smarthome_homekit_iptables.lan_address }}
+Environment=LAN_SUBNET={{ smarthome_homekit_iptables.lan_subnet }}
+Environment=HOMEKIT_PORT={{ smarthome_homekit_iptables.homekit_port }}
+ExecStart={{ smarthome_homekit_iptables.script_path }} apply
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

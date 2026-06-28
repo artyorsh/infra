@@ -8,6 +8,21 @@ roles:
 
   - name: "elliotweiser.osx-command-line-tools"
 
+  - name: "homeassistant"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-homeassistant"
+    scm: "git"
+    version: "v1.0.0"
+
+  - name: "mosquitto"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-mosquitto"
+    scm: "git"
+    version: "v1.0.0"
+
+  - name: "zigbee2mqtt"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-zigbee2mqtt"
+    scm: "git"
+    version: "v1.0.0"
+
 collections:
   - name: "https://github.com/ansible-collections/community.general"
     type: "git"
@@ -22,7 +37,5 @@ collections:
     type: "git"
 
   - name: "artyorsh.selfhosted"
-
-  - name: "artyorsh.smarthome"
 
   - name: "geerlingguy.mac"

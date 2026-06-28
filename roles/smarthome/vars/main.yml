@@ -1,0 +1,8 @@
+---
+smarthome_homekit_iptables_default:
+  enabled: true
+  script_path: "/etc/homekit-iptables.sh"
+  service_name: "homeassistant-homekit"
+  lan_interface: "end0"
+  lan_address: "{{ ansible_host }}"
+  homekit_port: "{{ homeassistant_homekit_config.port }}"
