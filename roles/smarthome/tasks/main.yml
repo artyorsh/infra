@@ -1,26 +1,29 @@
 ---
 - name: "Install HomeAssistant"
   ansible.builtin.include_role:
-    name: "homeassistant"
+    name: "artyorsh.homeassistant"
   vars:
     homeassistant_mdns_host_network_interface: "end0"
+    homeassistant_docker_settings: "{{ hostvars[inventory_hostname]['homeassistant_docker_settings'] | default(smarthome_docker_settings | combine({'network': smarthome_network})) }}"
 
 - name: "Install Mosquitto"
   ansible.builtin.include_role:
-    name: "mosquitto"
+    name: "artyorsh.mosquitto"
   vars:
     mosquitto_user: "{{ smarthome_user }}"
+    mosquitto_docker_settings: "{{ hostvars[inventory_hostname]['mosquitto_docker_settings'] | default(smarthome_docker_settings) }}"
 
 - name: "Install Zigbee2MQTT"
   ansible.builtin.include_role:
-    name: "zigbee2mqtt"
+    name: "artyorsh.zigbee2mqtt"
   vars:
-    zigbee2mqtt_adapter: "/dev/ttyUSB0"
+    zigbee2mqtt_docker_settings: "{{ hostvars[inventory_hostname]['zigbee2mqtt_docker_settings'] | default(smarthome_docker_settings | combine({'network': smarthome_network})) }}"
     zigbee2mqtt_config:
       mqtt:
-        server: "mqtt://mosquitto"
+        server: "mqtt://{{ mosquitto_service_id }}"
         user: "{{ smarthome_user.name }}"
         password: "{{ smarthome_user.password }}"
+    zigbee2mqtt_adapter: "/dev/ttyUSB0"
 
 - name: "Prepare HomeKit iptables task variables"
   block:

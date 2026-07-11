@@ -36,7 +36,7 @@
       tags:
         - "security"
 
-    - role: "artyorsh.selfhosted.docker"
+    - role: "docker"
       tags:
         - "docker"
 
@@ -44,75 +44,66 @@
       tags:
         - "wireguard"
 
-    - role: "artyorsh.yams.yams"
+    - role: "artyorsh.jellyfin"
       tags:
+        - "jellyfin"
         - "media"
+
+    - role: "artyorsh.immich"
+      tags:
         - "immich"
 
-    - role: "monitoring"
-      tags:
-        - "monitoring"
-
-    - role: "artyorsh.selfhosted.nginx"
+    - role: "artyorsh.nginx"
       tags:
         - "nginx"
 
-    - role: "artyorsh.selfhosted.openarchiver"
+    - role: "artyorsh.openarchiver"
       tags:
         - "openarchiver"
 
-    - role: "artyorsh.selfhosted.paperlessngx"
+    - role: "artyorsh.paperlessngx"
       tags:
         - "paperlessngx"
-
-    - role: "artyorsh.selfhosted.paperless_ai"
-      tags:
-        - "paperlessngx"
-        - "paperless-ai"
-
-    - role: "artyorsh.selfhosted.postiz"
-      tags:
-        - "postiz"
 
     - role: "smarthome"
       tags:
         - "smarthome"
+        - "homeassistant"
+        - "mosquitto"
+        - "zigbee2mqtt"
 
-    - role: "artyorsh.selfhosted.rss"
+    - role: "artyorsh.miniflux"
       tags:
+        - "miniflux"
         - "rss"
 
-    - role: "artyorsh.selfhosted.syncthing"
+    - role: "artyorsh.syncthing"
       tags:
         - "syncthing"
 
-    - role: "artyorsh.selfhosted.homebox"
+    - role: "artyorsh.homebox"
       tags:
         - "homebox"
 
-    - role: "artyorsh.selfhosted.vaultwarden"
+    - role: "artyorsh.vaultwarden"
       tags:
         - "vaultwarden"
 
-    - role: "artyorsh.selfhosted.duplicati"
+    - role: "artyorsh.duplicati"
       tags:
         - "duplicati"
 
-    - role: "artyorsh.selfhosted.watchtower"
-      tags:
-        - "watchtower"
-
-    - role: "artyorsh.selfhosted.wallos"
+    - role: "artyorsh.wallos"
       tags:
         - "wallos"
 
-    - role: "artyorsh.selfhosted.forgejo"
+    - role: "artyorsh.forgejo"
       tags:
         - "forgejo"
 
-    - role: "artyorsh.selfhosted.weblate"
+    - role: "artyorsh.dnsmasq"
       tags:
-        - "weblate"
+        - "dnsmasq"
 
     - role: "website"
       tags:

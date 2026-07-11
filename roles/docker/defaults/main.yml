@@ -1,0 +1,17 @@
+---
+docker_dir: "/opt/docker"
+
+docker_autobackup_enabled: false
+docker_autobackup_dest_dir: "{{ docker_dir }}/.backups"
+docker_autobackup_containers: []
+# - { name: "homarr", volumes: ["/data"] }
+
+docker_autobackup_schedule: # 0AM every Monday
+  weekday: 1
+  hour: 0
+
+docker_autoprune_enabled: false
+docker_autoprune_until_hours: 720
+docker_autoprune_schedule: # 0AM every Monday
+  weekday: 1
+  hour: 0

@@ -15,6 +15,19 @@ FMARK_LAN="${FMARK_LAN:-0x2}"
 TABLE_LAN="${TABLE_LAN:-100}"
 PRIO_LAN="${PRIO_LAN:-5175}"
 MANGLE_CHAIN="${MANGLE_CHAIN:-SPLITRT}"
+WAIT_SECONDS="${WAIT_SECONDS:-120}"
+
+wait_for_lan_ip() {
+  local elapsed=0
+  while ! ip -4 addr show dev "${LAN_IF}" 2>/dev/null | grep -q "inet ${LAN_IP}/"; do
+    if (( elapsed >= WAIT_SECONDS )); then
+      echo "Timed out waiting for ${LAN_IP} on ${LAN_IF}" >&2
+      return 1
+    fi
+    sleep 2
+    elapsed=$((elapsed + 2))
+  done
+}
 
 apply_iptables() {
   local action="$1"
@@ -53,6 +66,8 @@ flush_chain() {
 
 apply() {
   revert 2>/dev/null || true
+
+  wait_for_lan_ip
 
   ip route replace table "${TABLE_LAN}" "${LAN_SUBNET}" dev "${LAN_IF}" src "${LAN_IP}"
   ip rule add fwmark "${FMARK_LAN}" lookup "${TABLE_LAN}" priority "${PRIO_LAN}" 2>/dev/null || true

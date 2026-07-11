@@ -8,34 +8,97 @@ roles:
 
   - name: "elliotweiser.osx-command-line-tools"
 
-  - name: "homeassistant"
+  - name: "artyorsh.homeassistant"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-homeassistant"
     scm: "git"
-    version: "v1.0.0"
+    version: "homeassistant-032745a7e89f"
 
-  - name: "mosquitto"
+  - name: "artyorsh.mosquitto"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-mosquitto"
     scm: "git"
-    version: "v1.0.0"
+    version: "mosquitto-6f8d8a947c50"
 
-  - name: "zigbee2mqtt"
+  - name: "artyorsh.zigbee2mqtt"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-zigbee2mqtt"
     scm: "git"
-    version: "v1.0.0"
+    version: "zigbee2mqtt-80f7f04f72a9"
+
+  - name: "artyorsh.vaultwarden"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-vaultwarden"
+    scm: "git"
+    version: "vaultwarden-d3531610b486"
+
+  - name: "artyorsh.nginx"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-nginx"
+    scm: "git"
+    version: "nginx-52b2c59994f3"
+
+  - name: "artyorsh.openarchiver"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-openarchiver"
+    scm: "git"
+    version: "openarchiver-dd5d5ca653e6"
+
+  - name: "artyorsh.paperlessngx"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-paperlessngx"
+    scm: "git"
+    version: "paperlessngx-6c86cad80397"
+
+  - name: "artyorsh.miniflux"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-miniflux"
+    scm: "git"
+    version: "miniflux-cd353a6af9ce"
+
+  - name: "artyorsh.syncthing"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-syncthing"
+    scm: "git"
+    version: "syncthing-550509c4e375"
+
+  - name: "artyorsh.homebox"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-homebox"
+    scm: "git"
+    version: "homebox-17d82459c12a"
+
+  - name: "artyorsh.duplicati"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-duplicati"
+    scm: "git"
+    version: "duplicati-724e4f9cec94"
+
+  - name: "artyorsh.wallos"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-wallos"
+    scm: "git"
+    version: "wallos-3b2cdc843b4b"
+
+  - name: "artyorsh.forgejo"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-forgejo"
+    scm: "git"
+    version: "forgejo-4472ab05ed70"
+
+  - name: "artyorsh.dnsmasq"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-dnsmasq"
+    scm: "git"
+    version: "dnsmasq-7ad3c1c802de"
+
+  - name: "artyorsh.immich"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-immich"
+    scm: "git"
+    version: "immich-46dedfc5848f"
+
+  - name: "artyorsh.jellyfin"
+    src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-jellyfin"
+    scm: "git"
+    version: "jellyfin-bb8ff21a8794"
 
 collections:
   - name: "https://github.com/ansible-collections/community.general"
     type: "git"
 
+  - name: "https://github.com/ansible-collections/community.docker"
+    type: "git"
+
   - name: "https://github.com/ansible-collections/ansible.posix"
     type: "git"
 
-  - name: "https://github.com/artyorsh/ansible-collection-yams"
-    type: "git"
-
-  - name: "https://github.com/artyorsh/ansible-collection-mobiledev"
-    type: "git"
-
-  - name: "artyorsh.selfhosted"
+  # - name: "https://github.com/artyorsh/ansible-collection-mobiledev"
+  #   type: "git"
 
   - name: "geerlingguy.mac"
