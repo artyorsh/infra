@@ -1,0 +1,69 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../ansible-role-vaultwarden"
+		},
+		{
+			"path": "../../ansible-role-homeassistant"
+		},
+		{
+			"path": "../../ansible-role-immich"
+		},
+		{
+			"path": "../../ansible-role-paperlessngx"
+		},
+		{
+			"path": "../../ansible-role-syncthing"
+		},
+		{
+			"path": "../../ansible-role-duplicati"
+		},
+		{
+			"path": "../../ansible-role-forgejo"
+		},
+		{
+			"path": "../../ansible-role-wallos"
+		},
+		{
+			"path": "../../ansible-role-homebox"
+		},
+		{
+			"path": "../../ansible-role-jellyfin"
+		},
+		{
+			"path": "../../ansible-role-miniflux"
+		},
+		{
+			"path": "../../ansible-role-rssbridge"
+		},
+		{
+			"path": "../../ansible-role-jellyseerr"
+		},
+		{
+			"path": "../../ansible-role-dnsmasq"
+		},
+		{
+			"path": "../../ansible-role-mosquitto"
+		},
+		{
+			"path": "../../ansible-role-nginx"
+		},
+		{
+			"path": "../../ansible-role-openarchiver"
+		},
+		{
+			"path": "../../ansible-role-zigbee2mqtt"
+		},
+		{
+			"path": "../../ansible-role-suggestarr"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.yml": "ansible"
+		}
+	}
+}
