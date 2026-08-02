@@ -59,6 +59,9 @@
 		},
 		{
 			"path": "../../ansible-role-suggestarr"
+		},
+		{
+			"path": "../../infra-skills"
 		}
 	],
 	"settings": {
