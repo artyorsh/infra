@@ -13,6 +13,14 @@ security_firewall_allow_rules:
     proto: "tcp"
     port: "{{ security_ssh_port }}"
 
+  - desc: "Allow mDNS (HomeKit discovery)"
+    proto: "udp"
+    port: "5353"
+
+  - desc: "Allow HomeKit bridge (HAP)"
+    proto: "tcp"
+    port: "21065"
+
 security_firewall_allow_ips: []
 #  - desc: "Allow localhost"
 #    address: "192.168.0.0/24"

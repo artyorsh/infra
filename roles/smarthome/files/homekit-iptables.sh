@@ -13,8 +13,12 @@ set -euo pipefail
 
 FMARK_LAN="${FMARK_LAN:-0x2}"
 TABLE_LAN="${TABLE_LAN:-100}"
-PRIO_LAN="${PRIO_LAN:-5175}"
+# Must be < WireGuard's "lookup main suppress_prefixlength 0" (typically 5173),
+# otherwise LAN /24 in main via wg0 wins and table 100 is never consulted.
+PRIO_LAN="${PRIO_LAN:-5172}"
+PRIO_LAN_LEGACY="${PRIO_LAN_LEGACY:-5175}"
 MANGLE_CHAIN="${MANGLE_CHAIN:-SPLITRT}"
+FILTER_CHAIN="${FILTER_CHAIN:-FILTERS}"
 WAIT_SECONDS="${WAIT_SECONDS:-120}"
 
 wait_for_lan_ip() {
@@ -64,6 +68,43 @@ flush_chain() {
   fi
 }
 
+apply_filter() {
+  local action="$1"
+  shift
+  if iptables -C "${FILTER_CHAIN}" "$@" 2>/dev/null; then
+    [[ "${action}" == "-A" ]] && return 0
+  else
+    [[ "${action}" == "-D" ]] && return 0
+  fi
+  iptables "${action}" "${FILTER_CHAIN}" "$@"
+}
+
+ensure_homekit_input() {
+  if ! iptables -L "${FILTER_CHAIN}" -n >/dev/null 2>&1; then
+    echo "Filter chain ${FILTER_CHAIN} absent; skipping HAP INPUT rule" >&2
+    return 0
+  fi
+
+  if iptables -C "${FILTER_CHAIN}" -m state --state NEW -p tcp -m tcp --dport "${HOMEKIT_PORT}" -j ACCEPT 2>/dev/null; then
+    return 0
+  fi
+
+  reject_line="$(iptables -L "${FILTER_CHAIN}" --line-numbers -n | awk '/reject-with icmp-host-prohibited/{print $1; exit}')"
+  if [[ -n "${reject_line}" ]]; then
+    iptables -I "${FILTER_CHAIN}" "${reject_line}" -m state --state NEW -p tcp -m tcp --dport "${HOMEKIT_PORT}" -j ACCEPT
+  else
+    iptables -A "${FILTER_CHAIN}" -m state --state NEW -p tcp -m tcp --dport "${HOMEKIT_PORT}" -j ACCEPT
+  fi
+}
+
+remove_homekit_input() {
+  if ! iptables -L "${FILTER_CHAIN}" -n >/dev/null 2>&1; then
+    return 0
+  fi
+
+  apply_filter -D -m state --state NEW -p tcp -m tcp --dport "${HOMEKIT_PORT}" -j ACCEPT
+}
+
 apply() {
   revert 2>/dev/null || true
 
@@ -78,26 +119,34 @@ apply() {
     -j CONNMARK --set-xmark "${FMARK_LAN}/0xffffffff"
   apply_iptables -A -j CONNMARK --restore-mark --nfmask 0xffffffff --ctmask 0xffffffff
 
-  echo "Applied HomeKit iptables routing (connmark)."
+  ensure_homekit_input
+
+  echo "Applied HomeKit iptables routing (connmark + INPUT)."
 }
 
 revert() {
   ip rule del fwmark "${FMARK_LAN}" lookup "${TABLE_LAN}" priority "${PRIO_LAN}" 2>/dev/null || true
+  ip rule del fwmark "${FMARK_LAN}" lookup "${TABLE_LAN}" priority "${PRIO_LAN_LEGACY}" 2>/dev/null || true
   ip route flush table "${TABLE_LAN}" 2>/dev/null || true
 
   remove_jump_rules
   flush_chain
+  remove_homekit_input
 
-  echo "Reverted HomeKit iptables routing (connmark)."
+  echo "Reverted HomeKit iptables routing (connmark + INPUT)."
 }
 
 status() {
   echo "=== ip rules ==="
-  ip rule list | grep -E "${PRIO_LAN}|table ${TABLE_LAN}" || echo "(none)"
+  ip rule list | grep -E "${PRIO_LAN}|${PRIO_LAN_LEGACY}|table ${TABLE_LAN}|fwmark ${FMARK_LAN}" || echo "(none)"
   echo "=== table ${TABLE_LAN} ==="
   ip route show table "${TABLE_LAN}" || true
+  echo "=== mark ${FMARK_LAN} sample route ==="
+  ip route get "${LAN_SUBNET%/*}" mark "${FMARK_LAN}" 2>/dev/null || ip route get 10.24.2.1 mark "${FMARK_LAN}" 2>/dev/null || true
   echo "=== mangle ${MANGLE_CHAIN} ==="
   iptables -t mangle -L "${MANGLE_CHAIN}" -n -v 2>/dev/null || echo "(chain absent)"
+  echo "=== filter ${FILTER_CHAIN} (HAP) ==="
+  iptables -L "${FILTER_CHAIN}" -n -v 2>/dev/null | grep -E "dpt:${HOMEKIT_PORT}|^Chain" || echo "(no HAP rule)"
 }
 
 case "${1:-}" in
