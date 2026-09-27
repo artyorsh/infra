@@ -13,9 +13,10 @@ set -euo pipefail
 
 FMARK_LAN="${FMARK_LAN:-0x2}"
 TABLE_LAN="${TABLE_LAN:-100}"
-# Must be < WireGuard's "lookup main suppress_prefixlength 0" (typically 5173),
+# Must run before WireGuard's "lookup main suppress_prefixlength 0" rule,
 # otherwise LAN /24 in main via wg0 wins and table 100 is never consulted.
-PRIO_LAN="${PRIO_LAN:-5172}"
+PRIO_LAN="${PRIO_LAN:-5169}"
+PRIO_LAN_PREVIOUS="${PRIO_LAN_PREVIOUS:-5172}"
 PRIO_LAN_LEGACY="${PRIO_LAN_LEGACY:-5175}"
 MANGLE_CHAIN="${MANGLE_CHAIN:-SPLITRT}"
 FILTER_CHAIN="${FILTER_CHAIN:-FILTERS}"
@@ -126,6 +127,7 @@ apply() {
 
 revert() {
   ip rule del fwmark "${FMARK_LAN}" lookup "${TABLE_LAN}" priority "${PRIO_LAN}" 2>/dev/null || true
+  ip rule del fwmark "${FMARK_LAN}" lookup "${TABLE_LAN}" priority "${PRIO_LAN_PREVIOUS}" 2>/dev/null || true
   ip rule del fwmark "${FMARK_LAN}" lookup "${TABLE_LAN}" priority "${PRIO_LAN_LEGACY}" 2>/dev/null || true
   ip route flush table "${TABLE_LAN}" 2>/dev/null || true
 
@@ -138,7 +140,7 @@ revert() {
 
 status() {
   echo "=== ip rules ==="
-  ip rule list | grep -E "${PRIO_LAN}|${PRIO_LAN_LEGACY}|table ${TABLE_LAN}|fwmark ${FMARK_LAN}" || echo "(none)"
+  ip rule list | grep -E "${PRIO_LAN}|${PRIO_LAN_PREVIOUS}|${PRIO_LAN_LEGACY}|table ${TABLE_LAN}|fwmark ${FMARK_LAN}" || echo "(none)"
   echo "=== table ${TABLE_LAN} ==="
   ip route show table "${TABLE_LAN}" || true
   echo "=== mark ${FMARK_LAN} sample route ==="
