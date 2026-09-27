@@ -11,7 +11,7 @@ roles:
   - name: "artyorsh.homeassistant"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-homeassistant"
     scm: "git"
-    version: "homeassistant-032745a7e89f"
+    version: "ff7c179"
 
   - name: "artyorsh.mosquitto"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-mosquitto"
