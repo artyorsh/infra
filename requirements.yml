@@ -21,7 +21,7 @@ roles:
   - name: "artyorsh.zigbee2mqtt"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-zigbee2mqtt"
     scm: "git"
-    version: "zigbee2mqtt-80f7f04f72a9"
+    version: "768253b9575b8acade025a1bb8c0c42fed1ba140"
 
   - name: "artyorsh.vaultwarden"
     src: "https://forgejo.artyorsh.me/artyorsh/ansible-role-vaultwarden"
