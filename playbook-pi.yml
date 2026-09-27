@@ -7,6 +7,7 @@
     - ansible.builtin.import_tasks: "tasks/docker-registry-login.yml"
       tags:
         - "docker"
+        - "always"
 
     - ansible.builtin.import_tasks: "tasks/mount-smb-share.yml"
       vars:
@@ -21,6 +22,7 @@
         src: "{{ smb_share_base_url }}/repositories"
         path: "{{ forgejo_repositories_dir }}"
       tags:
+        - "smb"
         - "forgejo"
 
   roles:
